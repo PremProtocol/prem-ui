@@ -1,0 +1,15 @@
+/* src/components/ClaimWinnings.css */
+.button {
+  padding: 10px 20px;
+  background-color: #ffc107;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background-color: #e0a800;
+}

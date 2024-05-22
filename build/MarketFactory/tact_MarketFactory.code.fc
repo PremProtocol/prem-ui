@@ -1,0 +1,164 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "tact_MarketFactory.headers.fc";
+#include "tact_MarketFactory.stdlib.fc";
+#include "tact_MarketFactory.constants.fc";
+#include "tact_MarketFactory.storage.fc";
+
+;;
+;; Contract MarketFactory functions
+;;
+
+(slice) $MarketFactory$_contract_init() impure inline_ref {
+    var (($self'owner)) = (null());
+    $self'owner = __tact_context_get_sender();
+    return ($self'owner);
+}
+
+((slice), slice) $MarketFactory$_fun_deployPredictionMarket((slice) $self, slice $eventDescription, int $endTime, slice $outcomeName1, slice $outcomeName2, int $numOutcomes) impure inline_ref {
+    var (($self'owner)) = $self;
+    var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, __tact_context_get_sender(), my_address(), $eventDescription, $endTime, $outcomeName1, $outcomeName2, $numOutcomes);
+    slice $preMarketContractAddress = $global_contractAddress(($initState'code, $initState'data));
+    $global_send($SendParameters$_constructor_to_value_mode_code_data($preMarketContractAddress, 300000000, 2, $initState'code, $initState'data));
+    return (($self'owner), $preMarketContractAddress);
+}
+
+((slice), ()) $MarketFactory$_fun_requireOwner((slice) $self) impure inline_ref {
+    var (($self'owner)) = $self;
+    throw_unless(132, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    return (($self'owner), ());
+}
+
+((slice), slice) $MarketFactory$_fun_owner((slice) $self) impure inline_ref {
+    var (($self'owner)) = $self;
+    return (($self'owner), $self'owner);
+}
+
+;;
+;; Receivers of a Contract MarketFactory
+;;
+
+(((slice)), ()) $MarketFactory$_internal_binary_CreateMarket((slice) $self, (slice, int, slice, slice, int) $msg) impure inline {
+    var ($self'owner) = $self;
+    var ($msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
+    throw_unless(55984, ($msg'endTime > now()));
+    throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName1));
+    throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName2));
+    throw_unless(16210, ($msg'numOutcomes == 2));
+    throw_unless(17847, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventDescription));
+    ($self'owner)~$MarketFactory$_fun_requireOwner();
+    slice $preMarketContractAddress = ($self'owner)~$MarketFactory$_fun_deployPredictionMarket($msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes);
+    ($self'owner)~$MarketFactory$_fun_reply($CreateMarketResponse$_store_cell($CreateMarketResponse$_constructor_address($preMarketContractAddress)));
+    return (($self'owner), ());
+}
+
+(((slice)), ()) $MarketFactory$_internal_binary_Deploy((slice) $self, (int) $deploy) impure inline {
+    var ($self'owner) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'owner)~$MarketFactory$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner), ());
+}
+
+(((slice)), ()) $MarketFactory$_internal_binary_ChangeOwner((slice) $self, (int, slice) $msg) impure inline {
+    var ($self'owner) = $self;
+    var ($msg'queryId, $msg'newOwner) = $msg;
+    ($self'owner)~$MarketFactory$_fun_requireOwner();
+    $self'owner = $msg'newOwner;
+    ($self'owner)~$MarketFactory$_fun_reply($ChangeOwnerOk$_store_cell($ChangeOwnerOk$_constructor_queryId_newOwner($msg'queryId, $msg'newOwner)));
+    return (($self'owner), ());
+}
+
+;;
+;; Get methods of a Contract MarketFactory
+;;
+
+_ %owner() method_id(83229) {
+    var self = $MarketFactory$_contract_load();
+    var res = self~$MarketFactory$_fun_owner();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128,
+        "org.ton.ownable.transferable.v2"H >> 128,
+        "org.ton.ownable"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmeMj72hffU1iyCRrCR41Ap3CsY3tFc2MLo6Zoj1J73nfJ";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract MarketFactory
+;;
+
+((slice), int) $MarketFactory$_contract_router_internal((slice) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive CreateMarket message
+    if (op == 336041117) {
+        var msg = in_msg~$CreateMarket$_load();
+        self~$MarketFactory$_internal_binary_CreateMarket(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$MarketFactory$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    ;; Receive ChangeOwner message
+    if (op == 2174598809) {
+        var msg = in_msg~$ChangeOwner$_load();
+        self~$MarketFactory$_internal_binary_ChangeOwner(msg);
+        return (self, true);
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $MarketFactory$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$MarketFactory$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $MarketFactory$_contract_store(self);
+}
