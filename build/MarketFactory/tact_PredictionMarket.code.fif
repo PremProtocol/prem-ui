@@ -17,6 +17,7 @@ PROGRAM{
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
+  DECLPROC $MarketInitialize$_load
   DECLPROC $PlaceBet$_load
   DECLPROC $ResolveMarket$_load
   DECLPROC $ClaimWinningsInfo$_load
@@ -47,6 +48,7 @@ PROGRAM{
   DECLPROC $PredictionMarket$_fun_notify
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
+  DECLPROC $PredictionMarket$_internal_binary_MarketInitialize
   DECLPROC $PredictionMarket$_internal_binary_PlaceBet
   DECLPROC $PredictionMarket$_internal_binary_ResolveMarket
   DECLPROC $PredictionMarket$_internal_binary_ClaimWinningsInfo
@@ -208,6 +210,30 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
+  $MarketInitialize$_load PROCREF:<{
+    32 LDU
+    SWAP
+    2376986870 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    __tact_load_address INLINECALLDICT
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    64 LDU
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    8 LDU
+    6 -ROLL
+  }>
   $PlaceBet$_load PROCINLINE:<{
     32 LDU
     SWAP
@@ -251,19 +277,20 @@ PROGRAM{
     ENDC
   }>
   $PredictionMarket$_store PROCINLINE:<{
-    s11 s10 XCHG2
+    s12 s11 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s8 XCHG2
+    s0 s9 XCHG2
     __tact_store_address INLINECALLDICT
+    s1 s7 XCHG
+    64 STU
     NEWC
-    s0 s7 XCHG2
+    s0 s6 XCHG2
     STSLICER
     ENDC
-    s0 s6 XCHG2
+    s0 s5 XCHG2
     STREF
-    s1 s4 XCHG
+    s1 s3 XCHG
     64 STU
-    s1 s2 XCHG
     1 STI
     8 STI
     NEWC
@@ -293,6 +320,7 @@ PROGRAM{
     SWAP
     __tact_load_address INLINECALLDICT
     SWAP
+    64 LDU
     LDREF
     SWAP
     CTOS
@@ -315,6 +343,7 @@ PROGRAM{
     LDDICT
     64 LDU
     DROP
+    s4 s12 XCHG
     s4 s11 XCHG
     s4 s10 XCHG
     s4 s9 XCHG
@@ -333,36 +362,12 @@ PROGRAM{
     s1 s3 XCHG
     3 BLKDROP
   }>
-  $PredictionMarket$init$_load PROCREF:<{
+  $PredictionMarket$init$_load PROCINLINE:<{
     __tact_load_address INLINECALLDICT
-    SWAP
-    __tact_load_address INLINECALLDICT
-    SWAP
-    LDREF
-    SWAP
-    CTOS
     SWAP
     257 PUSHINT
     LDIX
-    LDREF
-    SWAP
-    CTOS
-    SWAP
-    LDREF
-    SWAP
-    CTOS
-    LDREF
-    SWAP
-    CTOS
-    SWAP
-    257 PUSHINT
-    LDIX
-    DROP
-    s2 s7 XCHG
-    s2 s6 XCHG
-    s2 s5 XCHG
-    s2 s4 XCHG
-    s2 s3 XCHG
+    -ROT
   }>
   $UserBet$init$_store PROCINLINE:<{
     -ROT
@@ -371,12 +376,26 @@ PROGRAM{
     __tact_store_address INLINECALLDICT
   }>
   $PredictionMarket$_contract_init PROCREF:<{
-    s5 s6 XCHG
     PUSHNULL
+    0 PUSHINT
+    DUP
+    __tact_create_address INLINECALLDICT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    0 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    s2 PUSH
     FALSE
     -1 PUSHINT
-    4 2 BLKSWAP
-    0 PUSHINT
+    s2 PUSH
+    s8 s11 XCHG
+    s8 s10 XCHG
+    s8 s9 XCHG
+    s7 s8 XCHG
+    s6 s7 XCHG
+    s6 s5 s0 XCHG3
+    s1 s4 XCHG
+    s3 s3 s0 XCHG3
   }>
   $PredictionMarket$_contract_load PROCREF:<{
     c4 PUSH
@@ -388,7 +407,7 @@ PROGRAM{
     SWAP
     IFJMP:<{
       $PredictionMarket$_load INLINECALLDICT
-      1 11 BLKDROP2
+      1 12 BLKDROP2
     }>
     MYADDR
     11 PLDU
@@ -396,9 +415,9 @@ PROGRAM{
     EQUAL
     137 THROWIFNOT
     $PredictionMarket$init$_load INLINECALLDICT
-    s0 s7 XCHG
+    s0 s2 XCHG
     ENDS
-    6 ROLL
+    SWAP
     $PredictionMarket$_contract_init INLINECALLDICT
   }>
   $PredictionMarket$_contract_store PROCINLINE:<{
@@ -409,7 +428,7 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
-    11 -ROLL
+    12 -ROLL
     $PredictionMarket$_store INLINECALLDICT
     ENDC
     c4 POP
@@ -647,6 +666,19 @@ PROGRAM{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
+  $PredictionMarket$_internal_binary_MarketInitialize PROCINLINE:<{
+    s8 POP
+    s8 POP
+    s8 POP
+    s10 POP
+    s10 POP
+    s12 POP
+    24122 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s12 s(-1) PUXC
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+  }>
   $PredictionMarket$_internal_binary_PlaceBet PROCINLINE:<{
     24032 PUSHINT
     NOW
@@ -692,7 +724,7 @@ PROGRAM{
     s6 POP
     24933 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s11 s(-1) PUXC
+    s13 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     38368 PUSHINT
@@ -758,23 +790,23 @@ PROGRAM{
   %totalPool PROC:<{
     $PredictionMarket$_contract_load INLINECALLDICT
     $PredictionMarket$_fun_totalPool INLINECALLDICT
-    11 1 BLKDROP2
+    12 1 BLKDROP2
   }>
   %totalBetForOutcome PROC:<{
     $PredictionMarket$_contract_load INLINECALLDICT
-    11 ROLL
+    12 ROLL
     $PredictionMarket$_fun_totalBetForOutcome INLINECALLDICT
-    11 1 BLKDROP2
+    12 1 BLKDROP2
   }>
   %resolvedOutcome PROC:<{
     $PredictionMarket$_contract_load INLINECALLDICT
     $PredictionMarket$_fun_resolvedOutcome INLINECALLDICT
-    11 1 BLKDROP2
+    12 1 BLKDROP2
   }>
   %isResolved PROC:<{
     $PredictionMarket$_contract_load INLINECALLDICT
     $PredictionMarket$_fun_isResolved INLINECALLDICT
-    11 1 BLKDROP2
+    12 1 BLKDROP2
   }>
   supported_interfaces PROC:<{
     123515602279859691144772641439386770278 PUSHINT
@@ -783,7 +815,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d564d426d58383851575a736e6f71524352714347464a35647a6455525153386650545154666a4550514e3770} PUSHSLICE
+    x{697066733a2f2f516d514c703454504e6e5469526976505444626352554271377074314347547665716135513272534a596e734534} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -807,6 +839,16 @@ PROGRAM{
       DROP
       DUP
       32 PLDU
+    }>
+    DUP
+    2376986870 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $MarketInitialize$_load INLINECALLDICT
+      1 6 BLKDROP2
+      $PredictionMarket$_internal_binary_MarketInitialize INLINECALLDICT
+      TRUE
     }>
     DUP
     3093552415 PUSHINT
@@ -868,7 +910,7 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     $PredictionMarket$_contract_load INLINECALLDICT
-    2 11 BLKSWAP
+    2 12 BLKSWAP
     $PredictionMarket$_contract_router_internal INLINECALLDICT
     130 THROWIFNOT
     $PredictionMarket$_contract_store INLINECALLDICT

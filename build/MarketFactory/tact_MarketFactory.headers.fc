@@ -63,35 +63,35 @@ builder $ChangeOwnerOk$_store(builder build_0, (int, slice) v) inline;
 ;; $ChangeOwnerOk$_store_cell
 cell $ChangeOwnerOk$_store_cell((int, slice) v) inline;
 
-;; $CreateMarketResponse$_store
-builder $CreateMarketResponse$_store(builder build_0, (slice) v) inline;
-
-;; $CreateMarketResponse$_store_cell
-cell $CreateMarketResponse$_store_cell((slice) v) inline;
-
 ;; $CreateMarket$_load
 (slice, ((slice, int, slice, slice, int))) $CreateMarket$_load(slice sc_0) inline;
 
+;; $MarketInitialize$_store
+builder $MarketInitialize$_store(builder build_0, (slice, slice, int, slice, slice, int) v) inline_ref;
+
+;; $MarketInitialize$_store_cell
+cell $MarketInitialize$_store_cell((slice, slice, int, slice, slice, int) v) inline;
+
 ;; $MarketFactory$_store
-builder $MarketFactory$_store(builder build_0, (slice) v) inline;
+builder $MarketFactory$_store(builder build_0, (slice, int) v) inline;
 
 ;; $MarketFactory$_load
-(slice, ((slice))) $MarketFactory$_load(slice sc_0) inline;
+(slice, ((slice, int))) $MarketFactory$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
 
 ;; $PredictionMarket$init$_store
-builder $PredictionMarket$init$_store(builder build_0, (slice, slice, slice, int, slice, slice, int) v) inline;
+builder $PredictionMarket$init$_store(builder build_0, (slice, int) v) inline;
 
 ;; $MarketFactory$_contract_init
-(slice) $MarketFactory$_contract_init() impure inline_ref;
+(slice, int) $MarketFactory$_contract_init() impure inline_ref;
 
 ;; $MarketFactory$_contract_load
-(slice) $MarketFactory$_contract_load() impure inline_ref;
+(slice, int) $MarketFactory$_contract_load() impure inline_ref;
 
 ;; $MarketFactory$_contract_store
-() $MarketFactory$_contract_store((slice) v) impure inline;
+() $MarketFactory$_contract_store((slice, int) v) impure inline;
 
 ;; $global_contractAddress
 slice $global_contractAddress((cell, cell) $s) impure inline;
@@ -100,34 +100,34 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
 
 ;; $PredictionMarket$_init_child
-(cell, cell) $PredictionMarket$_init_child(cell sys', slice $owner, slice $parent, slice $eventDescription, int $endTime, slice $outcomeName1, slice $outcomeName2, int $numOutcomes) inline_ref;
+(cell, cell) $PredictionMarket$_init_child(cell sys', slice $parent, int $seqno) inline_ref;
+
+;; $SendParameters$_constructor_to_value_mode_code_data_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_code_data_body(slice to, int value, int mode, cell code, cell data, cell body) inline;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
 
-;; $SendParameters$_constructor_to_value_mode_code_data
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_code_data(slice to, int value, int mode, cell code, cell data) inline;
-
-;; $MarketFactory$_fun_deployPredictionMarket
-((slice), slice) $MarketFactory$_fun_deployPredictionMarket((slice) $self, slice $eventDescription, int $endTime, slice $outcomeName1, slice $outcomeName2, int $numOutcomes) impure inline_ref;
+;; $MarketFactory$_fun_childAddress
+((slice, int), slice) $MarketFactory$_fun_childAddress((slice, int) $self, int $seqno) impure inline_ref;
 
 ;; $MarketFactory$_fun_forward
-((slice), ()) $MarketFactory$_fun_forward((slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, int), ()) $MarketFactory$_fun_forward((slice, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $MarketFactory$_fun_reply
-((slice), ()) $MarketFactory$_fun_reply((slice) $self, cell $body) impure inline;
+((slice, int), ()) $MarketFactory$_fun_reply((slice, int) $self, cell $body) impure inline;
 
 ;; $MarketFactory$_fun_notify
-((slice), ()) $MarketFactory$_fun_notify((slice) $self, cell $body) impure inline;
+((slice, int), ()) $MarketFactory$_fun_notify((slice, int) $self, cell $body) impure inline;
 
 ;; $MarketFactory$_fun_requireOwner
-((slice), ()) $MarketFactory$_fun_requireOwner((slice) $self) impure inline_ref;
+((slice, int), ()) $MarketFactory$_fun_requireOwner((slice, int) $self) impure inline_ref;
 
 ;; $MarketFactory$_fun_owner
-((slice), slice) $MarketFactory$_fun_owner((slice) $self) impure inline_ref;
+((slice, int), slice) $MarketFactory$_fun_owner((slice, int) $self) impure inline_ref;
 
-;; $CreateMarketResponse$_constructor_address
-((slice)) $CreateMarketResponse$_constructor_address(slice address) inline;
+;; $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes
+((slice, slice, int, slice, slice, int)) $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(slice owner, slice eventDescription, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes) inline;
 
 ;; $DeployOk$_constructor_queryId
 ((int)) $DeployOk$_constructor_queryId(int queryId) inline;

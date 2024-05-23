@@ -19,9 +19,9 @@ PROGRAM{
   DECLPROC $ChangeOwner$_load
   DECLPROC $ChangeOwnerOk$_store
   DECLPROC $ChangeOwnerOk$_store_cell
-  DECLPROC $CreateMarketResponse$_store
-  DECLPROC $CreateMarketResponse$_store_cell
   DECLPROC $CreateMarket$_load
+  DECLPROC $MarketInitialize$_store
+  DECLPROC $MarketInitialize$_store_cell
   DECLPROC $MarketFactory$_store
   DECLPROC $MarketFactory$_load
   DECLPROC $StateInit$_not_null
@@ -32,20 +32,21 @@ PROGRAM{
   DECLPROC $global_contractAddress
   DECLPROC $global_send
   DECLPROC $PredictionMarket$_init_child
+  DECLPROC $SendParameters$_constructor_to_value_mode_code_data_body
   DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
-  DECLPROC $SendParameters$_constructor_to_value_mode_code_data
-  DECLPROC $MarketFactory$_fun_deployPredictionMarket
+  DECLPROC $MarketFactory$_fun_childAddress
   DECLPROC $MarketFactory$_fun_forward
   DECLPROC $MarketFactory$_fun_reply
   DECLPROC $MarketFactory$_fun_notify
   DECLPROC $MarketFactory$_fun_requireOwner
   DECLPROC $MarketFactory$_fun_owner
-  DECLPROC $CreateMarketResponse$_constructor_address
+  DECLPROC $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $ChangeOwnerOk$_constructor_queryId_newOwner
   DECLPROC $MarketFactory$_internal_binary_CreateMarket
   DECLPROC $MarketFactory$_internal_binary_Deploy
   DECLPROC $MarketFactory$_internal_binary_ChangeOwner
+  80689 DECLMETHOD %childAddress
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
   121275 DECLMETHOD get_abi_ipfs
@@ -201,19 +202,6 @@ PROGRAM{
     $ChangeOwnerOk$_store INLINECALLDICT
     ENDC
   }>
-  $CreateMarketResponse$_store PROCINLINE:<{
-    4036598661 PUSHINT
-    ROT
-    32 STU
-    SWAP
-    __tact_store_address INLINECALLDICT
-  }>
-  $CreateMarketResponse$_store_cell PROCINLINE:<{
-    NEWC
-    SWAP
-    $CreateMarketResponse$_store INLINECALLDICT
-    ENDC
-  }>
   $CreateMarket$_load PROCINLINE:<{
     32 LDU
     SWAP
@@ -236,11 +224,49 @@ PROGRAM{
     8 LDU
     5 -ROLL
   }>
-  $MarketFactory$_store PROCINLINE:<{
+  $MarketInitialize$_store PROCREF:<{
+    2376986870 PUSHINT
+    s0 s7 XCHG2
+    32 STU
+    s0 s5 XCHG2
     __tact_store_address INLINECALLDICT
+    NEWC
+    s0 s4 XCHG2
+    STSLICER
+    ENDC
+    s0 s3 XCHG2
+    STREF
+    64 STU
+    NEWC
+    ROT
+    STSLICER
+    ENDC
+    SWAP
+    STREF
+    NEWC
+    ROT
+    STSLICER
+    ENDC
+    SWAP
+    STREF
+    8 STU
+  }>
+  $MarketInitialize$_store_cell PROCINLINE:<{
+    NEWC
+    6 -ROLL
+    $MarketInitialize$_store INLINECALLDICT
+    ENDC
+  }>
+  $MarketFactory$_store PROCINLINE:<{
+    -ROT
+    __tact_store_address INLINECALLDICT
+    64 STU
   }>
   $MarketFactory$_load PROCINLINE:<{
     __tact_load_address INLINECALLDICT
+    SWAP
+    64 LDU
+    -ROT
   }>
   $StateInit$_not_null PROCINLINE:<{
     DUP
@@ -249,39 +275,14 @@ PROGRAM{
     2 UNTUPLE
   }>
   $PredictionMarket$init$_store PROCINLINE:<{
-    s7 s6 XCHG2
+    -ROT
     __tact_store_address INLINECALLDICT
-    s0 s4 XCHG2
-    __tact_store_address INLINECALLDICT
-    NEWC
-    s0 s3 XCHG2
-    STSLICER
-    ENDC
-    ROT
-    STREF
     257 PUSHINT
     STIX
-    NEWC
-    ROT
-    STSLICER
-    ENDC
-    SWAP
-    STREF
-    NEWC
-    NEWC
-    s0 s4 XCHG2
-    STSLICER
-    ENDC
-    s0 s3 XCHG2
-    STREF
-    257 PUSHINT
-    STIX
-    ENDC
-    SWAP
-    STREF
   }>
   $MarketFactory$_contract_init PROCREF:<{
     __tact_context_get_sender INLINECALLDICT
+    0 PUSHINT
   }>
   $MarketFactory$_contract_load PROCREF:<{
     c4 PUSH
@@ -293,7 +294,7 @@ PROGRAM{
     SWAP
     IFJMP:<{
       $MarketFactory$_load INLINECALLDICT
-      NIP
+      1 2 BLKDROP2
     }>
     DROP
     MYADDR
@@ -311,7 +312,7 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
-    SWAP
+    -ROT
     $MarketFactory$_store INLINECALLDICT
     ENDC
     c4 POP
@@ -424,7 +425,7 @@ PROGRAM{
     SENDRAWMSG
   }>
   $PredictionMarket$_init_child PROCREF:<{
-    s0 s7 XCHG
+    s0 s2 XCHG
     CTOS
     LDDICT
     DROP
@@ -453,36 +454,25 @@ PROGRAM{
     FALSE
     SWAP
     1 STI
-    7 -ROLL
-    s0 s8 XCHG
+    s0 s0 s3 XCHG3
     $PredictionMarket$init$_store INLINECALLDICT
     ENDC
   }>
-  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
-  }>
-  $SendParameters$_constructor_to_value_mode_code_data PROCINLINE:<{
+  $SendParameters$_constructor_to_value_mode_code_data_body PROCINLINE:<{
     TRUE
+    s0 s6 XCHG
     s0 s5 XCHG
     s0 s4 XCHG
-    s3 s1 s3 XCHG3
-    PUSHNULL
-    s0 s2 XCHG
+    s1 s3 s3 XCHG3
   }>
-  $MarketFactory$_fun_deployPredictionMarket PROCREF:<{
+  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
+  }>
+  $MarketFactory$_fun_childAddress PROCREF:<{
     __tact_context_sys GETGLOB
-    __tact_context_get_sender INLINECALLDICT
     MYADDR
-    5 3 BLKSWAP
+    ROT
     $PredictionMarket$_init_child INLINECALLDICT
-    2DUP
     $global_contractAddress INLINECALLDICT
-    300000000 PUSHINT
-    2 PUSHINT
-    s2 PUSH
-    s1 s3 s4 XCHG3
-    s1 s5 XCHG
-    $SendParameters$_constructor_to_value_mode_code_data INLINECALLDICT
-    $global_send INLINECALLDICT
   }>
   $MarketFactory$_fun_forward PROCREF:<{
     PUSHNULL
@@ -522,14 +512,14 @@ PROGRAM{
   }>
   $MarketFactory$_fun_requireOwner PROCREF:<{
     __tact_context_get_sender INLINECALLDICT
-    s1 s(-1) PUXC
+    s2 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     132 THROWIFNOT
   }>
   $MarketFactory$_fun_owner PROCREF:<{
-    DUP
+    OVER
   }>
-  $CreateMarketResponse$_constructor_address PROCINLINE:<{
+  $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes PROCINLINE:<{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
@@ -560,13 +550,31 @@ PROGRAM{
     s6 PUSH
     __tact_slice_neq INLINECALLDICT
     THROWANYIFNOT
-    s0 s5 XCHG
+    s6 s5 XCHG2
     $MarketFactory$_fun_requireOwner INLINECALLDICT
+    __tact_context_sys GETGLOB
+    MYADDR
+    s2 PUSH
+    $PredictionMarket$_init_child INLINECALLDICT
+    2DUP
+    $global_contractAddress INLINECALLDICT
+    30000000 PUSHINT
+    2 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
     s0 s5 XCHG
-    $MarketFactory$_fun_deployPredictionMarket INLINECALLDICT
-    $CreateMarketResponse$_constructor_address INLINECALLDICT
-    $CreateMarketResponse$_store_cell INLINECALLDICT
-    $MarketFactory$_fun_reply INLINECALLDICT
+    s4 s10 XCHG
+    s3 s9 XCHG
+    s8 s12 s11 XCHG3
+    $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes INLINECALLDICT
+    $MarketInitialize$_store_cell INLINECALLDICT
+    s4 s5 XCHG
+    s3 s4 XCHG
+    s3 s7 XCHG
+    s6 s7 s0 XCHG3
+    $SendParameters$_constructor_to_value_mode_code_data_body INLINECALLDICT
+    $global_send INLINECALLDICT
+    SWAP
+    INC
   }>
   $MarketFactory$_internal_binary_Deploy PROCINLINE:<{
     $DeployOk$_constructor_queryId INLINECALLDICT
@@ -574,18 +582,25 @@ PROGRAM{
     $MarketFactory$_fun_notify INLINECALLDICT
   }>
   $MarketFactory$_internal_binary_ChangeOwner PROCINLINE:<{
-    s0 s2 XCHG
+    2SWAP
     $MarketFactory$_fun_requireOwner INLINECALLDICT
-    DROP
-    OVER
+    NIP
+    s2 s1 XCPU
     $ChangeOwnerOk$_constructor_queryId_newOwner INLINECALLDICT
     $ChangeOwnerOk$_store_cell INLINECALLDICT
+    s1 s2 XCHG
     $MarketFactory$_fun_reply INLINECALLDICT
+  }>
+  %childAddress PROC:<{
+    $MarketFactory$_contract_load INLINECALLDICT
+    ROT
+    $MarketFactory$_fun_childAddress INLINECALLDICT
+    2 1 BLKDROP2
   }>
   %owner PROC:<{
     $MarketFactory$_contract_load INLINECALLDICT
     $MarketFactory$_fun_owner INLINECALLDICT
-    NIP
+    2 1 BLKDROP2
   }>
   supported_interfaces PROC:<{
     123515602279859691144772641439386770278 PUSHINT
@@ -596,7 +611,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d654d6a3732686666553169794352724352343141703343735933744663324d4c6f365a6f6a314a37336e664a} PUSHSLICE
+    x{697066733a2f2f516d516779516358546673764d536e74465671666d6e527771595669704a4a4c785072543339676136383343657a} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -669,7 +684,7 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     $MarketFactory$_contract_load INLINECALLDICT
-    -ROT
+    2SWAP
     $MarketFactory$_contract_router_internal INLINECALLDICT
     130 THROWIFNOT
     $MarketFactory$_contract_store INLINECALLDICT

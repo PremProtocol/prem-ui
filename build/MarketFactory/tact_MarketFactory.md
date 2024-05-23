@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: MarketFactory
-BOC Size: 1290 bytes
+BOC Size: 1361 bytes
 
 # Types
-Total Types: 16
+Total Types: 17
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -45,6 +45,10 @@ Signature: `CreateMarketResponse{address:address}`
 TLB: `create_market#1407949d eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = CreateMarket`
 Signature: `CreateMarket{eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8}`
 
+## MarketInitialize
+TLB: `market_initialize#8dadf0f6 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize`
+Signature: `MarketInitialize{owner:address,eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8}`
+
 ## PlaceBet
 TLB: `place_bet#b863dd1f outcome:int8 = PlaceBet`
 Signature: `PlaceBet{outcome:int8}`
@@ -70,7 +74,10 @@ TLB: `claim_winnings_internal#dc560808 resolved:bool winningOutcome:uint8 totalP
 Signature: `ClaimWinningsInternal{resolved:bool,winningOutcome:uint8,totalPool:uint64,totalOutcomeBets:uint64}`
 
 # Get Methods
-Total Get Methods: 1
+Total Get Methods: 2
+
+## childAddress
+Argument: seqno
 
 ## owner
 
@@ -107,6 +114,7 @@ Total Get Methods: 1
 20846: Market already resolved
 22516: Outcome does not match the bet outcome
 24032: Betting has ended
+24122: Only parent contract can init the market
 24933: Only owner can resolve market
 25427: Only the market can call this function
 33245: Only the market can place a bet

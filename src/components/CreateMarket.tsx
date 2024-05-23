@@ -1,17 +1,26 @@
 // src/components/CreateMarket.tsx
 import React, { useState } from 'react';
 import './CreateMarket.css';
+import { useMarketFactoryContract } from '../hooks/useMainFactoryContract';
 
 const CreateMarket: React.FC = () => {
+  const {childAddress, createMarket} = useMarketFactoryContract();
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [outcomes, setOutcomes] = useState('');
-  const [numOutcomes, setNumOutcomes] = useState(2);
+  const [outcomeName1, setOutcomeName1] = useState('');
+  const [outcomeName2, setOutcomeName2] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle create market logic here
-    console.log({ eventDescription, endTime, outcomes, numOutcomes });
+    console.log({ eventDescription, endTime, outcomeName1, outcomeName2 });
+    const endTimeNumber = Date.parse(endTime) / 1000;
+    createMarket(eventDescription, endTimeNumber, outcomeName1, outcomeName2);
+  };
+
+  const getChildAddress = () => {
+    // Handle get child address logic here
+    console.log(childAddress);
   };
 
   return (
@@ -34,23 +43,23 @@ const CreateMarket: React.FC = () => {
           />
         </label>
         <label>
-          Outcomes (comma separated):
+          Outcome 1:
           <input
             type="text"
-            value={outcomes}
-            onChange={(e) => setOutcomes(e.target.value)}
+            value={outcomeName1}
+            onChange={(e) => setOutcomeName1(e.target.value)}
           />
         </label>
         <label>
-          Number of Outcomes:
+          Outcome 2:
           <input
-            type="number"
-            value={numOutcomes}
-            onChange={(e) => setNumOutcomes(Number(e.target.value))}
-            min="2"
+            type="text"
+            value={outcomeName2}
+            onChange={(e) => setOutcomeName2(e.target.value)}
           />
         </label>
         <button type="submit">Create Market</button>
+        <button type="button" onClick={getChildAddress}>Get Child Address</button>
       </form>
     </div>
   );

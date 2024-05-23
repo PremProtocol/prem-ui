@@ -57,6 +57,9 @@ builder $DeployOk$_store(builder build_0, (int) v) inline;
 ;; $DeployOk$_store_cell
 cell $DeployOk$_store_cell((int) v) inline;
 
+;; $MarketInitialize$_load
+(slice, ((slice, slice, int, slice, slice, int))) $MarketInitialize$_load(slice sc_0) inline_ref;
+
 ;; $PlaceBet$_load
 (slice, ((int))) $PlaceBet$_load(slice sc_0) inline;
 
@@ -73,10 +76,10 @@ builder $PlaceBetInternal$_store(builder build_0, (int) v) inline;
 cell $PlaceBetInternal$_store_cell((int) v) inline;
 
 ;; $PredictionMarket$_store
-builder $PredictionMarket$_store(builder build_0, (slice, slice, slice, int, int, int, slice, slice, int, cell, int) v) inline;
+builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) v) inline;
 
 ;; $PredictionMarket$_load
-(slice, ((slice, slice, slice, int, int, int, slice, slice, int, cell, int))) $PredictionMarket$_load(slice sc_0) inline;
+(slice, ((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int))) $PredictionMarket$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
@@ -85,19 +88,19 @@ builder $PredictionMarket$_store(builder build_0, (slice, slice, slice, int, int
 _ $Context$_get_value((int, slice, int, slice) v) inline;
 
 ;; $PredictionMarket$init$_load
-(slice, ((slice, slice, slice, int, slice, slice, int))) $PredictionMarket$init$_load(slice sc_0) inline_ref;
+(slice, ((slice, int))) $PredictionMarket$init$_load(slice sc_0) inline;
 
 ;; $UserBet$init$_store
 builder $UserBet$init$_store(builder build_0, (slice, slice) v) inline;
 
 ;; $PredictionMarket$_contract_init
-(slice, slice, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_init(slice $owner, slice $parent, slice $eventDescription, int $endTime, slice $outcomeName1, slice $outcomeName2, int $numOutcomes) impure inline_ref;
+(slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_init(slice $parent, int $seqno) impure inline_ref;
 
 ;; $PredictionMarket$_contract_load
-(slice, slice, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_load() impure inline_ref;
+(slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_load() impure inline_ref;
 
 ;; $PredictionMarket$_contract_store
-() $PredictionMarket$_contract_store((slice, slice, slice, int, int, int, slice, slice, int, cell, int) v) impure inline;
+() $PredictionMarket$_contract_store((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) v) impure inline;
 
 ;; $global_contractAddress
 slice $global_contractAddress((cell, cell) $s) impure inline;
@@ -115,31 +118,31 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 (cell, cell) $UserBet$_init_child(cell sys', slice $owner, slice $parent) inline_ref;
 
 ;; $PredictionMarket$_fun_placeUserBet
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_placeUserBet((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self, slice $owner, slice $parent, int $betAmount, int $outcome) impure inline_ref;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_placeUserBet((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, slice $owner, slice $parent, int $betAmount, int $outcome) impure inline_ref;
 
 ;; $PredictionMarket$_fun_totalPool
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalPool((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalPool((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
 
 ;; $PredictionMarket$_fun_totalBetForOutcome
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalBetForOutcome((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self, int $outcome) impure inline_ref;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalBetForOutcome((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, int $outcome) impure inline_ref;
 
 ;; $PredictionMarket$_fun_resolvedOutcome
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_resolvedOutcome((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_resolvedOutcome((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
 
 ;; $PredictionMarket$_fun_isResolved
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_isResolved((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_isResolved((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
 
 ;; $PredictionMarket$_fun_forward
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_forward((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_forward((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $PredictionMarket$_fun_reply
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_reply((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self, cell $body) impure inline;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_reply((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, cell $body) impure inline;
 
 ;; $PredictionMarket$_fun_notify
-((slice, slice, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_notify((slice, slice, slice, int, int, int, slice, slice, int, cell, int) $self, cell $body) impure inline;
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_notify((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, cell $body) impure inline;
 
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;

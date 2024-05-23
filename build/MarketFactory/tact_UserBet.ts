@@ -519,6 +519,73 @@ function dictValueParserCreateMarket(): DictionaryValue<CreateMarket> {
     }
 }
 
+export type MarketInitialize = {
+    $$type: 'MarketInitialize';
+    owner: Address;
+    eventDescription: string;
+    endTime: bigint;
+    outcomeName1: string;
+    outcomeName2: string;
+    numOutcomes: bigint;
+}
+
+export function storeMarketInitialize(src: MarketInitialize) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(2376986870, 32);
+        b_0.storeAddress(src.owner);
+        b_0.storeStringRefTail(src.eventDescription);
+        b_0.storeUint(src.endTime, 64);
+        b_0.storeStringRefTail(src.outcomeName1);
+        b_0.storeStringRefTail(src.outcomeName2);
+        b_0.storeUint(src.numOutcomes, 8);
+    };
+}
+
+export function loadMarketInitialize(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 2376986870) { throw Error('Invalid prefix'); }
+    let _owner = sc_0.loadAddress();
+    let _eventDescription = sc_0.loadStringRefTail();
+    let _endTime = sc_0.loadUintBig(64);
+    let _outcomeName1 = sc_0.loadStringRefTail();
+    let _outcomeName2 = sc_0.loadStringRefTail();
+    let _numOutcomes = sc_0.loadUintBig(8);
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+}
+
+function loadTupleMarketInitialize(source: TupleReader) {
+    let _owner = source.readAddress();
+    let _eventDescription = source.readString();
+    let _endTime = source.readBigNumber();
+    let _outcomeName1 = source.readString();
+    let _outcomeName2 = source.readString();
+    let _numOutcomes = source.readBigNumber();
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+}
+
+function storeTupleMarketInitialize(source: MarketInitialize) {
+    let builder = new TupleBuilder();
+    builder.writeAddress(source.owner);
+    builder.writeString(source.eventDescription);
+    builder.writeNumber(source.endTime);
+    builder.writeString(source.outcomeName1);
+    builder.writeString(source.outcomeName2);
+    builder.writeNumber(source.numOutcomes);
+    return builder.build();
+}
+
+function dictValueParserMarketInitialize(): DictionaryValue<MarketInitialize> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeMarketInitialize(src)).endCell());
+        },
+        parse: (src) => {
+            return loadMarketInitialize(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type PlaceBet = {
     $$type: 'PlaceBet';
     outcome: bigint;
@@ -816,8 +883,8 @@ function initUserBet_init_args(src: UserBet_init_args) {
 }
 
 async function UserBet_init(owner: Address, parent: Address) {
-    const __code = Cell.fromBase64('te6ccgECGAEABFsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVE9s88uCCEAQFAgEgDg8EzO2i7fsBkjB/4HAh10nCH5UwINcLH94gghDQUyuruo85MNMfAYIQ0FMrq7ry4IHSBwExMoIAgd34QlJAxwXy9IIA0XgBwP/y9PhBbyQTXwOIEvhCAX9t2zx/4CCCEJRqmLa64wLAAAYJBwgApMj4QwHMfwHKAFUwUEMg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEss/ygfJ7VQAIAAAAABnYXMgcmV0dXJuZWQBUDDTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH8JAQqRMOMNcAoBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAL++QEggvDz4U6a5B0wncJo0VJfxEiuxkcTGSdpLXY9EzsCWkbbAbqO1zCBJt34QlJQxwXy9IIJMS0AcvgoVGNQWMhVIIIQQMZAYlAEyx8Syz8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WygfJJVUgf1UwbW3bPH/bMQwLAYTggvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqOm4FjU/hCUkDHBfL0I3CBAKJ/VSBtbW3bPH/bMeAMAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AA0AmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCEb7Rbtnm2eNiFBARAgEgFBUBwO1E0NQB+GPSAAGOSPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IHVTBsFOD4KNcLCoMJuvLgiRIABFwBAYr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB2zwTAARwfwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIFhcAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtVE1FMUprc3ZndkhUdnVRbzNLZ2J6NlNuUDM4VXJmN0tvbTJlV013Uk40bmGCA=');
-    const __system = Cell.fromBase64('te6cckECGgEABGUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRPbPPLgghEFDgTM7aLt+wGSMH/gcCHXScIflTAg1wsf3iCCENBTK6u6jzkw0x8BghDQUyuruvLggdIHATEyggCB3fhCUkDHBfL0ggDReAHA//L0+EFvJBNfA4gS+EIBf23bPH/gIIIQlGqYtrrjAsAABggHCQAgAAAAAGdhcyByZXR1cm5lZAFQMNMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8fwgBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAEKkTDjDXAKAv75ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuo7XMIEm3fhCUlDHBfL0ggkxLQBy+ChUY1BYyFUgghBAxkBiUATLHxLLPwEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbKB8klVSB/VTBtbds8f9sxDAsBhOCC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo6bgWNT+EJSQMcF8vQjcIEAon9VIG1tbds8f9sx4AwByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADQCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzACkyPhDAcx/AcoAVTBQQyDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYSyz/KB8ntVAIBIBAVAhG+0W7Z5tnjYhQRFAHA7UTQ1AH4Y9IAAY5I+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdM/0gdVMGwU4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAEcH8ABFwBAgEgFhcAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSBgZABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVRNRTFKa3N2Z3ZIVHZ1UW8zS2diejZTblAzOFVyZjdLb20yZVdNd1JONG5hggyTk3kQ==');
+    const __code = Cell.fromBase64('te6ccgECGAEABFsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVE9s88uCCEAQFAgEgDg8EzO2i7fsBkjB/4HAh10nCH5UwINcLH94gghDQUyuruo85MNMfAYIQ0FMrq7ry4IHSBwExMoIAgd34QlJAxwXy9IIA0XgBwP/y9PhBbyQTXwOIEvhCAX9t2zx/4CCCEJRqmLa64wLAAAYJBwgApMj4QwHMfwHKAFUwUEMg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEss/ygfJ7VQAIAAAAABnYXMgcmV0dXJuZWQBUDDTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH8JAQqRMOMNcAoBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAL++QEggvDz4U6a5B0wncJo0VJfxEiuxkcTGSdpLXY9EzsCWkbbAbqO1zCBJt34QlJQxwXy9IIJMS0AcvgoVGNQWMhVIIIQQMZAYlAEyx8Syz8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WygfJJVUgf1UwbW3bPH/bMQwLAYTggvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqOm4FjU/hCUkDHBfL0I3CBAKJ/VSBtbW3bPH/bMeAMAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AA0AmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCEb7Rbtnm2eNiFBARAgEgFBUBwO1E0NQB+GPSAAGOSPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IHVTBsFOD4KNcLCoMJuvLgiRIABFwBAYr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB2zwTAARwfwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIFhcAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtUWFCUUN0QW9peTN4ZVVxZDE3ZHZKV00zVVBGQlg2VjUzTW5adFVodnpzZFKCA=');
+    const __system = Cell.fromBase64('te6cckECGgEABGUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRPbPPLgghEFDgTM7aLt+wGSMH/gcCHXScIflTAg1wsf3iCCENBTK6u6jzkw0x8BghDQUyuruvLggdIHATEyggCB3fhCUkDHBfL0ggDReAHA//L0+EFvJBNfA4gS+EIBf23bPH/gIIIQlGqYtrrjAsAABggHCQAgAAAAAGdhcyByZXR1cm5lZAFQMNMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8fwgBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAEKkTDjDXAKAv75ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuo7XMIEm3fhCUlDHBfL0ggkxLQBy+ChUY1BYyFUgghBAxkBiUATLHxLLPwEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbKB8klVSB/VTBtbds8f9sxDAsBhOCC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo6bgWNT+EJSQMcF8vQjcIEAon9VIG1tbds8f9sx4AwByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADQCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzACkyPhDAcx/AcoAVTBQQyDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYSyz/KB8ntVAIBIBAVAhG+0W7Z5tnjYhQRFAHA7UTQ1AH4Y9IAAY5I+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdM/0gdVMGwU4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAEcH8ABFwBAgEgFhcAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSBgZABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVFhQlFDdEFvaXkzeGVVcWQxN2R2SldNM1VQRkJYNlY1M01uWnRVaHZ6c2RSggPACnCQ==');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -859,6 +926,7 @@ const UserBet_errors: { [key: number]: { message: string } } = {
     20846: { message: `Market already resolved` },
     22516: { message: `Outcome does not match the bet outcome` },
     24032: { message: `Betting has ended` },
+    24122: { message: `Only parent contract can init the market` },
     24933: { message: `Only owner can resolve market` },
     25427: { message: `Only the market can call this function` },
     33245: { message: `Only the market can place a bet` },
@@ -880,6 +948,7 @@ const UserBet_types: ABIType[] = [
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"CreateMarketResponse","header":4036598661,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"CreateMarket","header":336041117,"fields":[{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
+    {"name":"MarketInitialize","header":2376986870,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
     {"name":"PlaceBet","header":3093552415,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ResolveMarket","header":1189540808,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ClaimWinningsInfo","header":1086734434,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"userBet","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},

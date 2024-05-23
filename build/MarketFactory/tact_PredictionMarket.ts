@@ -519,6 +519,73 @@ function dictValueParserCreateMarket(): DictionaryValue<CreateMarket> {
     }
 }
 
+export type MarketInitialize = {
+    $$type: 'MarketInitialize';
+    owner: Address;
+    eventDescription: string;
+    endTime: bigint;
+    outcomeName1: string;
+    outcomeName2: string;
+    numOutcomes: bigint;
+}
+
+export function storeMarketInitialize(src: MarketInitialize) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(2376986870, 32);
+        b_0.storeAddress(src.owner);
+        b_0.storeStringRefTail(src.eventDescription);
+        b_0.storeUint(src.endTime, 64);
+        b_0.storeStringRefTail(src.outcomeName1);
+        b_0.storeStringRefTail(src.outcomeName2);
+        b_0.storeUint(src.numOutcomes, 8);
+    };
+}
+
+export function loadMarketInitialize(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 2376986870) { throw Error('Invalid prefix'); }
+    let _owner = sc_0.loadAddress();
+    let _eventDescription = sc_0.loadStringRefTail();
+    let _endTime = sc_0.loadUintBig(64);
+    let _outcomeName1 = sc_0.loadStringRefTail();
+    let _outcomeName2 = sc_0.loadStringRefTail();
+    let _numOutcomes = sc_0.loadUintBig(8);
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+}
+
+function loadTupleMarketInitialize(source: TupleReader) {
+    let _owner = source.readAddress();
+    let _eventDescription = source.readString();
+    let _endTime = source.readBigNumber();
+    let _outcomeName1 = source.readString();
+    let _outcomeName2 = source.readString();
+    let _numOutcomes = source.readBigNumber();
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+}
+
+function storeTupleMarketInitialize(source: MarketInitialize) {
+    let builder = new TupleBuilder();
+    builder.writeAddress(source.owner);
+    builder.writeString(source.eventDescription);
+    builder.writeNumber(source.endTime);
+    builder.writeString(source.outcomeName1);
+    builder.writeString(source.outcomeName2);
+    builder.writeNumber(source.numOutcomes);
+    return builder.build();
+}
+
+function dictValueParserMarketInitialize(): DictionaryValue<MarketInitialize> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeMarketInitialize(src)).endCell());
+        },
+        parse: (src) => {
+            return loadMarketInitialize(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type PlaceBet = {
     $$type: 'PlaceBet';
     outcome: bigint;
@@ -803,37 +870,25 @@ function dictValueParserClaimWinningsInternal(): DictionaryValue<ClaimWinningsIn
 
  type PredictionMarket_init_args = {
     $$type: 'PredictionMarket_init_args';
-    owner: Address;
     parent: Address;
-    eventDescription: string;
-    endTime: bigint;
-    outcomeName1: string;
-    outcomeName2: string;
-    numOutcomes: bigint;
+    seqno: bigint;
 }
 
 function initPredictionMarket_init_args(src: PredictionMarket_init_args) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeAddress(src.owner);
         b_0.storeAddress(src.parent);
-        b_0.storeStringRefTail(src.eventDescription);
-        b_0.storeInt(src.endTime, 257);
-        b_0.storeStringRefTail(src.outcomeName1);
-        let b_1 = new Builder();
-        b_1.storeStringRefTail(src.outcomeName2);
-        b_1.storeInt(src.numOutcomes, 257);
-        b_0.storeRef(b_1.endCell());
+        b_0.storeInt(src.seqno, 257);
     };
 }
 
-async function PredictionMarket_init(owner: Address, parent: Address, eventDescription: string, endTime: bigint, outcomeName1: string, outcomeName2: string, numOutcomes: bigint) {
-    const __code = Cell.fromBase64('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');
-    const __system = Cell.fromBase64('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');
+async function PredictionMarket_init(parent: Address, seqno: bigint) {
+    const __code = Cell.fromBase64('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');
+    const __system = Cell.fromBase64('te6cckECPQEAChoAAQHAAQIBSAIWAQW7TbgDART/APSkE/S88sgLBAIBYgUMA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVE9s88uCCDgYLBMztou37AZIwf+BwIddJwh+VMCDXCx/eIIIQ0FMrq7qPOTDTHwGCENBTK6u68uCB0gcBMTKCAIHd+EJSQMcF8vSCANF4AcD/8vT4QW8kE18DiBL4QgF/bds8f+AgghCUapi2uuMCwAAgJAcIAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/JAEKkTDjDXAJAv75ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuo7XMIEm3fhCUlDHBfL0ggkxLQBy+ChUY1BYyFUgghBAxkBiUATLHxLLPwEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbKB8klVSB/VTBtbds8f9sxJQoBhOCC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo6bgWNT+EJSQMcF8vQjcIEAon9VIG1tbds8f9sx4CUApMj4QwHMfwHKAFUwUEMg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEss/ygfJ7VQCASANEgIRvtFu2ebZ42IUDhEBwO1E0NQB+GPSAAGOSPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IHVTBsFOD4KNcLCoMJuvLgiQ8BivpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBIC0QHbPBAABHB/AARcAQIBIDATAgFIFBUAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtUWFCUUN0QW9peTN4ZVVxZDE3ZHZKV00zVVBGQlg2VjUzTW5adFVodnpzZFKCABBboJWBcBFP8A9KQT9LzyyAsYAgFiGSkDftAB0NMDAXGwowH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIVFBTA28E+GEC+GLbPFUb2zzy4ILbPDkaJwSoAZaAINchMH/gcCHXScIflTAg1wsf3iCCEI2t8Pa6jpcw2zxsFjg4ODo6PIFeOvhCUsDHBfL0f+AgghC4Y90fuuMCIIIQRubzyLrjAiCCEEDGQGK6GxwfIQB+0x8BghCNrfD2uvLggfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdM/1AHQAdQB0AHTB1VQAfYw0x8BghC4Y90fuvLggdIHATGBXeD4Iyq58vSCAJWLIcL/k1MUuZFw4vL0IngigEBBM/QOb6GUAdcBMJJbbeIgbvLQgPhBbyQTXwOCCTEtAKF4USGgRVBSMIBAIW6VW1n0WzCYyAHPAUEz9EPiUSOg+EL4KBBFVRLbPH8dAtIx+ENa2zxccFnIcAHLAXMBywFwAcsAEszMyfkAyHIBywFwAcsAEsoHy//J0CDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IiCCTEtAHIFyAGCENBTK6tYyx/KB8lFQEEwfwYFBEEz2zweJQDWAtD0BDBtAYE02wGAEPQPb6Hy4IcBgTTbIgKAEPQXyAHI9ADJAcxwAcoAQANZINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFskCljDTHwGCEEbm88i68uCB0gcBMTaBYWX4QlLQxwXy9IIAleD4Iym+8vSBUW4Hsxfy9IIAlYslwv+TU1K5kXDi8vR/iBf4QgF/bds8fyAkACAAAAAAZ2FzIHJldHVybmVkA/CPajDTHwGCEEDGQGK68uCB0z/6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdIHVSBsEzKCAJnp+EJSIMcF8vSBKNYp8vSBV/RTgrry9FNxumwSjw6CCTEtAHKIf1UwbW3bPJEw4n/gghCUapi2uuMCMHAiJSMAMgAAAABjbGFpbVdpbm5pbmdzSW50ZXJuYWwBTtMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8fyQBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8JQHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAmAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAfTI+EMBzH8BygBVsFDLINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAkg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYXyz/IUAbPFslQBcwTyz/KAMoHyFjPFskBzMjIUAPPFslYzBLLBxP0AMs/yQHMySgABO1UAgEgKi8CASArLQIRu1Fds82zxswYOSwAAiYCFbhd7bPFUL2zxswYOS4AUoIAlYshwv+TUxS5kXDi8vR4IwKAQEEz9A5voZQB1wEwkltt4iBu8tCAAgEgMDEAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSDI2AgFIMzQAEKq+7UTQ0gABAhCrDds82zxswTk1AAIlAgFqNzgAc6d3Ghq0uDM5nReXqLaopjgaKignNyo0qTS7KCoiMTGpKqE4m7g6GKGjqjsyuLCaqJk5KaUstzmimkECD6Xztnm2eNmDOTwChO1E0NQB+GPSAAHjAvgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAGBAQHXAFkC0QHbPDo7AOD6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/UAdAB0z/SANIH1AHQAdQB0NQB0AHTB/QE0z8wEEwQSxBKEEkQSBBHEEYQRWwcAJJtcCDIcgHLAXABywASygfL/8nQINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiIsIcIsIiwgicH8iEIsQihCJEHgQZ0ZQFEMwAAIgfIOJtg==');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
-    initPredictionMarket_init_args({ $$type: 'PredictionMarket_init_args', owner, parent, eventDescription, endTime, outcomeName1, outcomeName2, numOutcomes })(builder);
+    initPredictionMarket_init_args({ $$type: 'PredictionMarket_init_args', parent, seqno })(builder);
     const __data = builder.endCell();
     return { code: __code, data: __data };
 }
@@ -871,6 +926,7 @@ const PredictionMarket_errors: { [key: number]: { message: string } } = {
     20846: { message: `Market already resolved` },
     22516: { message: `Outcome does not match the bet outcome` },
     24032: { message: `Betting has ended` },
+    24122: { message: `Only parent contract can init the market` },
     24933: { message: `Only owner can resolve market` },
     25427: { message: `Only the market can call this function` },
     33245: { message: `Only the market can place a bet` },
@@ -892,6 +948,7 @@ const PredictionMarket_types: ABIType[] = [
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"CreateMarketResponse","header":4036598661,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"CreateMarket","header":336041117,"fields":[{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
+    {"name":"MarketInitialize","header":2376986870,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
     {"name":"PlaceBet","header":3093552415,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ResolveMarket","header":1189540808,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ClaimWinningsInfo","header":1086734434,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"userBet","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
@@ -908,6 +965,7 @@ const PredictionMarket_getters: ABIGetter[] = [
 ]
 
 const PredictionMarket_receivers: ABIReceiver[] = [
+    {"receiver":"internal","message":{"kind":"typed","type":"MarketInitialize"}},
     {"receiver":"internal","message":{"kind":"typed","type":"PlaceBet"}},
     {"receiver":"internal","message":{"kind":"typed","type":"ResolveMarket"}},
     {"receiver":"internal","message":{"kind":"typed","type":"ClaimWinningsInfo"}},
@@ -916,12 +974,12 @@ const PredictionMarket_receivers: ABIReceiver[] = [
 
 export class PredictionMarket implements Contract {
     
-    static async init(owner: Address, parent: Address, eventDescription: string, endTime: bigint, outcomeName1: string, outcomeName2: string, numOutcomes: bigint) {
-        return await PredictionMarket_init(owner, parent, eventDescription, endTime, outcomeName1, outcomeName2, numOutcomes);
+    static async init(parent: Address, seqno: bigint) {
+        return await PredictionMarket_init(parent, seqno);
     }
     
-    static async fromInit(owner: Address, parent: Address, eventDescription: string, endTime: bigint, outcomeName1: string, outcomeName2: string, numOutcomes: bigint) {
-        const init = await PredictionMarket_init(owner, parent, eventDescription, endTime, outcomeName1, outcomeName2, numOutcomes);
+    static async fromInit(parent: Address, seqno: bigint) {
+        const init = await PredictionMarket_init(parent, seqno);
         const address = contractAddress(0, init);
         return new PredictionMarket(address, init);
     }
@@ -944,9 +1002,12 @@ export class PredictionMarket implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: PlaceBet | ResolveMarket | ClaimWinningsInfo | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: MarketInitialize | PlaceBet | ResolveMarket | ClaimWinningsInfo | Deploy) {
         
         let body: Cell | null = null;
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'MarketInitialize') {
+            body = beginCell().store(storeMarketInitialize(message)).endCell();
+        }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'PlaceBet') {
             body = beginCell().store(storePlaceBet(message)).endCell();
         }

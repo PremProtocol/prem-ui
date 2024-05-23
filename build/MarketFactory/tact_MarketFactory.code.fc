@@ -11,68 +11,77 @@
 ;; Contract MarketFactory functions
 ;;
 
-(slice) $MarketFactory$_contract_init() impure inline_ref {
-    var (($self'owner)) = (null());
+(slice, int) $MarketFactory$_contract_init() impure inline_ref {
+    var (($self'owner, $self'predictionMarketCount)) = (null(), null());
     $self'owner = __tact_context_get_sender();
-    return ($self'owner);
+    $self'predictionMarketCount = 0;
+    return ($self'owner, $self'predictionMarketCount);
 }
 
-((slice), slice) $MarketFactory$_fun_deployPredictionMarket((slice) $self, slice $eventDescription, int $endTime, slice $outcomeName1, slice $outcomeName2, int $numOutcomes) impure inline_ref {
-    var (($self'owner)) = $self;
-    var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, __tact_context_get_sender(), my_address(), $eventDescription, $endTime, $outcomeName1, $outcomeName2, $numOutcomes);
+((slice, int), slice) $MarketFactory$_fun_childAddress((slice, int) $self, int $seqno) impure inline_ref {
+    var (($self'owner, $self'predictionMarketCount)) = $self;
+    var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, my_address(), $seqno);
     slice $preMarketContractAddress = $global_contractAddress(($initState'code, $initState'data));
-    $global_send($SendParameters$_constructor_to_value_mode_code_data($preMarketContractAddress, 300000000, 2, $initState'code, $initState'data));
-    return (($self'owner), $preMarketContractAddress);
+    return (($self'owner, $self'predictionMarketCount), $preMarketContractAddress);
 }
 
-((slice), ()) $MarketFactory$_fun_requireOwner((slice) $self) impure inline_ref {
-    var (($self'owner)) = $self;
+((slice, int), ()) $MarketFactory$_fun_requireOwner((slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'predictionMarketCount)) = $self;
     throw_unless(132, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
-    return (($self'owner), ());
+    return (($self'owner, $self'predictionMarketCount), ());
 }
 
-((slice), slice) $MarketFactory$_fun_owner((slice) $self) impure inline_ref {
-    var (($self'owner)) = $self;
-    return (($self'owner), $self'owner);
+((slice, int), slice) $MarketFactory$_fun_owner((slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'predictionMarketCount)) = $self;
+    return (($self'owner, $self'predictionMarketCount), $self'owner);
 }
 
 ;;
 ;; Receivers of a Contract MarketFactory
 ;;
 
-(((slice)), ()) $MarketFactory$_internal_binary_CreateMarket((slice) $self, (slice, int, slice, slice, int) $msg) impure inline {
-    var ($self'owner) = $self;
+(((slice, int)), ()) $MarketFactory$_internal_binary_CreateMarket((slice, int) $self, (slice, int, slice, slice, int) $msg) impure inline {
+    var ($self'owner, $self'predictionMarketCount) = $self;
     var ($msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
     throw_unless(55984, ($msg'endTime > now()));
     throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName1));
     throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName2));
     throw_unless(16210, ($msg'numOutcomes == 2));
     throw_unless(17847, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventDescription));
-    ($self'owner)~$MarketFactory$_fun_requireOwner();
-    slice $preMarketContractAddress = ($self'owner)~$MarketFactory$_fun_deployPredictionMarket($msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes);
-    ($self'owner)~$MarketFactory$_fun_reply($CreateMarketResponse$_store_cell($CreateMarketResponse$_constructor_address($preMarketContractAddress)));
-    return (($self'owner), ());
+    ($self'owner, $self'predictionMarketCount)~$MarketFactory$_fun_requireOwner();
+    var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, my_address(), $self'predictionMarketCount);
+    slice $preMarketContractAddress = $global_contractAddress(($initState'code, $initState'data));
+    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($preMarketContractAddress, 30000000, 2, $initState'code, $initState'data, $MarketInitialize$_store_cell($MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(__tact_context_get_sender(), $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes))));
+    $self'predictionMarketCount = $self'predictionMarketCount + 1;
+    return (($self'owner, $self'predictionMarketCount), ());
 }
 
-(((slice)), ()) $MarketFactory$_internal_binary_Deploy((slice) $self, (int) $deploy) impure inline {
-    var ($self'owner) = $self;
+(((slice, int)), ()) $MarketFactory$_internal_binary_Deploy((slice, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'predictionMarketCount) = $self;
     var ($deploy'queryId) = $deploy;
-    ($self'owner)~$MarketFactory$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
-    return (($self'owner), ());
+    ($self'owner, $self'predictionMarketCount)~$MarketFactory$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'predictionMarketCount), ());
 }
 
-(((slice)), ()) $MarketFactory$_internal_binary_ChangeOwner((slice) $self, (int, slice) $msg) impure inline {
-    var ($self'owner) = $self;
+(((slice, int)), ()) $MarketFactory$_internal_binary_ChangeOwner((slice, int) $self, (int, slice) $msg) impure inline {
+    var ($self'owner, $self'predictionMarketCount) = $self;
     var ($msg'queryId, $msg'newOwner) = $msg;
-    ($self'owner)~$MarketFactory$_fun_requireOwner();
+    ($self'owner, $self'predictionMarketCount)~$MarketFactory$_fun_requireOwner();
     $self'owner = $msg'newOwner;
-    ($self'owner)~$MarketFactory$_fun_reply($ChangeOwnerOk$_store_cell($ChangeOwnerOk$_constructor_queryId_newOwner($msg'queryId, $msg'newOwner)));
-    return (($self'owner), ());
+    ($self'owner, $self'predictionMarketCount)~$MarketFactory$_fun_reply($ChangeOwnerOk$_store_cell($ChangeOwnerOk$_constructor_queryId_newOwner($msg'queryId, $msg'newOwner)));
+    return (($self'owner, $self'predictionMarketCount), ());
 }
 
 ;;
 ;; Get methods of a Contract MarketFactory
 ;;
+
+_ %childAddress(int $$seqno) method_id(80689) {
+    int $seqno = $$seqno;
+    var self = $MarketFactory$_contract_load();
+    var res = self~$MarketFactory$_fun_childAddress($seqno);
+    return res;
+}
 
 _ %owner() method_id(83229) {
     var self = $MarketFactory$_contract_load();
@@ -92,7 +101,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmeMj72hffU1iyCRrCR41Ap3CsY3tFc2MLo6Zoj1J73nfJ";
+    return "ipfs://QmQgyQcXTfsvMSntFVqfmnRwqYVipJJLxPrT39ga683Cez";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -103,7 +112,7 @@ _ lazy_deployment_completed() method_id {
 ;; Routing of a Contract MarketFactory
 ;;
 
-((slice), int) $MarketFactory$_contract_router_internal((slice) self, int msg_bounced, slice in_msg) impure inline_ref {
+((slice, int), int) $MarketFactory$_contract_router_internal((slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
         return (self, true);
