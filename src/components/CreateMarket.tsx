@@ -8,40 +8,48 @@ const CreateMarket: React.FC = () => {
   const [outcomes, setOutcomes] = useState('');
   const [numOutcomes, setNumOutcomes] = useState(2);
 
-  const handleCreateMarket = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Market created:', { eventDescription, endTime, outcomes, numOutcomes });
+    // Handle create market logic here
+    console.log({ eventDescription, endTime, outcomes, numOutcomes });
   };
 
   return (
-    <div>
-      <h2>Create Market</h2>
-      <form className="form" onSubmit={handleCreateMarket}>
-        <label>Event Description</label>
-        <input
-          type="text"
-          value={eventDescription}
-          onChange={(e) => setEventDescription(e.target.value)}
-        />
-        <label>End Time</label>
-        <input
-          type="datetime-local"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-        />
-        <label>Outcomes (comma separated)</label>
-        <input
-          type="text"
-          value={outcomes}
-          onChange={(e) => setOutcomes(e.target.value)}
-        />
-        <label>Number of Outcomes</label>
-        <input
-          type="number"
-          value={numOutcomes}
-          onChange={(e) => setNumOutcomes(parseInt(e.target.value))}
-          min="2"
-        />
+    <div className="form-container">
+      <form className="form" onSubmit={handleSubmit}>
+        <label>
+          Event Description:
+          <input
+            type="text"
+            value={eventDescription}
+            onChange={(e) => setEventDescription(e.target.value)}
+          />
+        </label>
+        <label>
+          End Time:
+          <input
+            type="datetime-local"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </label>
+        <label>
+          Outcomes (comma separated):
+          <input
+            type="text"
+            value={outcomes}
+            onChange={(e) => setOutcomes(e.target.value)}
+          />
+        </label>
+        <label>
+          Number of Outcomes:
+          <input
+            type="number"
+            value={numOutcomes}
+            onChange={(e) => setNumOutcomes(Number(e.target.value))}
+            min="2"
+          />
+        </label>
         <button type="submit">Create Market</button>
       </form>
     </div>

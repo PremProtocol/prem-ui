@@ -4,29 +4,33 @@ import './PlaceBet.css';
 
 const PlaceBet: React.FC = () => {
   const [betAmount, setBetAmount] = useState('');
-  const [outcome, setOutcome] = useState('');
+  const [selectedOutcome, setSelectedOutcome] = useState('');
 
-  const handlePlaceBet = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Bet placed:', { betAmount, outcome });
+    // Handle place bet logic here
+    console.log({ betAmount, selectedOutcome });
   };
 
   return (
-    <div>
-      <h2>Place Bet</h2>
-      <form className="form" onSubmit={handlePlaceBet}>
-        <label>Bet Amount</label>
-        <input
-          type="number"
-          value={betAmount}
-          onChange={(e) => setBetAmount(e.target.value)}
-        />
-        <label>Outcome</label>
-        <input
-          type="text"
-          value={outcome}
-          onChange={(e) => setOutcome(e.target.value)}
-        />
+    <div className="form-container">
+      <form className="form" onSubmit={handleSubmit}>
+        <label>
+          Bet Amount:
+          <input
+            type="number"
+            value={betAmount}
+            onChange={(e) => setBetAmount(e.target.value)}
+          />
+        </label>
+        <label>
+          Select Outcome:
+          <input
+            type="text"
+            value={selectedOutcome}
+            onChange={(e) => setSelectedOutcome(e.target.value)}
+          />
+        </label>
         <button type="submit">Place Bet</button>
       </form>
     </div>

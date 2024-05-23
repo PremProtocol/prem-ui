@@ -3,14 +3,16 @@ import React from 'react';
 import './ClaimWinnings.css';
 
 const ClaimWinnings: React.FC = () => {
-  const handleClaimWinnings = () => {
-    console.log('Winnings claimed');
+  const handleClaim = () => {
+    // Handle claim winnings logic here
+    console.log('Claim winnings');
   };
 
   return (
-    <div>
-      <h2>Claim Winnings</h2>
-      <button className="button" onClick={handleClaimWinnings}>Claim Winnings</button>
+    <div className="form-container">
+      <button className="button" onClick={handleClaim}>
+        Claim Winnings
+      </button>
     </div>
   );
 };
