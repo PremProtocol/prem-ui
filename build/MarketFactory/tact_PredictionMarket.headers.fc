@@ -87,6 +87,9 @@ builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int
 ;; $Context$_get_value
 _ $Context$_get_value((int, slice, int, slice) v) inline;
 
+;; $PredictionMarketDetails$_to_external
+(slice, slice, int, slice, slice, int, cell, int, int, int) $PredictionMarketDetails$_to_external(((slice, slice, int, slice, slice, int, cell, int, int, int)) v) inline;
+
 ;; $PredictionMarket$init$_load
 (slice, ((slice, int))) $PredictionMarket$init$_load(slice sc_0) inline;
 
@@ -119,6 +122,12 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 
 ;; $PredictionMarket$_fun_placeUserBet
 ((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_placeUserBet((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, slice $owner, slice $parent, int $betAmount, int $outcome) impure inline_ref;
+
+;; $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome
+((slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome(slice owner, slice eventDescription, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes, cell totalOutcomeBets, int totalPool, int resolved, int outcome) inline;
+
+;; $PredictionMarket$_fun_predictionMarketDetails
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), (slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarket$_fun_predictionMarketDetails((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;
 
 ;; $PredictionMarket$_fun_totalPool
 ((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalPool((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref;

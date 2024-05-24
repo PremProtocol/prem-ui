@@ -111,6 +111,9 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $MarketFactory$_fun_childAddress
 ((slice, int), slice) $MarketFactory$_fun_childAddress((slice, int) $self, int $seqno) impure inline_ref;
 
+;; $MarketFactory$_fun_predictionMarketCount
+((slice, int), int) $MarketFactory$_fun_predictionMarketCount((slice, int) $self) impure inline_ref;
+
 ;; $MarketFactory$_fun_forward
 ((slice, int), ()) $MarketFactory$_fun_forward((slice, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 

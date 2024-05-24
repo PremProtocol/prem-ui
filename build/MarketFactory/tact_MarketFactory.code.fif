@@ -35,6 +35,7 @@ PROGRAM{
   DECLPROC $SendParameters$_constructor_to_value_mode_code_data_body
   DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
   DECLPROC $MarketFactory$_fun_childAddress
+  DECLPROC $MarketFactory$_fun_predictionMarketCount
   DECLPROC $MarketFactory$_fun_forward
   DECLPROC $MarketFactory$_fun_reply
   DECLPROC $MarketFactory$_fun_notify
@@ -47,6 +48,7 @@ PROGRAM{
   DECLPROC $MarketFactory$_internal_binary_Deploy
   DECLPROC $MarketFactory$_internal_binary_ChangeOwner
   80689 DECLMETHOD %childAddress
+  80373 DECLMETHOD %predictionMarketCount
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
   121275 DECLMETHOD get_abi_ipfs
@@ -474,6 +476,9 @@ PROGRAM{
     $PredictionMarket$_init_child INLINECALLDICT
     $global_contractAddress INLINECALLDICT
   }>
+  $MarketFactory$_fun_predictionMarketCount PROCREF:<{
+    DUP
+  }>
   $MarketFactory$_fun_forward PROCREF:<{
     PUSHNULL
     PUSHNULL
@@ -597,6 +602,11 @@ PROGRAM{
     $MarketFactory$_fun_childAddress INLINECALLDICT
     2 1 BLKDROP2
   }>
+  %predictionMarketCount PROC:<{
+    $MarketFactory$_contract_load INLINECALLDICT
+    $MarketFactory$_fun_predictionMarketCount INLINECALLDICT
+    2 1 BLKDROP2
+  }>
   %owner PROC:<{
     $MarketFactory$_contract_load INLINECALLDICT
     $MarketFactory$_fun_owner INLINECALLDICT
@@ -611,7 +621,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d516779516358546673764d536e74465671666d6e527771595669704a4a4c785072543339676136383343657a} PUSHSLICE
+    x{697066733a2f2f516d576e56616b6843566832365a68567a4e62553872666b6f4e455369754a6f54525a50426a5467565772726944} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

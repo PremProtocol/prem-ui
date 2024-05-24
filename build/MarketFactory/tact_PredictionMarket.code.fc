@@ -35,6 +35,11 @@
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
+((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), (slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarket$_fun_predictionMarketDetails((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome($self'owner, $self'eventDescription, $self'endTime, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool, $self'resolved, $self'outcome));
+}
+
 ((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalPool((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
     var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'totalPool);
@@ -131,6 +136,12 @@
 ;; Get methods of a Contract PredictionMarket
 ;;
 
+_ %predictionMarketDetails() method_id(123087) {
+    var self = $PredictionMarket$_contract_load();
+    var res = self~$PredictionMarket$_fun_predictionMarketDetails();
+    return $PredictionMarketDetails$_to_external(res);
+}
+
 _ %totalPool() method_id(121593) {
     var self = $PredictionMarket$_contract_load();
     var res = self~$PredictionMarket$_fun_totalPool();
@@ -166,7 +177,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmQLp4TPNnTiRivPTDbcRUBq7pt1CGTveqa5Q2rSJYnsE4";
+    return "ipfs://QmU4ZcE9Az94KBr8h9UY2SgRngfh3fa81PrmLz3x8bWZTM";
 }
 
 _ lazy_deployment_completed() method_id {

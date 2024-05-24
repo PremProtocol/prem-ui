@@ -5,38 +5,35 @@ import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
 
-const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
+//const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
 
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
-  const [childAddress, setChildAddress] = useState<string | null>()
+  const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
 
   const marketFactoryContract = useAsyncInitialize(async () => {
     if(!client || !wallet) return;
 
     //TODO: remove hardcoded address
-    const contract = MarketFactory.fromAddress(Address.parse("EQCCb3QHBUZeysbKE0kncv_OA1UeDCjWTOzUW4omdjGApK6R"))
+    const contract = MarketFactory.fromAddress(Address.parse("EQCkO6wRpB5o7MgLFRmSkzhlHk8DukjCXzDf48kj7lWCt8KB"))
 
     return client.open(contract) as OpenedContract<MarketFactory>
   }, [client, wallet])
 
   useEffect(()=>{
-    async function getChildAddress() {
+    async function getAllPredictionMarkets() {
         if(!marketFactoryContract) return 
-        setChildAddress(null)
-        const childAddress = (await marketFactoryContract.getChildAddress(0n));
-        setChildAddress(childAddress.toString());
-        await sleep(5000)
-        getChildAddress()
+        setPredictionMarketCount(0)
+        const predictionMarketCount = await marketFactoryContract.getPredictionMarketCount();
+        setPredictionMarketCount(Number(predictionMarketCount));
     }
-    getChildAddress()
-
+    getAllPredictionMarkets()
   }, [marketFactoryContract, wallet])
 
   return {
     address: marketFactoryContract?.address.toString(),
-    childAddress: childAddress,
+    predictionMarketCount: predictionMarketCount,
     createMarket: (eventDescription: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
       const message: CreateMarket = {
           $$type: "CreateMarket",
@@ -50,6 +47,10 @@ export function useMarketFactoryContract() {
       marketFactoryContract?.send(sender, {
           value: toNano("0.05")
       }, message)
+    },
+    getChildAddress: async (childSeqno: string) => {
+      const childAddress = await marketFactoryContract?.getChildAddress(BigInt(childSeqno));
+      return childAddress?.toString();
     }
   };
 }

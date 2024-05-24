@@ -27,6 +27,7 @@ PROGRAM{
   DECLPROC $PredictionMarket$_load
   DECLPROC $StateInit$_not_null
   DECLPROC $Context$_get_value
+  DECLPROC $PredictionMarketDetails$_to_external
   DECLPROC $PredictionMarket$init$_load
   DECLPROC $UserBet$init$_store
   DECLPROC $PredictionMarket$_contract_init
@@ -38,6 +39,8 @@ PROGRAM{
   DECLPROC $PlaceBetInternal$_constructor_outcome
   DECLPROC $UserBet$_init_child
   DECLPROC $PredictionMarket$_fun_placeUserBet
+  DECLPROC $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome
+  DECLPROC $PredictionMarket$_fun_predictionMarketDetails
   DECLPROC $PredictionMarket$_fun_totalPool
   DECLPROC $PredictionMarket$_fun_totalBetForOutcome
   DECLPROC $PredictionMarket$_fun_resolvedOutcome
@@ -54,6 +57,7 @@ PROGRAM{
   DECLPROC $PredictionMarket$_internal_binary_ClaimWinningsInfo
   DECLPROC $PredictionMarket$_receive_bounce
   DECLPROC $PredictionMarket$_internal_binary_Deploy
+  123087 DECLMETHOD %predictionMarketDetails
   121593 DECLMETHOD %totalPool
   83422 DECLMETHOD %totalBetForOutcome
   116493 DECLMETHOD %resolvedOutcome
@@ -362,6 +366,8 @@ PROGRAM{
     s1 s3 XCHG
     3 BLKDROP
   }>
+  $PredictionMarketDetails$_to_external PROCINLINE:<{
+  }>
   $PredictionMarket$init$_load PROCINLINE:<{
     __tact_load_address INLINECALLDICT
     SWAP
@@ -593,6 +599,16 @@ PROGRAM{
     $SendParameters$_constructor_to_value_mode_code_data_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
+  $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome PROCINLINE:<{
+    SWAP
+  }>
+  $PredictionMarket$_fun_predictionMarketDetails PROCREF:<{
+    s11 s8 s7 PUSH3
+    s7 s6 s5 PUSH3
+    s7 s6 s12 PUSH3
+    s14 PUSH
+    $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome INLINECALLDICT
+  }>
   $PredictionMarket$_fun_totalPool PROCREF:<{
     DUP
   }>
@@ -787,6 +803,12 @@ PROGRAM{
     $DeployOk$_store_cell INLINECALLDICT
     $PredictionMarket$_fun_notify INLINECALLDICT
   }>
+  %predictionMarketDetails PROC:<{
+    $PredictionMarket$_contract_load INLINECALLDICT
+    $PredictionMarket$_fun_predictionMarketDetails INLINECALLDICT
+    12 10 BLKDROP2
+    $PredictionMarketDetails$_to_external INLINECALLDICT
+  }>
   %totalPool PROC:<{
     $PredictionMarket$_contract_load INLINECALLDICT
     $PredictionMarket$_fun_totalPool INLINECALLDICT
@@ -815,7 +837,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d514c703454504e6e5469526976505444626352554271377074314347547665716135513272534a596e734534} PUSHSLICE
+    x{697066733a2f2f516d55345a634539417a39344b42723868395559325367526e676668336661383150726d4c7a33783862575a544d} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

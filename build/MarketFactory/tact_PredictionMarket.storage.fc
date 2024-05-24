@@ -125,6 +125,21 @@ cell $DeployOk$_store_cell((int) v) inline {
 }
 
 ;;
+;; Type: PredictionMarketDetails
+;; Header: 0x820ef6a8
+;; TLB: prediction_market_details#820ef6a8 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails
+;;
+
+(slice, slice, int, slice, slice, int, cell, int, int, int) $PredictionMarketDetails$_to_external(((slice, slice, int, slice, slice, int, cell, int, int, int)) v) inline {
+    var (v'owner, v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool, v'outcome, v'resolved) = v; 
+    return (v'owner, v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool, v'outcome, v'resolved);
+}
+
+((slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome(slice owner, slice eventDescription, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes, cell totalOutcomeBets, int totalPool, int resolved, int outcome) inline {
+    return (owner, eventDescription, endTime, outcomeName1, outcomeName2, numOutcomes, totalOutcomeBets, totalPool, outcome, resolved);
+}
+
+;;
 ;; Type: PlaceBetInternal
 ;; Header: 0xd0532bab
 ;; TLB: place_bet_internal#d0532bab outcome:int8 = PlaceBetInternal

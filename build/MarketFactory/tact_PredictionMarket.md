@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: PredictionMarket
-BOC Size: 1771 bytes
+BOC Size: 1802 bytes
 
 # Types
-Total Types: 17
+Total Types: 18
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -61,6 +61,10 @@ Signature: `ResolveMarket{outcome:int8}`
 TLB: `claim_winnings_info#40c64062 betAmount:uint64 userBet:address outcome:int8 = ClaimWinningsInfo`
 Signature: `ClaimWinningsInfo{betAmount:uint64,userBet:address,outcome:int8}`
 
+## PredictionMarketDetails
+TLB: `prediction_market_details#820ef6a8 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails`
+Signature: `PredictionMarketDetails{owner:address,eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8,totalOutcomeBets:dict<uint8, uint64>,totalPool:uint64,outcome:int8,resolved:bool}`
+
 ## PlaceBetInternal
 TLB: `place_bet_internal#d0532bab outcome:int8 = PlaceBetInternal`
 Signature: `PlaceBetInternal{outcome:int8}`
@@ -74,7 +78,9 @@ TLB: `claim_winnings_internal#dc560808 resolved:bool winningOutcome:uint8 totalP
 Signature: `ClaimWinningsInternal{resolved:bool,winningOutcome:uint8,totalPool:uint64,totalOutcomeBets:uint64}`
 
 # Get Methods
-Total Get Methods: 4
+Total Get Methods: 5
+
+## predictionMarketDetails
 
 ## totalPool
 

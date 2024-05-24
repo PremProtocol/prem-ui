@@ -25,6 +25,11 @@
     return (($self'owner, $self'predictionMarketCount), $preMarketContractAddress);
 }
 
+((slice, int), int) $MarketFactory$_fun_predictionMarketCount((slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'predictionMarketCount)) = $self;
+    return (($self'owner, $self'predictionMarketCount), $self'predictionMarketCount);
+}
+
 ((slice, int), ()) $MarketFactory$_fun_requireOwner((slice, int) $self) impure inline_ref {
     var (($self'owner, $self'predictionMarketCount)) = $self;
     throw_unless(132, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
@@ -83,6 +88,12 @@ _ %childAddress(int $$seqno) method_id(80689) {
     return res;
 }
 
+_ %predictionMarketCount() method_id(80373) {
+    var self = $MarketFactory$_contract_load();
+    var res = self~$MarketFactory$_fun_predictionMarketCount();
+    return res;
+}
+
 _ %owner() method_id(83229) {
     var self = $MarketFactory$_contract_load();
     var res = self~$MarketFactory$_fun_owner();
@@ -101,7 +112,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmQgyQcXTfsvMSntFVqfmnRwqYVipJJLxPrT39ga683Cez";
+    return "ipfs://QmWnVakhCVh26ZhVzNbU8rfkoNESiuJoTRZPBjTgVWrriD";
 }
 
 _ lazy_deployment_completed() method_id {
