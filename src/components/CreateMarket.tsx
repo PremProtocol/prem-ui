@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
-import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import PredictionMarket from './PredictionMarket';
 
 type Market = {
@@ -13,14 +12,11 @@ type Market = {
 };
 
 const CreateMarket: React.FC = () => {
-  const {predictionMarketDetailsArray, addNewPredictionMarket, createMarket, getChildAddress} = useMarketFactoryContract();
+  const {predictionMarketDetailsArray, addNewPredictionMarket, createMarket} = useMarketFactoryContract();
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
-  const [childSeqno] = useState('');
-  const [childAddress, setChildAddress] = useState('');
-  const {placeUserBet, getPredictionMarket} = usePredictionMarketContract(childAddress);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,15 +24,6 @@ const CreateMarket: React.FC = () => {
     createMarket(eventDescription, endTimeNumber, outcomeName1, outcomeName2);
     addNewPredictionMarket();
   };
-
-  const getPredictionMarketDetails = async () => {
-    const childAddress = await getChildAddress(childSeqno);
-    setChildAddress(childAddress ?? '');
-
-    console.log(childAddress);
-    const details = await getPredictionMarket();
-    console.log(childAddress, details);
-  }
 
   return (
     <div className="form-container">

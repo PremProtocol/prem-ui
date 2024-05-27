@@ -6,8 +6,6 @@ import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
 import { PredictionMarket } from '../wrappers/PredictionMarket';
 
-//const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
-
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
@@ -35,17 +33,13 @@ export function useMarketFactoryContract() {
   useEffect(() => {
     async function fetchData() {
       if (marketFactoryContract) {
-        console.log("start fetching data");
         const tempArray = [];
         if(predictionMarketCount === 0 || predictionMarketCount == undefined) return;
-
-        console.log(predictionMarketCount);
         for (let i = 0; i < predictionMarketCount; i++) {
           const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
           const childContract = PredictionMarket.fromAddress(childAddress)
           const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
           const predictionMarketDetails = await openedChildContract.getPredictionMarketDetails();
-          console.log(predictionMarketDetails);
           tempArray.push(predictionMarketDetails);
         }
         setPredictionMarketDetailsArray(tempArray)
@@ -70,7 +64,7 @@ export function useMarketFactoryContract() {
       }
 
       marketFactoryContract?.send(sender, {
-          value: toNano("0.05")
+          value: toNano("0.02")
       }, message)
     },
     getChildAddress: async (childSeqno: string) => {

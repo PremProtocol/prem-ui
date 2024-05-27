@@ -4,11 +4,10 @@ import { PredictionMarket } from '../wrappers/PredictionMarket';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { PlaceBet } from '../wrappers/UserBet';
-import { useEffect } from 'react';
 
 //const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
 
-export function usePredictionMarketContract(predictionMarketAddress: string, predictionMarketCount: number) {
+export function usePredictionMarketContract(predictionMarketAddress: string) {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
 
