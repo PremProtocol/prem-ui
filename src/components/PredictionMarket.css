@@ -1,0 +1,61 @@
+.markets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.market-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+
+.market-card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.market-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.market-info {
+  flex: 1;
+}
+
+.market-controls {
+  flex: 1;
+}
+
+.market-controls form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.market-controls input {
+  width: 100px; /* Adjust this value as needed */
+}
+
+.market-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.market-details p {
+  margin: 5px 0; /* Adjust this value as needed */
+}
+
+.bet-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

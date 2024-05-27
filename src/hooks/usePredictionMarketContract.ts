@@ -4,10 +4,11 @@ import { PredictionMarket } from '../wrappers/PredictionMarket';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { PlaceBet } from '../wrappers/UserBet';
+import { useEffect } from 'react';
 
 //const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
 
-export function usePredictionMarketContract(predictionMarketAddress: string) {
+export function usePredictionMarketContract(predictionMarketAddress: string, predictionMarketCount: number) {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
 
@@ -36,7 +37,6 @@ export function usePredictionMarketContract(predictionMarketAddress: string) {
       }, message)
     },
     getPredictionMarket: async () => {
-      console.log(predictionMarketContract);
       const getPredictionMarketDetails = await predictionMarketContract?.getPredictionMarketDetails();
       return getPredictionMarketDetails;
     }

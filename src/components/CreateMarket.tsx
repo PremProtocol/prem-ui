@@ -1,8 +1,9 @@
 // src/components/CreateMarket.tsx
 import React, { useState } from 'react';
 import './CreateMarket.css';
-import { useMarketFactoryContract } from '../hooks/useMainFactoryContract';
+import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
+import PredictionMarket from './PredictionMarket';
 
 type Market = {
   eventDescription: string;
@@ -12,35 +13,20 @@ type Market = {
 };
 
 const CreateMarket: React.FC = () => {
-  const {predictionMarketCount, createMarket, getChildAddress} = useMarketFactoryContract();
+  const {predictionMarketDetailsArray, addNewPredictionMarket, createMarket, getChildAddress} = useMarketFactoryContract();
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
-  const [childSeqno, setChildSeqno] = useState('');
+  const [childSeqno] = useState('');
   const [childAddress, setChildAddress] = useState('');
   const {placeUserBet, getPredictionMarket} = usePredictionMarketContract(childAddress);
-  const [markets, setMarkets] = useState<Market[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle create market logic here
-    console.log({ eventDescription, endTime, outcomeName1, outcomeName2 });
     const endTimeNumber = Date.parse(endTime) / 1000;
     createMarket(eventDescription, endTimeNumber, outcomeName1, outcomeName2);
-
-    const newMarket: Market = {
-      eventDescription,
-      endTime,
-      outcomeName1,
-      outcomeName2,
-    }
-    setMarkets(prevMarkets => [...prevMarkets, newMarket]);
-  };
-
-  const getPredictionMarketAddress = async () => {
-    const childAddress = await getChildAddress(childSeqno);
-    console.log(childAddress);
+    addNewPredictionMarket();
   };
 
   const getPredictionMarketDetails = async () => {
@@ -88,29 +74,10 @@ const CreateMarket: React.FC = () => {
           />
         </label>
         <button type="submit">Create Market</button>
-
-        <p>{predictionMarketCount}</p>
-        <label>
-          ChildSeqno:
-          <input
-            type="text"
-            value={childSeqno}
-            onChange={(e) => setChildSeqno(e.target.value)}
-          />
-        </label>
-        <button type="button" onClick={getPredictionMarketAddress}>Get Child Address</button>
-        <button type="button" onClick={getPredictionMarketDetails}>Get Prediction Market Details</button>
       </form>
       <div className="markets-list">
-        {markets.map((market, index) => (
-          <div key={index} className="market-card">
-            <h2>{market.eventDescription}</h2>
-            <div className="market-details">
-              <p><strong>End Time:</strong> {market.endTime}</p>
-              <p><strong>Outcome 1:</strong> {market.outcomeName1}</p>
-              <p><strong>Outcome 2:</strong> {market.outcomeName2}</p>
-            </div>
-          </div>
+        {predictionMarketDetailsArray.map((market, index) => (
+          <PredictionMarket key={index} market={market} />
         ))}
       </div>
     </div>
