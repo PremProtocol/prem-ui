@@ -46,7 +46,7 @@ builder $ClaimWinningsInfo$_store(builder build_0, (int, slice, int) v) inline;
 cell $ClaimWinningsInfo$_store_cell((int, slice, int) v) inline;
 
 ;; $PlaceBetInternal$_load
-(slice, ((int))) $PlaceBetInternal$_load(slice sc_0) inline;
+(slice, ((int, int))) $PlaceBetInternal$_load(slice sc_0) inline;
 
 ;; $UserBet$_store
 builder $UserBet$_store(builder build_0, (slice, slice, int, int) v) inline;
@@ -56,9 +56,6 @@ builder $UserBet$_store(builder build_0, (slice, slice, int, int) v) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
-
-;; $Context$_get_value
-_ $Context$_get_value((int, slice, int, slice) v) inline;
 
 ;; $UserBetInfo$_to_external
 (int, int) $UserBetInfo$_to_external(((int, int)) v) inline;
@@ -89,9 +86,6 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 
 ;; $UserBet$_fun_forward
 ((slice, slice, int, int), ()) $UserBet$_fun_forward((slice, slice, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
-
-;; $UserBet$_fun_reply
-((slice, slice, int, int), ()) $UserBet$_fun_reply((slice, slice, int, int) $self, cell $body) impure inline;
 
 ;; $UserBet$_fun_notify
 ((slice, slice, int, int), ()) $UserBet$_fun_notify((slice, slice, int, int) $self, cell $body) impure inline;

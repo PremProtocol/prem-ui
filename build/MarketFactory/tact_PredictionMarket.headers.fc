@@ -70,10 +70,10 @@ cell $DeployOk$_store_cell((int) v) inline;
 (slice, ((int, slice, int))) $ClaimWinningsInfo$_load(slice sc_0) inline;
 
 ;; $PlaceBetInternal$_store
-builder $PlaceBetInternal$_store(builder build_0, (int) v) inline;
+builder $PlaceBetInternal$_store(builder build_0, (int, int) v) inline;
 
 ;; $PlaceBetInternal$_store_cell
-cell $PlaceBetInternal$_store_cell((int) v) inline;
+cell $PlaceBetInternal$_store_cell((int, int) v) inline;
 
 ;; $PredictionMarket$_store
 builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) v) inline;
@@ -114,8 +114,8 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $SendParameters$_constructor_to_value_mode_code_data_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_code_data_body(slice to, int value, int mode, cell code, cell data, cell body) inline;
 
-;; $PlaceBetInternal$_constructor_outcome
-((int)) $PlaceBetInternal$_constructor_outcome(int outcome) inline;
+;; $PlaceBetInternal$_constructor_outcome_betAmount
+((int, int)) $PlaceBetInternal$_constructor_outcome_betAmount(int outcome, int betAmount) inline;
 
 ;; $UserBet$_init_child
 (cell, cell) $UserBet$_init_child(cell sys', slice $owner, slice $parent) inline_ref;

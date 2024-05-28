@@ -113,12 +113,6 @@ forall X0, X1 -> (X0, X1) __tact_tuple_destroy_2(tuple v) asm "2 UNTUPLE";
     return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
 }
 
-((slice, slice, int, int), ()) $UserBet$_fun_reply((slice, slice, int, int) $self, cell $body) impure inline {
-    var (($self'owner, $self'parent, $self'betAmount, $self'outcome)) = $self;
-    ($self'owner, $self'parent, $self'betAmount, $self'outcome)~$UserBet$_fun_forward(__tact_context_get_sender(), $body, true, null());
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
-}
-
 ((slice, slice, int, int), ()) $UserBet$_fun_notify((slice, slice, int, int) $self, cell $body) impure inline {
     var (($self'owner, $self'parent, $self'betAmount, $self'outcome)) = $self;
     ($self'owner, $self'parent, $self'betAmount, $self'outcome)~$UserBet$_fun_forward(__tact_context_get_sender(), $body, false, null());

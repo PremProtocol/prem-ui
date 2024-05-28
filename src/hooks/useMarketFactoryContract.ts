@@ -30,7 +30,7 @@ export function useMarketFactoryContract() {
     if(!client || !wallet) return;
 
     //TODO: remove hardcoded address
-    const contract = MarketFactory.fromAddress(Address.parse("EQCkO6wRpB5o7MgLFRmSkzhlHk8DukjCXzDf48kj7lWCt8KB"))
+    const contract = MarketFactory.fromAddress(Address.parse("EQARWhrbmi8aY7YI7tmvZ1fW3VcGBt0Zmr9eK9qkqBEsP1Vh"))
 
     return client.open(contract) as OpenedContract<MarketFactory>
   }, [client, wallet])
@@ -50,24 +50,28 @@ export function useMarketFactoryContract() {
         const tempArray = [];
         if(predictionMarketCount === 0 || predictionMarketCount == undefined) return;
         for (let i = 0; i < predictionMarketCount; i++) {
-          const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
-          const childContract = PredictionMarket.fromAddress(childAddress)
-          const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
-          const predictionMarketDetailsRes = await openedChildContract.getPredictionMarketDetails();
-          const predictionMarketDetails: PredictionMarketDetails = {
-            selfAddress: childAddress, // You need to provide this
-            owner: predictionMarketDetailsRes.owner,
-            eventDescription: predictionMarketDetailsRes.eventDescription,
-            endTime: predictionMarketDetailsRes.endTime,
-            outcomeName1: predictionMarketDetailsRes.outcomeName1,
-            outcomeName2: predictionMarketDetailsRes.outcomeName2,
-            numOutcomes: predictionMarketDetailsRes.numOutcomes,
-            totalOutcomeBets: predictionMarketDetailsRes.totalOutcomeBets,
-            totalPool: predictionMarketDetailsRes.totalPool,
-            outcome: predictionMarketDetailsRes.outcome,
-            resolved: predictionMarketDetailsRes.resolved,
-          };
-          tempArray.push(predictionMarketDetails);
+          try {
+            const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
+            const childContract = PredictionMarket.fromAddress(childAddress)
+            const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
+            const predictionMarketDetailsRes = await openedChildContract.getPredictionMarketDetails();
+            const predictionMarketDetails: PredictionMarketDetails = {
+              selfAddress: childAddress,
+              owner: predictionMarketDetailsRes.owner,
+              eventDescription: predictionMarketDetailsRes.eventDescription,
+              endTime: predictionMarketDetailsRes.endTime,
+              outcomeName1: predictionMarketDetailsRes.outcomeName1,
+              outcomeName2: predictionMarketDetailsRes.outcomeName2,
+              numOutcomes: predictionMarketDetailsRes.numOutcomes,
+              totalOutcomeBets: predictionMarketDetailsRes.totalOutcomeBets,
+              totalPool: predictionMarketDetailsRes.totalPool,
+              outcome: predictionMarketDetailsRes.outcome,
+              resolved: predictionMarketDetailsRes.resolved,
+            };
+            tempArray.push(predictionMarketDetails);
+          } catch (e) {
+            console.log(e)
+          }
         }
         setPredictionMarketDetailsArray(tempArray)
       }
@@ -91,7 +95,7 @@ export function useMarketFactoryContract() {
       }
 
       marketFactoryContract?.send(sender, {
-          value: toNano("0.02")
+          value: toNano("0.05")
       }, message)
     },
     getChildAddress: async (childSeqno: string) => {

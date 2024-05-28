@@ -4,19 +4,13 @@ import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import PredictionMarket from './PredictionMarket';
 
-type Market = {
-  eventDescription: string;
-  endTime: string;
-  outcomeName1: string;
-  outcomeName2: string;
-};
-
 const CreateMarket: React.FC = () => {
   const {predictionMarketDetailsArray, addNewPredictionMarket, createMarket} = useMarketFactoryContract();
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
+  console.log(predictionMarketDetailsArray);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

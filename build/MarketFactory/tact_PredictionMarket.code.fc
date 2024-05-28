@@ -31,7 +31,7 @@
     var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
     var ($userBetInitState'code, $userBetInitState'data) = $UserBet$_init_child(__tact_context_sys, $owner, $parent);
     slice $userBetAddress = $global_contractAddress(($userBetInitState'code, $userBetInitState'data));
-    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, 20000000, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome($outcome))));
+    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, $betAmount, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome_betAmount($outcome, $betAmount))));
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
@@ -75,6 +75,8 @@
     $self'outcomeName1 = $msg'outcomeName1;
     $self'outcomeName2 = $msg'outcomeName2;
     $self'numOutcomes = $msg'numOutcomes;
+    $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, 0, 0, 64);
+    $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, 1, 0, 64);
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
@@ -84,8 +86,8 @@
     throw_unless(24032, (now() < $self'endTime));
     throw_unless(38283, ( (($msg'outcome >= 0)) ? (($msg'outcome < $self'numOutcomes)) : (false) ));
     int $currentBet = __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $msg'outcome, 64));
-    int $newBetAmount = ($Context$_get_value(__tact_context_get()) - 20000000);
-    $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, $msg'outcome, ($currentBet + $newBetAmount), 64);
+    int $newBetAmount = ($Context$_get_value(__tact_context_get()) - 50000000);
+    $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, $msg'outcome, (0 + $newBetAmount), 64);
     $self'totalPool = $self'totalPool + $newBetAmount;
     ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_placeUserBet(__tact_context_get_sender(), my_address(), $newBetAmount, $msg'outcome);
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
@@ -177,7 +179,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmU4ZcE9Az94KBr8h9UY2SgRngfh3fa81PrmLz3x8bWZTM";
+    return "ipfs://QmUtgZmywwc3jTC5smT8rksEmwXLAiCpng1piPSSYoRchJ";
 }
 
 _ lazy_deployment_completed() method_id {

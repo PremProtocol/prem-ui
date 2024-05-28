@@ -36,7 +36,7 @@ PROGRAM{
   DECLPROC $global_contractAddress
   DECLPROC $global_send
   DECLPROC $SendParameters$_constructor_to_value_mode_code_data_body
-  DECLPROC $PlaceBetInternal$_constructor_outcome
+  DECLPROC $PlaceBetInternal$_constructor_outcome_betAmount
   DECLPROC $UserBet$_init_child
   DECLPROC $PredictionMarket$_fun_placeUserBet
   DECLPROC $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome
@@ -269,14 +269,15 @@ PROGRAM{
     3 -ROLL
   }>
   $PlaceBetInternal$_store PROCINLINE:<{
-    3495111595 PUSHINT
-    ROT
+    4125778717 PUSHINT
+    s0 s3 XCHG2
     32 STU
     8 STI
+    64 STU
   }>
   $PlaceBetInternal$_store_cell PROCINLINE:<{
     NEWC
-    SWAP
+    -ROT
     $PlaceBetInternal$_store INLINECALLDICT
     ENDC
   }>
@@ -553,7 +554,7 @@ PROGRAM{
     s0 s4 XCHG
     s1 s3 s3 XCHG3
   }>
-  $PlaceBetInternal$_constructor_outcome PROCINLINE:<{
+  $PlaceBetInternal$_constructor_outcome_betAmount PROCINLINE:<{
   }>
   $UserBet$_init_child PROCREF:<{
     s0 s2 XCHG
@@ -583,19 +584,17 @@ PROGRAM{
     ENDC
   }>
   $PredictionMarket$_fun_placeUserBet PROCREF:<{
-    NIP
     __tact_context_sys GETGLOB
-    2SWAP
+    s0 s4 s3 XCHG3
     $UserBet$_init_child INLINECALLDICT
     2DUP
     $global_contractAddress INLINECALLDICT
-    20000000 PUSHINT
     2 PUSHINT
-    s0 s5 XCHG
-    $PlaceBetInternal$_constructor_outcome INLINECALLDICT
+    s5 s4 XCPU
+    $PlaceBetInternal$_constructor_outcome_betAmount INLINECALLDICT
     $PlaceBetInternal$_store_cell INLINECALLDICT
-    s5 s4 s0 XCHG3
-    s1 s3 s0 XCHG3
+    s1 s5 XCHG
+    s3 s3 s0 XCHG3
     $SendParameters$_constructor_to_value_mode_code_data_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
@@ -694,6 +693,18 @@ PROGRAM{
     s12 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
+    8 PUSHINT
+    0 PUSHINT
+    DUP
+    s3 s4 XCHG
+    64 PUSHINT
+    __tact_dict_set_uint_uint INLINECALLDICT
+    8 PUSHINT
+    1 PUSHINT
+    0 PUSHINT
+    64 PUSHINT
+    __tact_dict_set_uint_uint INLINECALLDICT
+    SWAP
   }>
   $PredictionMarket$_internal_binary_PlaceBet PROCINLINE:<{
     24032 PUSHINT
@@ -711,20 +722,12 @@ PROGRAM{
       FALSE
     }>
     THROWANYIFNOT
-    s2 PUSH
-    8 PUSHINT
-    s2 PUSH
-    64 PUSHINT
-    __tact_dict_get_uint_uint INLINECALLDICT
-    __tact_not_null INLINECALLDICT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
-    20000000 PUSHINT
+    50000000 PUSHINT
     SUB
     8 PUSHINT
-    s2 s1 XCPU
-    ADD
-    s5 s5 s0 XCHG3
+    s4 s0 s4 XC2PU
     s3 s(-1) PUXC
     64 PUSHINT
     __tact_dict_set_uint_uint INLINECALLDICT
@@ -837,7 +840,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d55345a634539417a39344b42723868395559325367526e676668336661383150726d4c7a33783862575a544d} PUSHSLICE
+    x{697066733a2f2f516d5574675a6d79777763336a544335736d5438726b73456d77584c416943706e67317069505353596f5263684a} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

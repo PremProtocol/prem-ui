@@ -141,23 +141,24 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: PlaceBetInternal
-;; Header: 0xd0532bab
-;; TLB: place_bet_internal#d0532bab outcome:int8 = PlaceBetInternal
+;; Header: 0xf5ea631d
+;; TLB: place_bet_internal#f5ea631d outcome:int8 betAmount:uint64 = PlaceBetInternal
 ;;
 
-builder $PlaceBetInternal$_store(builder build_0, (int) v) inline {
-    var (v'outcome) = v;
-    build_0 = store_uint(build_0, 3495111595, 32);
+builder $PlaceBetInternal$_store(builder build_0, (int, int) v) inline {
+    var (v'outcome, v'betAmount) = v;
+    build_0 = store_uint(build_0, 4125778717, 32);
     build_0 = build_0.store_int(v'outcome, 8);
+    build_0 = build_0.store_uint(v'betAmount, 64);
     return build_0;
 }
 
-cell $PlaceBetInternal$_store_cell((int) v) inline {
+cell $PlaceBetInternal$_store_cell((int, int) v) inline {
     return $PlaceBetInternal$_store(begin_cell(), v).end_cell();
 }
 
-((int)) $PlaceBetInternal$_constructor_outcome(int outcome) inline {
-    return (outcome);
+((int, int)) $PlaceBetInternal$_constructor_outcome_betAmount(int outcome, int betAmount) inline {
+    return (outcome, betAmount);
 }
 
 ;;

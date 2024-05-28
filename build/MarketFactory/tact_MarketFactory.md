@@ -66,8 +66,8 @@ TLB: `prediction_market_details#820ef6a8 owner:address eventDescription:^string 
 Signature: `PredictionMarketDetails{owner:address,eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8,totalOutcomeBets:dict<uint8, uint64>,totalPool:uint64,outcome:int8,resolved:bool}`
 
 ## PlaceBetInternal
-TLB: `place_bet_internal#d0532bab outcome:int8 = PlaceBetInternal`
-Signature: `PlaceBetInternal{outcome:int8}`
+TLB: `place_bet_internal#f5ea631d outcome:int8 betAmount:uint64 = PlaceBetInternal`
+Signature: `PlaceBetInternal{outcome:int8,betAmount:uint64}`
 
 ## UserBetInfo
 TLB: `user_bet_info#f7b3403f outcome:int8 betAmount:uint64 = UserBetInfo`
@@ -123,7 +123,6 @@ Argument: seqno
 24122: Only parent contract can init the market
 24933: Only owner can resolve market
 25427: Only the market can call this function
-33245: Only the market can place a bet
 38283: Invalid outcome
 38368: Event has not ended
 39401: Only owner can claim winnings

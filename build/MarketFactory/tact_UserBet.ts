@@ -815,31 +815,36 @@ function dictValueParserPredictionMarketDetails(): DictionaryValue<PredictionMar
 export type PlaceBetInternal = {
     $$type: 'PlaceBetInternal';
     outcome: bigint;
+    betAmount: bigint;
 }
 
 export function storePlaceBetInternal(src: PlaceBetInternal) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(3495111595, 32);
+        b_0.storeUint(4125778717, 32);
         b_0.storeInt(src.outcome, 8);
+        b_0.storeUint(src.betAmount, 64);
     };
 }
 
 export function loadPlaceBetInternal(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3495111595) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 4125778717) { throw Error('Invalid prefix'); }
     let _outcome = sc_0.loadIntBig(8);
-    return { $$type: 'PlaceBetInternal' as const, outcome: _outcome };
+    let _betAmount = sc_0.loadUintBig(64);
+    return { $$type: 'PlaceBetInternal' as const, outcome: _outcome, betAmount: _betAmount };
 }
 
 function loadTuplePlaceBetInternal(source: TupleReader) {
     let _outcome = source.readBigNumber();
-    return { $$type: 'PlaceBetInternal' as const, outcome: _outcome };
+    let _betAmount = source.readBigNumber();
+    return { $$type: 'PlaceBetInternal' as const, outcome: _outcome, betAmount: _betAmount };
 }
 
 function storeTuplePlaceBetInternal(source: PlaceBetInternal) {
     let builder = new TupleBuilder();
     builder.writeNumber(source.outcome);
+    builder.writeNumber(source.betAmount);
     return builder.build();
 }
 
@@ -973,8 +978,8 @@ function initUserBet_init_args(src: UserBet_init_args) {
 }
 
 async function UserBet_init(owner: Address, parent: Address) {
-    const __code = Cell.fromBase64('te6ccgECGAEABFsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVE9s88uCCEAQFAgEgDg8EzO2i7fsBkjB/4HAh10nCH5UwINcLH94gghDQUyuruo85MNMfAYIQ0FMrq7ry4IHSBwExMoIAgd34QlJAxwXy9IIA0XgBwP/y9PhBbyQTXwOIEvhCAX9t2zx/4CCCEJRqmLa64wLAAAYJBwgApMj4QwHMfwHKAFUwUEMg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEss/ygfJ7VQAIAAAAABnYXMgcmV0dXJuZWQBUDDTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH8JAQqRMOMNcAoBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAL++QEggvDz4U6a5B0wncJo0VJfxEiuxkcTGSdpLXY9EzsCWkbbAbqO1zCBJt34QlJQxwXy9IIJMS0AcvgoVGNQWMhVIIIQQMZAYlAEyx8Syz8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WygfJJVUgf1UwbW3bPH/bMQwLAYTggvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqOm4FjU/hCUkDHBfL0I3CBAKJ/VSBtbW3bPH/bMeAMAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AA0AmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCEb7Rbtnm2eNiFBARAgEgFBUBwO1E0NQB+GPSAAGOSPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IHVTBsFOD4KNcLCoMJuvLgiRIABFwBAYr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB2zwTAARwfwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIFhcAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtZU5USEJGZDFuWkg4VWNpNFg5Q0RIU0hXYWlOV05VekpEcGNRTThzUE5tTUSCA=');
-    const __system = Cell.fromBase64('te6cckECGgEABGUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRPbPPLgghEFDgTM7aLt+wGSMH/gcCHXScIflTAg1wsf3iCCENBTK6u6jzkw0x8BghDQUyuruvLggdIHATEyggCB3fhCUkDHBfL0ggDReAHA//L0+EFvJBNfA4gS+EIBf23bPH/gIIIQlGqYtrrjAsAABggHCQAgAAAAAGdhcyByZXR1cm5lZAFQMNMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8fwgBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAEKkTDjDXAKAv75ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuo7XMIEm3fhCUlDHBfL0ggkxLQBy+ChUY1BYyFUgghBAxkBiUATLHxLLPwEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbKB8klVSB/VTBtbds8f9sxDAsBhOCC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo6bgWNT+EJSQMcF8vQjcIEAon9VIG1tbds8f9sx4AwByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADQCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzACkyPhDAcx/AcoAVTBQQyDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYSyz/KB8ntVAIBIBAVAhG+0W7Z5tnjYhQRFAHA7UTQ1AH4Y9IAAY5I+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdM/0gdVMGwU4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAEcH8ABFwBAgEgFhcAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSBgZABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbWVOVEhCRmQxblpIOFVjaTRYOUNESFNIV2FpTldOVXpKRHBjUU04c1BObU1EggR4sf1A==');
+    const __code = Cell.fromBase64('te6ccgECFgEABCwAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVE9s88uCCDgQFAgEgDA0D9O2i7fsBkjB/4HAh10nCH5UwINcLH94gghD16mMduo4hMNMfAYIQ9epjHbry4IHSB9M/WWwSM4IA0XgCwP8S8vR/4CCCEJRqmLa6jqgw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4MAA4w9wBgcIAKTI+EMBzH8BygBVMFBDINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFhLLP8oHye1UATptbSJus5lbIG7y0IBvIgGRMuIQJHADBIBCUCPbPAoC/vkBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG6jtcwgSbd+EJSUMcF8vSCCTEtAHL4KFRjUFjIVSCCEEDGQGJQBMsfEss/ASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySVVIH9VMG1t2zx/2zEKCQACMAGE4ILwIowpV1CZzKEoMEzfXQC0/X9yyXLtkZ5mmVn2XEbANMW6jpuBY1P4QlJAxwXy9CNwgQCif1UgbW1t2zx/2zHgCgHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wALAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+0W7Z5tnjYhQODwIBIBITAcDtRNDUAfhj0gABjkj6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB1UwbBTg+CjXCwqDCbry4IkQAARcAQGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EQAEcH8Albu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSBQVABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVh1V0F3UmR1elNxSmY0NUJINzM0SnRpWk1XVExwWmtGQkZuSmUxMXNXdGE5gg');
+    const __system = Cell.fromBase64('te6cckECGAEABDYAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDQN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRPbPPLggg8FDAP07aLt+wGSMH/gcCHXScIflTAg1wsf3iCCEPXqYx26jiEw0x8BghD16mMduvLggdIH0z9ZbBIzggDReALA/xLy9H/gIIIQlGqYtrqOqDDTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gwADjD3AGBwsBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8CQL++QEggvDz4U6a5B0wncJo0VJfxEiuxkcTGSdpLXY9EzsCWkbbAbqO1zCBJt34QlJQxwXy9IIJMS0AcvgoVGNQWMhVIIIQQMZAYlAEyx8Syz8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WygfJJVUgf1UwbW3bPH/bMQkIAYTggvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqOm4FjU/hCUkDHBfL0I3CBAKJ/VSBtbW3bPH/bMeAJAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AAoAmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwAAjAApMj4QwHMfwHKAFUwUEMg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEss/ygfJ7VQCASAOEwIRvtFu2ebZ42IUDxIBwO1E0NQB+GPSAAGOSPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IHVTBsFOD4KNcLCoMJuvLgiRABivpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBIC0QHbPBEABHB/AARcAQIBIBQVAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgWFwARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1YdVdBd1JkdXpTcUpmNDVCSDczNEp0aVpNV1RMcFprRkJGbkplMTFzV3RhOYIB2SlEY=');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -1019,7 +1024,6 @@ const UserBet_errors: { [key: number]: { message: string } } = {
     24122: { message: `Only parent contract can init the market` },
     24933: { message: `Only owner can resolve market` },
     25427: { message: `Only the market can call this function` },
-    33245: { message: `Only the market can place a bet` },
     38283: { message: `Invalid outcome` },
     38368: { message: `Event has not ended` },
     39401: { message: `Only owner can claim winnings` },
@@ -1043,7 +1047,7 @@ const UserBet_types: ABIType[] = [
     {"name":"ResolveMarket","header":1189540808,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ClaimWinningsInfo","header":1086734434,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"userBet","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"PredictionMarketDetails","header":2182018728,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalOutcomeBets","type":{"kind":"dict","key":"uint","keyFormat":8,"value":"uint","valueFormat":64}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}}]},
-    {"name":"PlaceBetInternal","header":3495111595,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
+    {"name":"PlaceBetInternal","header":4125778717,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"UserBetInfo","header":4155719743,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"ClaimWinningsInternal","header":3696625672,"fields":[{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}},{"name":"winningOutcome","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"totalOutcomeBets","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
 ]

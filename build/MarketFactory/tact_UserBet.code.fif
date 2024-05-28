@@ -17,7 +17,6 @@ PROGRAM{
   DECLPROC $UserBet$_store
   DECLPROC $UserBet$_load
   DECLPROC $StateInit$_not_null
-  DECLPROC $Context$_get_value
   DECLPROC $UserBetInfo$_to_external
   DECLPROC $UserBet$init$_load
   DECLPROC $UserBet$_contract_init
@@ -28,7 +27,6 @@ PROGRAM{
   DECLPROC $UserBetInfo$_constructor_betAmount_outcome
   DECLPROC $UserBet$_fun_userBet
   DECLPROC $UserBet$_fun_forward
-  DECLPROC $UserBet$_fun_reply
   DECLPROC $UserBet$_fun_notify
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet
@@ -136,11 +134,12 @@ PROGRAM{
   $PlaceBetInternal$_load PROCINLINE:<{
     32 LDU
     SWAP
-    3495111595 PUSHINT
+    4125778717 PUSHINT
     EQUAL
     129 THROWIFNOT
     8 LDI
-    SWAP
+    64 LDU
+    -ROT
   }>
   $UserBet$_store PROCINLINE:<{
     s4 s3 XCHG2
@@ -165,10 +164,6 @@ PROGRAM{
     ISNULL
     128 THROWIF
     2 UNTUPLE
-  }>
-  $Context$_get_value PROCINLINE:<{
-    s1 s3 XCHG
-    3 BLKDROP
   }>
   $UserBetInfo$_to_external PROCINLINE:<{
   }>
@@ -351,13 +346,6 @@ PROGRAM{
     $SendParameters$_constructor_bounce_to_value_mode_body_code_data INLINECALLDICT
     $global_send INLINECALLDICT
   }>
-  $UserBet$_fun_reply PROCINLINE:<{
-    __tact_context_get_sender INLINECALLDICT
-    SWAP
-    TRUE
-    PUSHNULL
-    $UserBet$_fun_forward INLINECALLDICT
-  }>
   $UserBet$_fun_notify PROCINLINE:<{
     __tact_context_get_sender INLINECALLDICT
     SWAP
@@ -384,21 +372,12 @@ PROGRAM{
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
   $UserBet$_internal_binary_PlaceBetInternal PROCINLINE:<{
-    s2 POP
-    33245 PUSHINT
-    __tact_context_get_sender INLINECALLDICT
-    s4 s(-1) PUXC
-    __tact_slice_eq_bits INLINECALLDICT
-    THROWANYIFNOT
+    s3 POP
     53624 PUSHINT
-    SWAP
+    s0 s2 XCHG
     -1 EQINT
-    THROWANYIFNOT
-    __tact_context_get INLINECALLDICT
-    $Context$_get_value INLINECALLDICT
-    B{b5ee9c72410101010012000020000000006761732072657475726e65648c97195b} B>boc PUSHREF
     s1 s2 XCHG
-    $UserBet$_fun_reply INLINECALLDICT
+    THROWANYIFNOT
   }>
   $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01 PROCINLINE:<{
     9949 PUSHINT
@@ -447,7 +426,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d654e5448424664316e5a483855636934583943444853485761694e574e557a4a447063514d3873504e6d4d44} PUSHSLICE
+    x{697066733a2f2f516d58755741775264757a53714a66343542483733344a74695a4d57544c705a6b4642466e4a6531317357746139} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -473,12 +452,12 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    3495111595 PUSHINT
+    4125778717 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $PlaceBetInternal$_load INLINECALLDICT
-      NIP
+      1 2 BLKDROP2
       $UserBet$_internal_binary_PlaceBetInternal INLINECALLDICT
       TRUE
     }>
