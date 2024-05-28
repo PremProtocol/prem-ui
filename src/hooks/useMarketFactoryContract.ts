@@ -1,10 +1,24 @@
 import { useAsyncInitialize } from './useAsyncInitialize';
-import { Address, OpenedContract, toNano } from '@ton/core';
+import { Address, Dictionary, OpenedContract, toNano } from '@ton/core';
 import { CreateMarket, MarketFactory } from '../wrappers/MarketFactory';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
 import { PredictionMarket } from '../wrappers/PredictionMarket';
+
+type PredictionMarketDetails = {
+  selfAddress: Address;
+  owner: Address;
+  eventDescription: string;
+  endTime: bigint;
+  outcomeName1: string;
+  outcomeName2: string;
+  numOutcomes: bigint;
+  totalOutcomeBets: Dictionary<any, any>;
+  totalPool: bigint;
+  outcome: bigint;
+  resolved: boolean;
+};
 
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
@@ -39,7 +53,20 @@ export function useMarketFactoryContract() {
           const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
           const childContract = PredictionMarket.fromAddress(childAddress)
           const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
-          const predictionMarketDetails = await openedChildContract.getPredictionMarketDetails();
+          const predictionMarketDetailsRes = await openedChildContract.getPredictionMarketDetails();
+          const predictionMarketDetails: PredictionMarketDetails = {
+            selfAddress: childAddress, // You need to provide this
+            owner: predictionMarketDetailsRes.owner,
+            eventDescription: predictionMarketDetailsRes.eventDescription,
+            endTime: predictionMarketDetailsRes.endTime,
+            outcomeName1: predictionMarketDetailsRes.outcomeName1,
+            outcomeName2: predictionMarketDetailsRes.outcomeName2,
+            numOutcomes: predictionMarketDetailsRes.numOutcomes,
+            totalOutcomeBets: predictionMarketDetailsRes.totalOutcomeBets,
+            totalPool: predictionMarketDetailsRes.totalPool,
+            outcome: predictionMarketDetailsRes.outcome,
+            resolved: predictionMarketDetailsRes.resolved,
+          };
           tempArray.push(predictionMarketDetails);
         }
         setPredictionMarketDetailsArray(tempArray)

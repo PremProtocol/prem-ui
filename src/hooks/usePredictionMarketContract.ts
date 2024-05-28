@@ -5,18 +5,15 @@ import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { PlaceBet } from '../wrappers/UserBet';
 
-//const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
-
-export function usePredictionMarketContract(predictionMarketAddress: string) {
+export function usePredictionMarketContract(predictionMarketAddress: Address) {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
 
   const predictionMarketContract = useAsyncInitialize(async () => {
     if(!client || !wallet) return;
 
-    if (predictionMarketAddress != null && predictionMarketAddress !== "") {
-      console.log(predictionMarketAddress);
-      const contract = PredictionMarket.fromAddress(Address.parse(predictionMarketAddress))
+    if (predictionMarketAddress != null && predictionMarketAddress != undefined) {
+      const contract = PredictionMarket.fromAddress(predictionMarketAddress)
       return client.open(contract) as OpenedContract<PredictionMarket>
     }
 
@@ -25,7 +22,7 @@ export function usePredictionMarketContract(predictionMarketAddress: string) {
 
   return {
     address: predictionMarketContract?.address.toString(),
-    placeUserBet: (betAmount: string, outcome: number) => {
+    placeUserBet: (betAmount: number, outcome: number) => {
       const message: PlaceBet = {
           $$type: "PlaceBet",
           outcome: BigInt(outcome),

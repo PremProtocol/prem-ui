@@ -62,6 +62,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .claim-section {
@@ -82,4 +83,15 @@
 button:disabled, button:disabled:hover {
   background-color: grey;
   cursor: not-allowed;
+}
+
+.bet-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bet-buttons {
+  display: flex;
+  gap: 10px;
 }

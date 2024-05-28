@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './PredictionMarket.css';
+import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 
 const PredictionMarket = ({ market }) => {
+  const { placeUserBet } = usePredictionMarketContract(market.selfAddress);
   const [bet, setBet] = useState(0);
   const eventEnded = new Date(Number(market.endTime) * 1000) <= new Date();
   const claimingAmount: number = 0;
@@ -15,8 +17,10 @@ const PredictionMarket = ({ market }) => {
 
   const handleBetSubmit = (e) => {
     e.preventDefault();
+    const outcome = e.nativeEvent.submitter.value;
     // Add your logic for handling the bet here
-    console.log(`Bet ${bet} on market ${market.eventDescription}`);
+    console.log(`Bet ${bet} TON on market ${market.eventDescription}, on outcome ${outcome}`);
+    placeUserBet(bet, Number(outcome));
   };
 
   return (
@@ -38,12 +42,16 @@ const PredictionMarket = ({ market }) => {
               <button onClick={handleClaim} disabled={claimingAmount === 0}>Claim</button>
             </div>
           ) : (
-            <form onSubmit={handleBetSubmit}>
-              <div className="bet-control">
-                <label>Bet:</label>
-                <input type="number" value={bet} onChange={handleBetChange} />
+            <form onSubmit={handleBetSubmit} className="bet-form">
+            <div className="bet-control">
+              <label>Bet:</label>
+              <input type="number" value={bet} onChange={handleBetChange} style={{ textAlign: 'center' }} />
+              <strong>TON</strong>
+            </div>
+              <div className="bet-buttons">
+                <button type="submit" value="1">Bet on {market.outcomeName1}</button>
+                <button type="submit" value="2">Bet on {market.outcomeName2}</button>
               </div>
-              <button type="submit">Place Bet</button>
             </form>
           )}
         </div>
