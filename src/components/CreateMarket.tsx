@@ -2,15 +2,13 @@
 import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
-import PredictionMarket from './PredictionMarket';
 
 const CreateMarket: React.FC = () => {
-  const {predictionMarketDetailsArray, addNewPredictionMarket, createMarket} = useMarketFactoryContract();
+  const {addNewPredictionMarket, createMarket} = useMarketFactoryContract();
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
-  console.log(predictionMarketDetailsArray);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,11 +54,6 @@ const CreateMarket: React.FC = () => {
         </label>
         <button type="submit">Create Market</button>
       </form>
-      <div className="markets-list">
-        {predictionMarketDetailsArray.map((market, index) => (
-          <PredictionMarket key={index} market={market} />
-        ))}
-      </div>
     </div>
   );
 };

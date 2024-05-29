@@ -31,10 +31,6 @@ export function usePredictionMarketContract(predictionMarketAddress: Address) {
       predictionMarketContract?.send(sender, {
           value: toNano(betAmount)
       }, message)
-    },
-    getPredictionMarket: async () => {
-      const getPredictionMarketDetails = await predictionMarketContract?.getPredictionMarketDetails();
-      return getPredictionMarketDetails;
     }
   };
 }

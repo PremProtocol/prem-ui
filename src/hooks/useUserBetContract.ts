@@ -2,20 +2,44 @@ import { useTonClient } from "./useTonClient"
 import { useTonConnect } from "./useTonConnect"
 import { useAsyncInitialize } from "./useAsyncInitialize"
 import { UserBet } from "../wrappers/UserBet"
-import { Address, OpenedContract } from "@ton/core"
+import { Address, OpenedContract, toNano } from "@ton/core"
+import { useEffect, useState } from "react"
+import { UserBetInfo } from "../wrappers/PredictionMarket"
 
 export function useUserBetContract(predictionMarketContractAddress: Address) {
   const {client} = useTonClient()
-  const {wallet} = useTonConnect()
-  
+  const {wallet, sender} = useTonConnect()
+  const [userBet, setUserBet] = useState<UserBetInfo>();
+  const [isNotUserBetContract, setIsNotUserBetContract] = useState<boolean>(false);
+
   const userBetContract = useAsyncInitialize(async () => {
     if(!client || !wallet) return;
-    console.log(wallet, predictionMarketContractAddress)
     const contract = await UserBet.fromInit(Address.parse(wallet), predictionMarketContractAddress)
     return client.open(contract) as OpenedContract<UserBet>
   }, [client, wallet])
 
+  useEffect(() => {
+    async function fetchData() {
+      try{
+        const userBet = await userBetContract?.getUserBet();
+        setUserBet(userBet);
+      } catch (e){
+        setIsNotUserBetContract(true);
+      }
+    }
+
+    fetchData();
+  }, [userBetContract, wallet]);
+
   return {
     address: userBetContract?.address.toString(),
+    userBet: userBet,
+    isNotUserBetContract: isNotUserBetContract,
+    claimWinnings: () => {
+
+      userBetContract?.send(sender, {
+          value: toNano("0.05")
+      }, "claimWinnings")
+    }
   };
 }

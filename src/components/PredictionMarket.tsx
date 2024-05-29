@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './PredictionMarket.css';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
+import { useUserBetContract } from '../hooks/useUserBetContract';
 
 const PredictionMarket = ({ market }) => {
   const { placeUserBet } = usePredictionMarketContract(market.selfAddress);
+  const { claimWinnings } = useUserBetContract(market.selfAddress);
   const [bet, setBet] = useState(0);
   const eventEnded = new Date(Number(market.endTime) * 1000) <= new Date();
   const claimingAmount: number = 0;
@@ -12,7 +14,7 @@ const PredictionMarket = ({ market }) => {
   };
 
   const handleClaim = () => {
-    console.log('Claiming');
+    claimWinnings();
   };
 
   const handleBetSubmit = (e) => {
@@ -36,11 +38,15 @@ const PredictionMarket = ({ market }) => {
         </div>
         <div className="market-controls">
           {eventEnded ? (
-            <div className="claim-section">
-              <label className="claim-label">Claim Amount:</label>
-              <div className="claim-amount">{claimingAmount}</div>
-              <button onClick={handleClaim} disabled={claimingAmount === 0}>Claim</button>
-            </div>
+             market.resolved ? (
+              <p>Wait until host resolve the market</p>
+             ) : (
+              <div className="claim-section">
+                <label className="claim-label">Claim Amount:</label>
+                <div className="claim-amount">{claimingAmount}</div>
+                <button onClick={handleClaim} disabled={claimingAmount === 0}>Claim</button>
+              </div>
+             )
           ) : (
             <form onSubmit={handleBetSubmit} className="bet-form">
             <div className="bet-control">

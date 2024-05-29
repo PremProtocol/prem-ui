@@ -1,24 +1,24 @@
-// src/components/UserBets.tsx
 import React from 'react';
+import PredictionMarket from './PredictionMarket';
+import "./PredictionMarkets.css";
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
-import UserBet from './UserBet';
-import './UserBets.css';
 import Loader from "react-js-loader";
 
-const UserBets: React.FC = () => {
+const PredictionMarkets: React.FC = () => {
   const { predictionMarketDetailsArray } = useMarketFactoryContract();
 
+  console.log(predictionMarketDetailsArray)
   if (!predictionMarketDetailsArray) {
     return <Loader type="spinner-default" bgColor="#000" color="#000" title={"Loading..."} size={100} />;
   }
 
   return (
-    <div className="place-bets">
-      {predictionMarketDetailsArray.map((details, index) => (
-        <UserBet key={index} predictionMarketDetails={details} />
+    <div className="markets-list">
+      {predictionMarketDetailsArray.map((market, index) => (
+        <PredictionMarket key={index} market={market} />
       ))}
     </div>
   );
 };
 
-export default UserBets;
+export default PredictionMarkets;

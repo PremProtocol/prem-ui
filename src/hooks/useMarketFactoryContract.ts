@@ -6,7 +6,7 @@ import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
 import { PredictionMarket } from '../wrappers/PredictionMarket';
 
-type PredictionMarketDetails = {
+export type PredictionMarketDetails = {
   selfAddress: Address;
   owner: Address;
   eventDescription: string;
@@ -24,7 +24,7 @@ export function useMarketFactoryContract() {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
   const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
-  const [predictionMarketDetailsArray, setPredictionMarketDetailsArray] = useState<any[]>([])
+  const [predictionMarketDetailsArray, setPredictionMarketDetailsArray] = useState<PredictionMarketDetails[]>()
 
   const marketFactoryContract = useAsyncInitialize(async () => {
     if(!client || !wallet) return;
