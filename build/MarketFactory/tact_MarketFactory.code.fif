@@ -45,6 +45,7 @@ PROGRAM{
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $ChangeOwnerOk$_constructor_queryId_newOwner
   DECLPROC $MarketFactory$_internal_binary_CreateMarket
+  DECLPROC $MarketFactory$_receive_bounce
   DECLPROC $MarketFactory$_internal_binary_Deploy
   DECLPROC $MarketFactory$_internal_binary_ChangeOwner
   80689 DECLMETHOD %childAddress
@@ -581,6 +582,9 @@ PROGRAM{
     SWAP
     INC
   }>
+  $MarketFactory$_receive_bounce PROCINLINE:<{
+    DROP
+  }>
   $MarketFactory$_internal_binary_Deploy PROCINLINE:<{
     $DeployOk$_constructor_queryId INLINECALLDICT
     $DeployOk$_store_cell INLINECALLDICT
@@ -632,7 +636,9 @@ PROGRAM{
   $MarketFactory$_contract_router_internal PROCREF:<{
     SWAP
     IFJMP:<{
-      DROP
+      32 PUSHINT
+      SDSKIPFIRST
+      $MarketFactory$_receive_bounce INLINECALLDICT
       TRUE
     }>
     0 PUSHINT

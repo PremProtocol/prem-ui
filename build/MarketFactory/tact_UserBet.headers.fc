@@ -57,6 +57,9 @@ builder $UserBet$_store(builder build_0, (slice, slice, int, int) v) inline;
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
 
+;; $Context$_get_value
+_ $Context$_get_value((int, slice, int, slice) v) inline;
+
 ;; $UserBetInfo$_to_external
 (int, int) $UserBetInfo$_to_external(((int, int)) v) inline;
 

@@ -17,6 +17,7 @@ PROGRAM{
   DECLPROC $UserBet$_store
   DECLPROC $UserBet$_load
   DECLPROC $StateInit$_not_null
+  DECLPROC $Context$_get_value
   DECLPROC $UserBetInfo$_to_external
   DECLPROC $UserBet$init$_load
   DECLPROC $UserBet$_contract_init
@@ -35,6 +36,7 @@ PROGRAM{
   DECLPROC $UserBet$_internal_binary_PlaceBetInternal
   DECLPROC $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01
   DECLPROC $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5
+  DECLPROC $UserBet$_receive_bounce
   DECLPROC $UserBet$_internal_binary_Deploy
   88621 DECLMETHOD %userBet
   113617 DECLMETHOD supported_interfaces
@@ -164,6 +166,10 @@ PROGRAM{
     ISNULL
     128 THROWIF
     2 UNTUPLE
+  }>
+  $Context$_get_value PROCINLINE:<{
+    s1 s3 XCHG
+    3 BLKDROP
   }>
   $UserBetInfo$_to_external PROCINLINE:<{
   }>
@@ -378,6 +384,16 @@ PROGRAM{
     -1 EQINT
     s1 s2 XCHG
     THROWANYIFNOT
+    __tact_context_get INLINECALLDICT
+    $Context$_get_value INLINECALLDICT
+    10000000 PUSHINT
+    SUB
+    2 PUSHINT
+    B{b5ee9c7241010101000c00001400000000726566756e647b1f4f15} B>boc PUSHREF
+    s6 PUSH
+    3 -ROLL
+    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $global_send INLINECALLDICT
   }>
   $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01 PROCINLINE:<{
     9949 PUSHINT
@@ -385,7 +401,7 @@ PROGRAM{
     s5 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    20000000 PUSHINT
+    40000000 PUSHINT
     2 PUSHINT
     MYADDR
     s3 s4 s(-2) PU2XC
@@ -404,9 +420,12 @@ PROGRAM{
     THROWANYIFNOT
     s3 PUSH
     0 PUSHINT
-    162 PUSHINT
+    226 PUSHINT
     $SendParameters$_constructor_to_value_mode INLINECALLDICT
     $global_send INLINECALLDICT
+  }>
+  $UserBet$_receive_bounce PROCINLINE:<{
+    DROP
   }>
   $UserBet$_internal_binary_Deploy PROCINLINE:<{
     $DeployOk$_constructor_queryId INLINECALLDICT
@@ -439,7 +458,9 @@ PROGRAM{
     SAMEALTSAVE
     SWAP
     IFJMP:<{
-      DROP
+      32 PUSHINT
+      SDSKIPFIRST
+      $UserBet$_receive_bounce INLINECALLDICT
       TRUE
     }>
     0 PUSHINT

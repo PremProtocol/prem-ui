@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: PredictionMarket
-BOC Size: 1823 bytes
+BOC Size: 1968 bytes
 
 # Types
 Total Types: 18

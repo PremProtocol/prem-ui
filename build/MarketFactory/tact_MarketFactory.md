@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: MarketFactory
-BOC Size: 1381 bytes
+BOC Size: 1385 bytes
 
 # Types
 Total Types: 18

@@ -12,6 +12,7 @@ PROGRAM{
   DECLPROC __tact_dict_set_uint_uint
   DECLPROC __tact_dict_get_uint_uint
   DECLPROC __tact_slice_eq_bits
+  DECLPROC __tact_slice_neq
   DECLPROC __tact_dict_set_code
   DECLPROC __tact_dict_get_code
   DECLPROC $Deploy$_load
@@ -180,6 +181,13 @@ PROGRAM{
   }>
   __tact_slice_eq_bits PROCINLINE:<{
     SDEQ
+  }>
+  __tact_slice_neq PROCINLINE:<{
+    SWAP
+    HASHSU
+    SWAP
+    HASHSU
+    NEQ
   }>
   __tact_dict_set_code PROCINLINE:<{
     s0 s2 XCHG
@@ -589,11 +597,14 @@ PROGRAM{
     $UserBet$_init_child INLINECALLDICT
     2DUP
     $global_contractAddress INLINECALLDICT
+    30000000 PUSHINT
+    s0 s5 XCHG
     2 PUSHINT
-    s5 s4 XCPU
+    s0 s5 XCHG
     $PlaceBetInternal$_constructor_outcome_betAmount INLINECALLDICT
     $PlaceBetInternal$_store_cell INLINECALLDICT
     s1 s5 XCHG
+    s1 s4 XCHG
     s3 s3 s0 XCHG3
     $SendParameters$_constructor_to_value_mode_code_data_body INLINECALLDICT
     $global_send INLINECALLDICT
@@ -693,6 +704,30 @@ PROGRAM{
     s12 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
+    55984 PUSHINT
+    s8 PUSH
+    NOW
+    GREATER
+    THROWANYIFNOT
+    11074 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    s6 PUSH
+    __tact_slice_neq INLINECALLDICT
+    THROWANYIFNOT
+    11074 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    s5 PUSH
+    __tact_slice_neq INLINECALLDICT
+    THROWANYIFNOT
+    16210 PUSHINT
+    s3 PUSH
+    2 EQINT
+    THROWANYIFNOT
+    17847 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    s10 PUSH
+    __tact_slice_neq INLINECALLDICT
+    THROWANYIFNOT
     8 PUSHINT
     0 PUSHINT
     DUP
@@ -704,6 +739,16 @@ PROGRAM{
     0 PUSHINT
     64 PUSHINT
     __tact_dict_set_uint_uint INLINECALLDICT
+    __tact_context_get INLINECALLDICT
+    $Context$_get_value INLINECALLDICT
+    20000000 PUSHINT
+    SUB
+    2 PUSHINT
+    B{b5ee9c7241010101000c00001400000000726566756e647b1f4f15} B>boc PUSHREF
+    s14 PUSH
+    3 -ROLL
+    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $global_send INLINECALLDICT
     SWAP
   }>
   $PredictionMarket$_internal_binary_PlaceBet PROCINLINE:<{
@@ -724,7 +769,7 @@ PROGRAM{
     THROWANYIFNOT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
-    50000000 PUSHINT
+    30000000 PUSHINT
     SUB
     8 PUSHINT
     s4 s0 s4 XC2PU
@@ -772,30 +817,36 @@ PROGRAM{
     $PredictionMarket$_fun_reply INLINECALLDICT
   }>
   $PredictionMarket$_internal_binary_ClaimWinningsInfo PROCINLINE:<{
-    s2 POP
     39401 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s2 s(-1) PUXC
+    s3 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     10454 PUSHINT
-    s9 PUSH
+    s10 PUSH
     THROWANYIFNOT
     22516 PUSHINT
-    s8 s2 PUSH2
+    s9 s1 PUSH2
     EQUAL
     THROWANYIFNOT
-    s7 s1 PUSH2
+    s8 s0 PUSH2
     EQUAL
-    1 2 BLKDROP2
     IF:<{
-      20000000 PUSHINT
-      2 PUSHINT
+      s2 s3 XCPU
+      MUL
+      8 PUSHINT
+      s5 s0 s3 PUXC2
+      64 PUSHINT
+      __tact_dict_get_uint_uint INLINECALLDICT
+      __tact_not_null INLINECALLDICT
+      s1 s2 XCHG
+      DIV
+      66 PUSHINT
       B{b5ee9c7241010101001b00003200000000636c61696d57696e6e696e6773496e7465726e616c5f0fdcc9} B>boc PUSHREF
       $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
       $global_send INLINECALLDICT
     }>ELSE<{
-      DROP
+      3 BLKDROP
     }>
   }>
   $PredictionMarket$_receive_bounce PROCINLINE:<{

@@ -31,7 +31,7 @@
     var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
     var ($userBetInitState'code, $userBetInitState'data) = $UserBet$_init_child(__tact_context_sys, $owner, $parent);
     slice $userBetAddress = $global_contractAddress(($userBetInitState'code, $userBetInitState'data));
-    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, $betAmount, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome_betAmount($outcome, $betAmount))));
+    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, 30000000, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome_betAmount($outcome, $betAmount))));
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
@@ -69,6 +69,11 @@
     var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
     var ($msg'owner, $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
     throw_unless(24122, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
+    throw_unless(55984, ($msg'endTime > now()));
+    throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName1));
+    throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName2));
+    throw_unless(16210, ($msg'numOutcomes == 2));
+    throw_unless(17847, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventDescription));
     $self'owner = $msg'owner;
     $self'eventDescription = $msg'eventDescription;
     $self'endTime = $msg'endTime;
@@ -77,6 +82,7 @@
     $self'numOutcomes = $msg'numOutcomes;
     $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, 0, 0, 64);
     $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, 1, 0, 64);
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, ($Context$_get_value(__tact_context_get()) - 20000000), 2, __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11()));
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
@@ -86,7 +92,7 @@
     throw_unless(24032, (now() < $self'endTime));
     throw_unless(38283, ( (($msg'outcome >= 0)) ? (($msg'outcome < $self'numOutcomes)) : (false) ));
     int $currentBet = __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $msg'outcome, 64));
-    int $newBetAmount = ($Context$_get_value(__tact_context_get()) - 50000000);
+    int $newBetAmount = ($Context$_get_value(__tact_context_get()) - 30000000);
     $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, $msg'outcome, (0 + $newBetAmount), 64);
     $self'totalPool = $self'totalPool + $newBetAmount;
     ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_placeUserBet(__tact_context_get_sender(), my_address(), $newBetAmount, $msg'outcome);
@@ -97,9 +103,6 @@
     var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
     var ($msg'outcome) = $msg;
     throw_unless(24933, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
-    __tact_nop();
-    __tact_nop();
-    __tact_nop();
     throw_unless(38368, (now() >= $self'endTime));
     throw_unless(20846, (~ $self'resolved));
     throw_unless(38283, ( (($msg'outcome >= 0)) ? (($msg'outcome < $self'numOutcomes)) : (false) ));
@@ -117,7 +120,7 @@
     throw_unless(22516, ($self'outcome == $msg'outcome));
     if (($self'outcome == $msg'outcome)) {
         int $userShare = (($msg'betAmount * $self'totalPool) / __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $msg'outcome, 64)));
-        $global_send($SendParameters$_constructor_to_value_mode_body($msg'userBet, 20000000, 2, __gen_cell_comment_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5()));
+        $global_send($SendParameters$_constructor_to_value_mode_body($msg'userBet, $userShare, (64 | 2), __gen_cell_comment_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5()));
     }
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }

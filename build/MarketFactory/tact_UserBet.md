@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: UserBet
-BOC Size: 1080 bytes
+BOC Size: 1126 bytes
 
 # Types
 Total Types: 18

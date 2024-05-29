@@ -4,6 +4,7 @@
 
 #include "tact_UserBet.headers.fc";
 #include "tact_UserBet.stdlib.fc";
+#include "tact_UserBet.constants.fc";
 #include "tact_UserBet.storage.fc";
 
 ;;
@@ -34,20 +35,26 @@
     throw_unless(53624, ($self'outcome == (- 1)));
     $self'outcome = $msg'outcome;
     $self'betAmount = $msg'betAmount;
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, ($Context$_get_value(__tact_context_get()) - 10000000), 2, __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11()));
     return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
 }
 
 ((slice, slice, int, int), ()) $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01((slice, slice, int, int) $self) impure inline {
     var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
     throw_unless(9949, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, 20000000, 2, $ClaimWinningsInfo$_store_cell($ClaimWinningsInfo$_constructor_outcome_betAmount_userBet($self'outcome, $self'betAmount, my_address()))));
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, 40000000, 2, $ClaimWinningsInfo$_store_cell($ClaimWinningsInfo$_constructor_outcome_betAmount_userBet($self'outcome, $self'betAmount, my_address()))));
     return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
 }
 
 ((slice, slice, int, int), ()) $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5((slice, slice, int, int) $self) impure inline {
     var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
     throw_unless(25427, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
-    $global_send($SendParameters$_constructor_to_value_mode($self'owner, 0, ((128 | 32) | 2)));
+    $global_send($SendParameters$_constructor_to_value_mode($self'owner, 0, (((128 | 64) | 32) | 2)));
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
+}
+
+((slice, slice, int, int), ()) $UserBet$_receive_bounce((slice, slice, int, int) $self, slice $src) impure inline {
+    var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
     return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
 }
 
@@ -92,6 +99,13 @@ _ lazy_deployment_completed() method_id {
 ((slice, slice, int, int), int) $UserBet$_contract_router_internal((slice, slice, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
+        
+        ;; Skip 0xFFFFFFFF
+        in_msg~skip_bits(32);
+        
+        ;; Fallback bounce receiver
+        self~$UserBet$_receive_bounce(in_msg);
+        
         return (self, true);
     }
     

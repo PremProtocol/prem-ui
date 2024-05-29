@@ -83,6 +83,10 @@ int __tact_slice_eq_bits(slice a, slice b) inline {
     return equal_slice_bits(a, b);
 }
 
+int __tact_slice_neq(slice a, slice b) inline {
+    return (a.slice_hash() !=  b.slice_hash());
+}
+
 cell __tact_dict_set_code(cell dict, int id, cell code) inline {
     return udict_set_ref(dict, 16, id, code);
 }

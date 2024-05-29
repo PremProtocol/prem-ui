@@ -1,6 +1,9 @@
 ;; String ""
 slice __gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7() asm "B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE";
 
+;; Comment "refund"
+cell __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11() asm "B{b5ee9c7241010101000c00001400000000726566756e647b1f4f15} B>boc PUSHREF";
+
 ;; Comment "gas returned"
 cell __gen_cell_comment_2c6b6b865e2040850946d4affb813aa640fc59bf74d62a27acb5af4c6537968f() asm "B{b5ee9c72410101010012000020000000006761732072657475726e65648c97195b} B>boc PUSHREF";
 
