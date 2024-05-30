@@ -19,7 +19,7 @@ const CreateMarket: React.FC = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="create-market-container">
       <form className="form" onSubmit={handleSubmit}>
         <label>
           Event Description:

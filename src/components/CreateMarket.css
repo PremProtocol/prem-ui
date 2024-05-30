@@ -6,6 +6,14 @@
   width: 100%;
 }
 
+.create-market-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  max-width: 300px;
+}
+
 label {
   font-weight: bold;
 }
