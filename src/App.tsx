@@ -17,15 +17,15 @@ function App() {
             <TonConnectButton /> {/* TonConnectButton on the right */}
           </div>
           <nav>
-            <Link to="/">Home</Link>
-            <Link to="/pre-markets">Pre-Markets</Link>
-            <Link to="/user-bets">User Bets</Link>
+            <Link to="/prem-ui/">Home</Link>
+            <Link to="/prem-ui/pre-markets">Pre-Markets</Link>
+            <Link to="/prem-ui/user-bets">User Bets</Link>
           </nav>
         </header>
         <Routes>
-          <Route path="/" element={<CreateMarket />} />
-          <Route path="/pre-markets" element={<PredictionMarkets />} />
-          <Route path="/user-bets" element={<UserBets />} />
+          <Route path="/prem-ui/" element={<CreateMarket />} />
+          <Route path="/prem-ui/pre-markets" element={<PredictionMarkets />} />
+          <Route path="/prem-ui/user-bets" element={<UserBets />} />
         </Routes>
       </div>
     </Router>
