@@ -1,6 +1,6 @@
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { Address, OpenedContract, toNano } from '@ton/core';
-import { PredictionMarket } from '../wrappers/PredictionMarket';
+import { PredictionMarket, ResolveMarket } from '../wrappers/PredictionMarket';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { PlaceBet } from '../wrappers/UserBet';
@@ -29,7 +29,17 @@ export function usePredictionMarketContract(predictionMarketAddress: Address) {
       }
 
       predictionMarketContract?.send(sender, {
-          value: toNano(betAmount)
+          value: toNano(betAmount) + toNano("0.03")
+      }, message)
+    },
+    resolveMarket: (outcome: number) => {
+      const message: ResolveMarket = {
+        $$type: "ResolveMarket",
+        outcome: BigInt(outcome),
+    }
+
+      predictionMarketContract?.send(sender, {
+          value: toNano("0.03")
       }, message)
     }
   };

@@ -144,13 +144,14 @@ PROGRAM{
     -ROT
   }>
   $UserBet$_store PROCINLINE:<{
-    s4 s3 XCHG2
+    s5 s4 XCHG2
     __tact_store_address INLINECALLDICT
-    SWAP
+    ROT
     __tact_store_address INLINECALLDICT
-    s1 s2 XCHG
     64 STU
+    s1 s2 XCHG
     8 STI
+    1 STI
   }>
   $UserBet$_load PROCINLINE:<{
     __tact_load_address INLINECALLDICT
@@ -159,7 +160,8 @@ PROGRAM{
     SWAP
     64 LDU
     8 LDI
-    4 -ROLL
+    1 LDI
+    5 -ROLL
   }>
   $StateInit$_not_null PROCINLINE:<{
     DUP
@@ -182,6 +184,7 @@ PROGRAM{
   $UserBet$_contract_init PROCREF:<{
     0 PUSHINT
     -1 PUSHINT
+    FALSE
   }>
   $UserBet$_contract_load PROCREF:<{
     c4 PUSH
@@ -193,7 +196,7 @@ PROGRAM{
     SWAP
     IFJMP:<{
       $UserBet$_load INLINECALLDICT
-      1 4 BLKDROP2
+      1 5 BLKDROP2
     }>
     MYADDR
     11 PLDU
@@ -214,7 +217,7 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
-    4 -ROLL
+    5 -ROLL
     $UserBet$_store INLINECALLDICT
     ENDC
     c4 POP
@@ -327,7 +330,7 @@ PROGRAM{
     SWAP
   }>
   $UserBet$_fun_userBet PROCREF:<{
-    2DUP
+    s2 s1 PUSH2
     $UserBetInfo$_constructor_betAmount_outcome INLINECALLDICT
   }>
   $UserBet$_fun_forward PROCREF:<{
@@ -378,11 +381,11 @@ PROGRAM{
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
   $UserBet$_internal_binary_PlaceBetInternal PROCINLINE:<{
-    s3 POP
+    s4 POP
     53624 PUSHINT
-    s0 s2 XCHG
+    s0 s3 XCHG
     -1 EQINT
-    s1 s2 XCHG
+    s1 s3 XCHG
     THROWANYIFNOT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
@@ -390,7 +393,7 @@ PROGRAM{
     SUB
     2 PUSHINT
     B{b5ee9c7241010101000c00001400000000726566756e647b1f4f15} B>boc PUSHREF
-    s6 PUSH
+    s7 PUSH
     3 -ROLL
     $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
@@ -398,16 +401,20 @@ PROGRAM{
   $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01 PROCINLINE:<{
     9949 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s5 s(-1) PUXC
+    s6 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    40000000 PUSHINT
+    8274 PUSHINT
+    OVER
+    0 EQINT
+    THROWANYIFNOT
+    20000000 PUSHINT
     2 PUSHINT
     MYADDR
-    s3 s4 s(-2) PU2XC
+    s4 s5 s(-2) PU2XC
     $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet INLINECALLDICT
     $ClaimWinningsInfo$_store_cell INLINECALLDICT
-    s5 PUSH
+    s6 PUSH
     3 -ROLL
     $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
@@ -415,10 +422,15 @@ PROGRAM{
   $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5 PROCINLINE:<{
     25427 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s4 s(-1) PUXC
+    s5 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    s3 PUSH
+    8274 PUSHINT
+    SWAP
+    0 EQINT
+    THROWANYIFNOT
+    TRUE
+    s4 PUSH
     0 PUSHINT
     226 PUSHINT
     $SendParameters$_constructor_to_value_mode INLINECALLDICT
@@ -435,7 +447,7 @@ PROGRAM{
   %userBet PROC:<{
     $UserBet$_contract_load INLINECALLDICT
     $UserBet$_fun_userBet INLINECALLDICT
-    4 2 BLKDROP2
+    5 2 BLKDROP2
     $UserBetInfo$_to_external INLINECALLDICT
   }>
   supported_interfaces PROC:<{
@@ -445,7 +457,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d58755741775264757a53714a66343542483733344a74695a4d57544c705a6b4642466e4a6531317357746139} PUSHSLICE
+    x{697066733a2f2f516d624c6b473235386b7434454171717876675059324567486d4b50387351755944763361387648343771543467} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -535,7 +547,7 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     $UserBet$_contract_load INLINECALLDICT
-    2 4 BLKSWAP
+    2 5 BLKSWAP
     $UserBet$_contract_router_internal INLINECALLDICT
     130 THROWIFNOT
     $UserBet$_contract_store INLINECALLDICT

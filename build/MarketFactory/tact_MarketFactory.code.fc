@@ -56,13 +56,12 @@
     ($self'owner, $self'predictionMarketCount)~$MarketFactory$_fun_requireOwner();
     var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, my_address(), $self'predictionMarketCount);
     slice $preMarketContractAddress = $global_contractAddress(($initState'code, $initState'data));
-    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($preMarketContractAddress, 30000000, 2, $initState'code, $initState'data, $MarketInitialize$_store_cell($MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(__tact_context_get_sender(), $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes))));
     $self'predictionMarketCount = $self'predictionMarketCount + 1;
-    return (($self'owner, $self'predictionMarketCount), ());
-}
-
-((slice, int), ()) $MarketFactory$_receive_bounce((slice, int) $self, slice $src) impure inline {
-    var ($self'owner, $self'predictionMarketCount) = $self;
+    int $messageValue = $Context$_get_value(__tact_context_get());
+    if ((__tact_my_balance() < 20000000)) {
+        $messageValue = ($Context$_get_value(__tact_context_get()) - 20000000);
+    }
+    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($preMarketContractAddress, $messageValue, 2, $initState'code, $initState'data, $MarketInitialize$_store_cell($MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(__tact_context_get_sender(), $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes))));
     return (($self'owner, $self'predictionMarketCount), ());
 }
 
@@ -117,7 +116,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://Qmf6dvfpr9EHsLuB85YUy6AiK5mrTpswgoxGLSsgAiAVSy";
+    return "ipfs://QmbWM7sMR7BUu4b1N5sDQsN9DLYp4Xct24XdTgWoAhS681";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -131,13 +130,6 @@ _ lazy_deployment_completed() method_id {
 ((slice, int), int) $MarketFactory$_contract_router_internal((slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
-        
-        ;; Skip 0xFFFFFFFF
-        in_msg~skip_bits(32);
-        
-        ;; Fallback bounce receiver
-        self~$MarketFactory$_receive_bounce(in_msg);
-        
         return (self, true);
     }
     

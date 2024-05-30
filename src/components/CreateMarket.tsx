@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
+import ResolveMarkets from './ResolveMarkets';
 
 const CreateMarket: React.FC = () => {
   const {addNewPredictionMarket, createMarket} = useMarketFactoryContract();
@@ -54,6 +55,7 @@ const CreateMarket: React.FC = () => {
         </label>
         <button type="submit">Create Market</button>
       </form>
+      <ResolveMarkets />
     </div>
   );
 };

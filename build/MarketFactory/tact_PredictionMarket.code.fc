@@ -31,7 +31,7 @@
     var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
     var ($userBetInitState'code, $userBetInitState'data) = $UserBet$_init_child(__tact_context_sys, $owner, $parent);
     slice $userBetAddress = $global_contractAddress(($userBetInitState'code, $userBetInitState'data));
-    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, 30000000, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome_betAmount($outcome, $betAmount))));
+    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, 25000000, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome_betAmount($outcome, $betAmount))));
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
@@ -82,7 +82,9 @@
     $self'numOutcomes = $msg'numOutcomes;
     $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, 0, 0, 64);
     $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, 1, 0, 64);
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, ($Context$_get_value(__tact_context_get()) - 20000000), 2, __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11()));
+    if (($Context$_get_value(__tact_context_get()) > 20000000)) {
+        $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, ($Context$_get_value(__tact_context_get()) - 20000000), 2, __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11()));
+    }
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
@@ -182,7 +184,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmUtgZmywwc3jTC5smT8rksEmwXLAiCpng1piPSSYoRchJ";
+    return "ipfs://QmUS4uDmVUqNAzkV6M9xMBZTLho97TQE5urrhhb34TkuMC";
 }
 
 _ lazy_deployment_completed() method_id {

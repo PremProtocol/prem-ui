@@ -9,7 +9,6 @@ import Loader from "react-js-loader";
 const UserBet: React.FC<PredictionMarketDetails> = ({ predictionMarketDetails }) => {
   const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(predictionMarketDetails.selfAddress);
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
-  const claimingAmount: number = 0;
   const handleClaim = () => {
     claimWinnings();
   };
@@ -35,16 +34,16 @@ const UserBet: React.FC<PredictionMarketDetails> = ({ predictionMarketDetails })
       <div className="market-controls">
         {eventEnded ? (
             predictionMarketDetails.resolved ? (
-            <p>Wait until host resolve the market</p>
-            ) : (
             <div className="claim-section">
               <label className="claim-label">Claim Amount:</label>
-              <div className="claim-amount">{claimingAmount}</div>
-              <button onClick={handleClaim} disabled={claimingAmount === 0}>Claim</button>
+              <div className="claim-amount">{fromNano(Number(userBet.betAmount))}</div>
+              <button onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
             </div>
+            ) : (
+            <p className="centered-text">Wait until host resolve the market</p>
             )
         ) : (
-          <p>Wait until end of event</p>
+          <p className="centered-text">Wait until end of event</p>
         )}
       </div>
     </div>

@@ -11,58 +11,62 @@
 ;; Contract UserBet functions
 ;;
 
-(slice, slice, int, int) $UserBet$_contract_init(slice $owner, slice $parent) impure inline_ref {
-    var (($self'owner, $self'parent, $self'betAmount, $self'outcome)) = (null(), null(), null(), null());
+(slice, slice, int, int, int) $UserBet$_contract_init(slice $owner, slice $parent) impure inline_ref {
+    var (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed)) = (null(), null(), null(), null(), null());
     $self'owner = $owner;
     $self'parent = $parent;
     $self'betAmount = 0;
     $self'outcome = (- 1);
-    return ($self'owner, $self'parent, $self'betAmount, $self'outcome);
+    $self'isClaimed = false;
+    return ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed);
 }
 
-((slice, slice, int, int), (int, int)) $UserBet$_fun_userBet((slice, slice, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'parent, $self'betAmount, $self'outcome)) = $self;
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), $UserBetInfo$_constructor_betAmount_outcome($self'betAmount, $self'outcome));
+((slice, slice, int, int, int), (int, int)) $UserBet$_fun_userBet((slice, slice, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed)) = $self;
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), $UserBetInfo$_constructor_betAmount_outcome($self'betAmount, $self'outcome));
 }
 
 ;;
 ;; Receivers of a Contract UserBet
 ;;
 
-(((slice, slice, int, int)), ()) $UserBet$_internal_binary_PlaceBetInternal((slice, slice, int, int) $self, (int, int) $msg) impure inline {
-    var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
+(((slice, slice, int, int, int)), ()) $UserBet$_internal_binary_PlaceBetInternal((slice, slice, int, int, int) $self, (int, int) $msg) impure inline {
+    var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
     var ($msg'outcome, $msg'betAmount) = $msg;
     throw_unless(53624, ($self'outcome == (- 1)));
     $self'outcome = $msg'outcome;
     $self'betAmount = $msg'betAmount;
     $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, ($Context$_get_value(__tact_context_get()) - 10000000), 2, __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11()));
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
-((slice, slice, int, int), ()) $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01((slice, slice, int, int) $self) impure inline {
-    var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
+((slice, slice, int, int, int), ()) $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01((slice, slice, int, int, int) $self) impure inline {
+    var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
     throw_unless(9949, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, 40000000, 2, $ClaimWinningsInfo$_store_cell($ClaimWinningsInfo$_constructor_outcome_betAmount_userBet($self'outcome, $self'betAmount, my_address()))));
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
+    throw_unless(8274, ($self'isClaimed == false));
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, 20000000, 2, $ClaimWinningsInfo$_store_cell($ClaimWinningsInfo$_constructor_outcome_betAmount_userBet($self'outcome, $self'betAmount, my_address()))));
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
-((slice, slice, int, int), ()) $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5((slice, slice, int, int) $self) impure inline {
-    var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
+((slice, slice, int, int, int), ()) $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5((slice, slice, int, int, int) $self) impure inline {
+    var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
     throw_unless(25427, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
+    throw_unless(8274, ($self'isClaimed == false));
+    $self'isClaimed = true;
     $global_send($SendParameters$_constructor_to_value_mode($self'owner, 0, (((128 | 64) | 32) | 2)));
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
-((slice, slice, int, int), ()) $UserBet$_receive_bounce((slice, slice, int, int) $self, slice $src) impure inline {
-    var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
+((slice, slice, int, int, int), ()) $UserBet$_receive_bounce((slice, slice, int, int, int) $self, slice $src) impure inline {
+    var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
-(((slice, slice, int, int)), ()) $UserBet$_internal_binary_Deploy((slice, slice, int, int) $self, (int) $deploy) impure inline {
-    var ($self'owner, $self'parent, $self'betAmount, $self'outcome) = $self;
+(((slice, slice, int, int, int)), ()) $UserBet$_internal_binary_Deploy((slice, slice, int, int, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
     var ($deploy'queryId) = $deploy;
-    ($self'owner, $self'parent, $self'betAmount, $self'outcome)~$UserBet$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
-    return (($self'owner, $self'parent, $self'betAmount, $self'outcome), ());
+    ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed)~$UserBet$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
 ;;
@@ -85,7 +89,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmXuWAwRduzSqJf45BH734JtiZMWTLpZkFBFnJe11sWta9";
+    return "ipfs://QmbLkG258kt4EAqqxvgPY2EgHmKP8sQuYDv3a8vH47qT4g";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -96,7 +100,7 @@ _ lazy_deployment_completed() method_id {
 ;; Routing of a Contract UserBet
 ;;
 
-((slice, slice, int, int), int) $UserBet$_contract_router_internal((slice, slice, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+((slice, slice, int, int, int), int) $UserBet$_contract_router_internal((slice, slice, int, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
         

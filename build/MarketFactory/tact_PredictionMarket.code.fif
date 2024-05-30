@@ -597,7 +597,7 @@ PROGRAM{
     $UserBet$_init_child INLINECALLDICT
     2DUP
     $global_contractAddress INLINECALLDICT
-    30000000 PUSHINT
+    25000000 PUSHINT
     s0 s5 XCHG
     2 PUSHINT
     s0 s5 XCHG
@@ -742,13 +742,19 @@ PROGRAM{
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
     20000000 PUSHINT
-    SUB
-    2 PUSHINT
-    B{b5ee9c7241010101000c00001400000000726566756e647b1f4f15} B>boc PUSHREF
-    s14 PUSH
-    3 -ROLL
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
-    $global_send INLINECALLDICT
+    GREATER
+    IF:<{
+      __tact_context_get INLINECALLDICT
+      $Context$_get_value INLINECALLDICT
+      20000000 PUSHINT
+      SUB
+      2 PUSHINT
+      B{b5ee9c7241010101000c00001400000000726566756e647b1f4f15} B>boc PUSHREF
+      s14 PUSH
+      3 -ROLL
+      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+      $global_send INLINECALLDICT
+    }>
     SWAP
   }>
   $PredictionMarket$_internal_binary_PlaceBet PROCINLINE:<{
@@ -891,7 +897,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d5574675a6d79777763336a544335736d5438726b73456d77584c416943706e67317069505353596f5263684a} PUSHSLICE
+    x{697066733a2f2f516d55533475446d5655714e417a6b56364d39784d425a544c686f3937545145357572726868623334546b754d43} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

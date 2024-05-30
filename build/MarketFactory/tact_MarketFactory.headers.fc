@@ -81,6 +81,9 @@ builder $MarketFactory$_store(builder build_0, (slice, int) v) inline;
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
 
+;; $Context$_get_value
+_ $Context$_get_value((int, slice, int, slice) v) inline;
+
 ;; $PredictionMarket$init$_store
 builder $PredictionMarket$init$_store(builder build_0, (slice, int) v) inline;
 

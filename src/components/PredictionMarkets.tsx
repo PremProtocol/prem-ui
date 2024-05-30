@@ -5,18 +5,21 @@ import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import Loader from "react-js-loader";
 
 const PredictionMarkets: React.FC = () => {
-  const { predictionMarketDetailsArray } = useMarketFactoryContract();
+  const { predictionMarketDetailsArray, predictionMarketCount } = useMarketFactoryContract();
 
-  console.log(predictionMarketDetailsArray)
   if (!predictionMarketDetailsArray) {
     return <Loader type="spinner-default" bgColor="#000" color="#000" title={"Loading..."} size={100} />;
   }
 
   return (
     <div className="markets-list">
-      {predictionMarketDetailsArray.map((market, index) => (
-        <PredictionMarket key={index} market={market} />
-      ))}
+      {predictionMarketCount === 0 ? (
+        <p className="centered-text"><strong>No prediction market available right now</strong></p>
+        ) : (
+        predictionMarketDetailsArray.map((market, index) => (
+          <PredictionMarket key={index} market={market} />
+        ))
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: PredictionMarket
-BOC Size: 1968 bytes
+BOC Size: 1984 bytes
 
 # Types
 Total Types: 18
@@ -116,6 +116,7 @@ Argument: outcome
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+8274: Winnings already claimed
 9949: Only the owner can claim winnings
 10454: Market should be resolved to claim winnings
 11074: Outcome names must be provided

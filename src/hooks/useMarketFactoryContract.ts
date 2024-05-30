@@ -30,7 +30,7 @@ export function useMarketFactoryContract() {
     if(!client || !wallet) return;
 
     //TODO: remove hardcoded address
-    const contract = MarketFactory.fromAddress(Address.parse("EQCBOmc4BkMe_KdRLo6zGlBCuT4UuubPA_Z8FdXK8dXcyVOz"))
+    const contract = MarketFactory.fromAddress(Address.parse("EQBxPAlndQoeDKOe6BFODVAF8rirvqsP8-U4-iD3KAMtrfyj"))
 
     return client.open(contract) as OpenedContract<MarketFactory>
   }, [client, wallet])
@@ -48,7 +48,7 @@ export function useMarketFactoryContract() {
     async function fetchData() {
       if (marketFactoryContract) {
         const tempArray = [];
-        if(predictionMarketCount === 0 || predictionMarketCount == undefined) return;
+        if(predictionMarketCount == undefined) return;
         for (let i = 0; i < predictionMarketCount; i++) {
           try {
             const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
@@ -73,6 +73,7 @@ export function useMarketFactoryContract() {
             console.log(e)
           }
         }
+        console.log("temp " + tempArray)
         setPredictionMarketDetailsArray(tempArray)
       }
     }
@@ -95,7 +96,7 @@ export function useMarketFactoryContract() {
       }
 
       marketFactoryContract?.send(sender, {
-          value: toNano("0.05")
+          value: toNano("0.06")
       }, message)
     },
     getChildAddress: async (childSeqno: string) => {

@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: UserBet
-BOC Size: 1126 bytes
+BOC Size: 1146 bytes
 
 # Types
 Total Types: 18
@@ -107,6 +107,7 @@ Total Get Methods: 1
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+8274: Winnings already claimed
 9949: Only the owner can claim winnings
 10454: Market should be resolved to claim winnings
 11074: Outcome names must be provided

@@ -49,10 +49,10 @@ cell $ClaimWinningsInfo$_store_cell((int, slice, int) v) inline;
 (slice, ((int, int))) $PlaceBetInternal$_load(slice sc_0) inline;
 
 ;; $UserBet$_store
-builder $UserBet$_store(builder build_0, (slice, slice, int, int) v) inline;
+builder $UserBet$_store(builder build_0, (slice, slice, int, int, int) v) inline;
 
 ;; $UserBet$_load
-(slice, ((slice, slice, int, int))) $UserBet$_load(slice sc_0) inline;
+(slice, ((slice, slice, int, int, int))) $UserBet$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
@@ -67,13 +67,13 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 (slice, ((slice, slice))) $UserBet$init$_load(slice sc_0) inline;
 
 ;; $UserBet$_contract_init
-(slice, slice, int, int) $UserBet$_contract_init(slice $owner, slice $parent) impure inline_ref;
+(slice, slice, int, int, int) $UserBet$_contract_init(slice $owner, slice $parent) impure inline_ref;
 
 ;; $UserBet$_contract_load
-(slice, slice, int, int) $UserBet$_contract_load() impure inline_ref;
+(slice, slice, int, int, int) $UserBet$_contract_load() impure inline_ref;
 
 ;; $UserBet$_contract_store
-() $UserBet$_contract_store((slice, slice, int, int) v) impure inline;
+() $UserBet$_contract_store((slice, slice, int, int, int) v) impure inline;
 
 ;; $global_send
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
@@ -85,13 +85,13 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 ((int, int)) $UserBetInfo$_constructor_betAmount_outcome(int betAmount, int outcome) inline;
 
 ;; $UserBet$_fun_userBet
-((slice, slice, int, int), (int, int)) $UserBet$_fun_userBet((slice, slice, int, int) $self) impure inline_ref;
+((slice, slice, int, int, int), (int, int)) $UserBet$_fun_userBet((slice, slice, int, int, int) $self) impure inline_ref;
 
 ;; $UserBet$_fun_forward
-((slice, slice, int, int), ()) $UserBet$_fun_forward((slice, slice, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, slice, int, int, int), ()) $UserBet$_fun_forward((slice, slice, int, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $UserBet$_fun_notify
-((slice, slice, int, int), ()) $UserBet$_fun_notify((slice, slice, int, int) $self, cell $body) impure inline;
+((slice, slice, int, int, int), ()) $UserBet$_fun_notify((slice, slice, int, int, int) $self, cell $body) impure inline;
 
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;
