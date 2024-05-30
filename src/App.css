@@ -10,8 +10,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 960px;
-  padding: 0 1rem;
+  max-width: 560px;
   margin: 0 auto;
 }
 

@@ -27,9 +27,6 @@ slice __tact_context_get_sender() inline;
 ;; __tact_store_bool
 builder __tact_store_bool(builder b, int v) inline;
 
-;; __tact_slice_eq_bits
-int __tact_slice_eq_bits(slice a, slice b) inline;
-
 ;; $Deploy$_load
 (slice, ((int))) $Deploy$_load(slice sc_0) inline;
 
@@ -96,11 +93,8 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;
 
-;; $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet
-((int, slice, int)) $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet(int outcome, int betAmount, slice userBet) inline;
-
-;; $SendParameters$_constructor_to_value_mode
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode(slice to, int value, int mode) inline;
+;; $ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress
+((int, slice, int)) $ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress(int outcome, int betAmount, slice walletAddress) inline;
 
 ;; $DeployOk$_constructor_queryId
 ((int)) $DeployOk$_constructor_queryId(int queryId) inline;

@@ -267,7 +267,7 @@ PROGRAM{
   $ClaimWinningsInfo$_load PROCINLINE:<{
     32 LDU
     SWAP
-    1086734434 PUSHINT
+    3371601891 PUSHINT
     EQUAL
     129 THROWIFNOT
     64 LDU
@@ -823,11 +823,6 @@ PROGRAM{
     $PredictionMarket$_fun_reply INLINECALLDICT
   }>
   $PredictionMarket$_internal_binary_ClaimWinningsInfo PROCINLINE:<{
-    39401 PUSHINT
-    __tact_context_get_sender INLINECALLDICT
-    s3 s(-1) PUXC
-    __tact_slice_eq_bits INLINECALLDICT
-    THROWANYIFNOT
     10454 PUSHINT
     s10 PUSH
     THROWANYIFNOT
@@ -835,24 +830,37 @@ PROGRAM{
     s9 s1 PUSH2
     EQUAL
     THROWANYIFNOT
-    s8 s0 PUSH2
+    __tact_context_sys GETGLOB
+    MYADDR
+    s1 s3 s0 XCHG3
+    $UserBet$_init_child INLINECALLDICT
+    $global_contractAddress INLINECALLDICT
+    39401 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s1 s2 XCHG
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    s7 s0 PUSH2
     EQUAL
     IF:<{
-      s2 s3 XCPU
+      s1 s2 XCPU
       MUL
       8 PUSHINT
-      s5 s0 s3 PUXC2
+      s4 s0 s2 PUXC2
       64 PUSHINT
       __tact_dict_get_uint_uint INLINECALLDICT
       __tact_not_null INLINECALLDICT
-      s1 s2 XCHG
       DIV
-      66 PUSHINT
+      __tact_context_get_sender INLINECALLDICT
+      SWAP
+      10000000 PUSHINT
+      SUB
+      2 PUSHINT
       B{b5ee9c7241010101001b00003200000000636c61696d57696e6e696e6773496e7465726e616c5f0fdcc9} B>boc PUSHREF
       $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
       $global_send INLINECALLDICT
     }>ELSE<{
-      3 BLKDROP
+      2DROP
     }>
   }>
   $PredictionMarket$_receive_bounce PROCINLINE:<{
@@ -897,7 +905,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d55533475446d5655714e417a6b56364d39784d425a544c686f3937545145357572726868623334546b754d43} PUSHSLICE
+    x{697066733a2f2f516d556969315461356f326f55555767564a4d34707a3662427056657553575147735a74477a374847724e736b50} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -953,7 +961,7 @@ PROGRAM{
       TRUE
     }>
     DUP
-    1086734434 PUSHINT
+    3371601891 PUSHINT
     EQUAL
     IFJMP:<{
       DROP

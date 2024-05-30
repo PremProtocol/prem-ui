@@ -112,16 +112,16 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: ClaimWinningsInfo
-;; Header: 0x40c64062
-;; TLB: claim_winnings_info#40c64062 betAmount:uint64 userBet:address outcome:int8 = ClaimWinningsInfo
+;; Header: 0xc8f68fe3
+;; TLB: claim_winnings_info#c8f68fe3 betAmount:uint64 walletAddress:address outcome:int8 = ClaimWinningsInfo
 ;;
 
 (slice, ((int, slice, int))) $ClaimWinningsInfo$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 1086734434);
+    throw_unless(129, sc_0~load_uint(32) == 3371601891);
     var v'betAmount = sc_0~load_uint(64);
-    var v'userBet = sc_0~__tact_load_address();
+    var v'walletAddress = sc_0~__tact_load_address();
     var v'outcome = sc_0~load_int(8);
-    return (sc_0, (v'betAmount, v'userBet, v'outcome));
+    return (sc_0, (v'betAmount, v'walletAddress, v'outcome));
 }
 
 ;;

@@ -57,9 +57,9 @@
     var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, my_address(), $self'predictionMarketCount);
     slice $preMarketContractAddress = $global_contractAddress(($initState'code, $initState'data));
     $self'predictionMarketCount = $self'predictionMarketCount + 1;
-    int $messageValue = $Context$_get_value(__tact_context_get());
+    int $messageValue = ($Context$_get_value(__tact_context_get()) - 20000000);
     if ((__tact_my_balance() < 20000000)) {
-        $messageValue = ($Context$_get_value(__tact_context_get()) - 20000000);
+        $messageValue = ($messageValue - 20000000);
     }
     $global_send($SendParameters$_constructor_to_value_mode_code_data_body($preMarketContractAddress, $messageValue, 2, $initState'code, $initState'data, $MarketInitialize$_store_cell($MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(__tact_context_get_sender(), $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes))));
     return (($self'owner, $self'predictionMarketCount), ());
@@ -116,7 +116,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmbWM7sMR7BUu4b1N5sDQsN9DLYp4Xct24XdTgWoAhS681";
+    return "ipfs://QmXRwdJRNABeXEQ4dH62KGBLyHXadt8he1eLDS8o4PBkhf";
 }
 
 _ lazy_deployment_completed() method_id {

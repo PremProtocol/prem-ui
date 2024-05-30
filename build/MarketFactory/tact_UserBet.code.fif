@@ -7,7 +7,6 @@ PROGRAM{
   DECLPROC __tact_context_get
   DECLPROC __tact_context_get_sender
   DECLPROC __tact_store_bool
-  DECLPROC __tact_slice_eq_bits
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
@@ -30,8 +29,7 @@ PROGRAM{
   DECLPROC $UserBet$_fun_forward
   DECLPROC $UserBet$_fun_notify
   DECLPROC $SendParameters$_constructor_to_value_mode_body
-  DECLPROC $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet
-  DECLPROC $SendParameters$_constructor_to_value_mode
+  DECLPROC $ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $UserBet$_internal_binary_PlaceBetInternal
   DECLPROC $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01
@@ -93,9 +91,6 @@ PROGRAM{
     SWAP
     1 STI
   }>
-  __tact_slice_eq_bits PROCINLINE:<{
-    SDEQ
-  }>
   $Deploy$_load PROCINLINE:<{
     32 LDU
     SWAP
@@ -118,7 +113,7 @@ PROGRAM{
     ENDC
   }>
   $ClaimWinningsInfo$_store PROCINLINE:<{
-    1086734434 PUSHINT
+    3371601891 PUSHINT
     s0 s4 XCHG2
     32 STU
     s1 s2 XCHG
@@ -368,15 +363,8 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
   }>
-  $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet PROCINLINE:<{
+  $ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress PROCINLINE:<{
     ROT
-  }>
-  $SendParameters$_constructor_to_value_mode PROCINLINE:<{
-    TRUE
-    3 -ROLL
-    PUSHNULL
-    PUSHNULL
-    PUSHNULL
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
@@ -399,20 +387,11 @@ PROGRAM{
     $global_send INLINECALLDICT
   }>
   $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01 PROCINLINE:<{
-    9949 PUSHINT
-    __tact_context_get_sender INLINECALLDICT
-    s6 s(-1) PUXC
-    __tact_slice_eq_bits INLINECALLDICT
-    THROWANYIFNOT
-    8274 PUSHINT
-    OVER
-    0 EQINT
-    THROWANYIFNOT
-    20000000 PUSHINT
+    60000000 PUSHINT
     2 PUSHINT
-    MYADDR
+    __tact_context_get_sender INLINECALLDICT
     s4 s5 s(-2) PU2XC
-    $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet INLINECALLDICT
+    $ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress INLINECALLDICT
     $ClaimWinningsInfo$_store_cell INLINECALLDICT
     s6 PUSH
     3 -ROLL
@@ -420,20 +399,14 @@ PROGRAM{
     $global_send INLINECALLDICT
   }>
   $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5 PROCINLINE:<{
-    25427 PUSHINT
-    __tact_context_get_sender INLINECALLDICT
-    s5 s(-1) PUXC
-    __tact_slice_eq_bits INLINECALLDICT
-    THROWANYIFNOT
-    8274 PUSHINT
-    SWAP
-    0 EQINT
-    THROWANYIFNOT
+    DROP
     TRUE
-    s4 PUSH
-    0 PUSHINT
-    226 PUSHINT
-    $SendParameters$_constructor_to_value_mode INLINECALLDICT
+    1000000 PUSHINT
+    2 PUSHINT
+    B{b5ee9c7241010101000d0000160000000077696e6e696e67ad40cc63} B>boc PUSHREF
+    s7 PUSH
+    3 -ROLL
+    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
   $UserBet$_receive_bounce PROCINLINE:<{
@@ -457,7 +430,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d624c6b473235386b7434454171717876675059324567486d4b50387351755944763361387648343771543467} PUSHSLICE
+    x{697066733a2f2f516d52426b666b53736a4d544736686167375437426b48615a5965376d706b774a775a4e7238325a575a74744841} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

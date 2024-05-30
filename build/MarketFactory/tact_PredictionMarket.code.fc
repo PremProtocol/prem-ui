@@ -116,13 +116,15 @@
 
 (((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_ClaimWinningsInfo((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, (int, slice, int) $msg) impure inline {
     var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
-    var ($msg'betAmount, $msg'userBet, $msg'outcome) = $msg;
-    throw_unless(39401, ( __tact_slice_eq_bits($msg'userBet, __tact_context_get_sender()) ));
+    var ($msg'betAmount, $msg'walletAddress, $msg'outcome) = $msg;
     throw_unless(10454, $self'resolved);
     throw_unless(22516, ($self'outcome == $msg'outcome));
+    var ($userBetInitState'code, $userBetInitState'data) = $UserBet$_init_child(__tact_context_sys, $msg'walletAddress, my_address());
+    slice $userBetAddress = $global_contractAddress(($userBetInitState'code, $userBetInitState'data));
+    throw_unless(39401, ( __tact_slice_eq_bits($userBetAddress, __tact_context_get_sender()) ));
     if (($self'outcome == $msg'outcome)) {
         int $userShare = (($msg'betAmount * $self'totalPool) / __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $msg'outcome, 64)));
-        $global_send($SendParameters$_constructor_to_value_mode_body($msg'userBet, $userShare, (64 | 2), __gen_cell_comment_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5()));
+        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), ($userShare - 10000000), 2, __gen_cell_comment_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5()));
     }
     return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
@@ -184,7 +186,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmUS4uDmVUqNAzkV6M9xMBZTLho97TQE5urrhhb34TkuMC";
+    return "ipfs://QmUii1Ta5o2oUUWgVJM4pz6bBpVeuSWQGsZtGz7HGrNskP";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -237,7 +239,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive ClaimWinningsInfo message
-    if (op == 1086734434) {
+    if (op == 3371601891) {
         var msg = in_msg~$ClaimWinningsInfo$_load();
         self~$PredictionMarket$_internal_binary_ClaimWinningsInfo(msg);
         return (self, true);

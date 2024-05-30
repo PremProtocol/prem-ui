@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: UserBet
-BOC Size: 1146 bytes
+BOC Size: 1128 bytes
 
 # Types
 Total Types: 18
@@ -58,8 +58,8 @@ TLB: `resolve_market#46e6f3c8 outcome:int8 = ResolveMarket`
 Signature: `ResolveMarket{outcome:int8}`
 
 ## ClaimWinningsInfo
-TLB: `claim_winnings_info#40c64062 betAmount:uint64 userBet:address outcome:int8 = ClaimWinningsInfo`
-Signature: `ClaimWinningsInfo{betAmount:uint64,userBet:address,outcome:int8}`
+TLB: `claim_winnings_info#c8f68fe3 betAmount:uint64 walletAddress:address outcome:int8 = ClaimWinningsInfo`
+Signature: `ClaimWinningsInfo{betAmount:uint64,walletAddress:address,outcome:int8}`
 
 ## PredictionMarketDetails
 TLB: `prediction_market_details#820ef6a8 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails`
@@ -107,8 +107,6 @@ Total Get Methods: 1
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
-8274: Winnings already claimed
-9949: Only the owner can claim winnings
 10454: Market should be resolved to claim winnings
 11074: Outcome names must be provided
 16210: Should be only 2 outcomes
@@ -118,7 +116,6 @@ Total Get Methods: 1
 24032: Betting has ended
 24122: Only parent contract can init the market
 24933: Only owner can resolve market
-25427: Only the market can call this function
 38283: Invalid outcome
 38368: Event has not ended
 39401: Only owner can claim winnings

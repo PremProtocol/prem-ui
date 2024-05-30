@@ -32,10 +32,6 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
     return (true, to, value, mode, body, null(), null());
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode(slice to, int value, int mode) inline {
-    return (true, to, value, mode, null(), null(), null());
-}
-
 ;;
 ;; Type: Deploy
 ;; Header: 0x946a98b6
@@ -71,15 +67,15 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: ClaimWinningsInfo
-;; Header: 0x40c64062
-;; TLB: claim_winnings_info#40c64062 betAmount:uint64 userBet:address outcome:int8 = ClaimWinningsInfo
+;; Header: 0xc8f68fe3
+;; TLB: claim_winnings_info#c8f68fe3 betAmount:uint64 walletAddress:address outcome:int8 = ClaimWinningsInfo
 ;;
 
 builder $ClaimWinningsInfo$_store(builder build_0, (int, slice, int) v) inline {
-    var (v'betAmount, v'userBet, v'outcome) = v;
-    build_0 = store_uint(build_0, 1086734434, 32);
+    var (v'betAmount, v'walletAddress, v'outcome) = v;
+    build_0 = store_uint(build_0, 3371601891, 32);
     build_0 = build_0.store_uint(v'betAmount, 64);
-    build_0 = __tact_store_address(build_0, v'userBet);
+    build_0 = __tact_store_address(build_0, v'walletAddress);
     build_0 = build_0.store_int(v'outcome, 8);
     return build_0;
 }
@@ -88,8 +84,8 @@ cell $ClaimWinningsInfo$_store_cell((int, slice, int) v) inline {
     return $ClaimWinningsInfo$_store(begin_cell(), v).end_cell();
 }
 
-((int, slice, int)) $ClaimWinningsInfo$_constructor_outcome_betAmount_userBet(int outcome, int betAmount, slice userBet) inline {
-    return (betAmount, userBet, outcome);
+((int, slice, int)) $ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress(int outcome, int betAmount, slice walletAddress) inline {
+    return (betAmount, walletAddress, outcome);
 }
 
 ;;
