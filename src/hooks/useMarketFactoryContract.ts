@@ -30,7 +30,7 @@ export function useMarketFactoryContract() {
     if(!client || !wallet) return;
 
     //TODO: remove hardcoded address
-    const contract = MarketFactory.fromAddress(Address.parse("EQDWEGBhFk__KFTXy3p_ExQ2zjYYHNA6nQLWYCIL_wAGEp9_"))
+    const contract = MarketFactory.fromAddress(Address.parse("EQDxIv76zWDH2SMU7onBk4X-WvQLYsoAaopUyHO2aKY0M4GI"))
 
     return client.open(contract) as OpenedContract<MarketFactory>
   }, [client, wallet])
@@ -73,7 +73,6 @@ export function useMarketFactoryContract() {
             console.log(e)
           }
         }
-        console.log("temp " + tempArray)
         setPredictionMarketDetailsArray(tempArray)
       }
     }

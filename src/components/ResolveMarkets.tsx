@@ -7,7 +7,6 @@ import ResolveMarket from './ResolveMarket';
 const ResolveMarkets: React.FC = () => {
   const { predictionMarketDetailsArray } = useMarketFactoryContract();
 
-  console.log(predictionMarketDetailsArray)
   if (!predictionMarketDetailsArray) {
     return <Loader type="spinner-default" bgColor="#000" color="#000" title={"Loading..."} size={100} />;
   }

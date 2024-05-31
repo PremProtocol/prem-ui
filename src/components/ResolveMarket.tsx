@@ -7,6 +7,7 @@ const ResolveMarket = ({ market }) => {
   
   const handleResolve = (e, outcome: number) => {
     e.preventDefault();
+    console.log(outcome);
     resolveMarket(outcome);
   };
 

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './PredictionMarket.css';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import { useUserBetContract } from '../hooks/useUserBetContract';
+import { fromNano } from '@ton/core';
 
 const PredictionMarket = ({ market }) => {
   const { placeUserBet } = usePredictionMarketContract(market.selfAddress);
-  const { claimWinnings } = useUserBetContract(market.selfAddress);
+  const { userBet, claimWinnings } = useUserBetContract(market.selfAddress);
   const [bet, setBet] = useState(0);
   const eventEnded = new Date(Number(market.endTime) * 1000) <= new Date();
-  const claimingAmount: number = 0;
   const handleBetChange = (e) => {
     setBet(e.target.value);
   };
@@ -20,8 +20,7 @@ const PredictionMarket = ({ market }) => {
   const handleBetSubmit = (e) => {
     e.preventDefault();
     const outcome = e.nativeEvent.submitter.value;
-    // Add your logic for handling the bet here
-    console.log(`Bet ${bet} TON on market ${market.eventDescription}, on outcome ${outcome}`);
+    console.log(outcome);
     placeUserBet(bet, Number(outcome));
   };
 
@@ -38,14 +37,14 @@ const PredictionMarket = ({ market }) => {
         </div>
         <div className="market-controls">
           {eventEnded ? (
-             market.resolved ? (
-              <p>Wait until host resolve the market</p>
-             ) : (
+             market.resolved && userBet ? (
               <div className="claim-section">
                 <label className="claim-label">Claim Amount:</label>
-                <div className="claim-amount">{claimingAmount}</div>
-                <button onClick={handleClaim} disabled={claimingAmount === 0}>Claim</button>
+                <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}</div>
+                <button onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
               </div>
+             ) : (
+              <p>Wait until host resolve the market</p>
              )
           ) : (
             <form onSubmit={handleBetSubmit} className="bet-form">
@@ -55,8 +54,8 @@ const PredictionMarket = ({ market }) => {
               <strong>TON</strong>
             </div>
               <div className="bet-buttons">
-                <button type="submit" value="1">Bet on {market.outcomeName1}</button>
-                <button type="submit" value="2">Bet on {market.outcomeName2}</button>
+                <button type="submit" value="0">Bet on {market.outcomeName1}</button>
+                <button type="submit" value="1">Bet on {market.outcomeName2}</button>
               </div>
             </form>
           )}

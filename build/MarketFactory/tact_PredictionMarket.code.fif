@@ -840,28 +840,20 @@ PROGRAM{
     s1 s2 XCHG
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    s7 s0 PUSH2
-    EQUAL
-    IF:<{
-      s1 s2 XCPU
-      MUL
-      8 PUSHINT
-      s4 s0 s2 PUXC2
-      64 PUSHINT
-      __tact_dict_get_uint_uint INLINECALLDICT
-      __tact_not_null INLINECALLDICT
-      DIV
-      __tact_context_get_sender INLINECALLDICT
-      SWAP
-      10000000 PUSHINT
-      SUB
-      2 PUSHINT
-      B{b5ee9c7241010101001b00003200000000636c61696d57696e6e696e6773496e7465726e616c5f0fdcc9} B>boc PUSHREF
-      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
-      $global_send INLINECALLDICT
-    }>ELSE<{
-      2DROP
-    }>
+    s1 s2 XCPU
+    MUL
+    8 PUSHINT
+    s4 s0 s2 PUXC2
+    64 PUSHINT
+    __tact_dict_get_uint_uint INLINECALLDICT
+    __tact_not_null INLINECALLDICT
+    DIV
+    __tact_context_get_sender INLINECALLDICT
+    66 PUSHINT
+    B{b5ee9c7241010101001b00003200000000636c61696d57696e6e696e6773496e7465726e616c5f0fdcc9} B>boc PUSHREF
+    s2 s3 XCHG
+    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $global_send INLINECALLDICT
   }>
   $PredictionMarket$_receive_bounce PROCINLINE:<{
     DROP
@@ -905,7 +897,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d556969315461356f326f55555767564a4d34707a3662427056657553575147735a74477a374847724e736b50} PUSHSLICE
+    x{697066733a2f2f516d5a556272597a4d6732447454676550796e325475636f5347387a38595068683165524c58537241627a545331} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

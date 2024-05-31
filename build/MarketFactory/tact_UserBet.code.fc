@@ -42,14 +42,18 @@
 
 ((slice, slice, int, int, int), ()) $UserBet$_internal_text_f3e14e9ae41d309dc268d1525fc448aec647131927692d763d133b025a46db01((slice, slice, int, int, int) $self) impure inline {
     var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, 60000000, 2, $ClaimWinningsInfo$_store_cell($ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress($self'outcome, $self'betAmount, __tact_context_get_sender()))));
+    throw_unless(9949, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    throw_unless(8274, ($self'isClaimed == false));
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, 0, (64 | 2), $ClaimWinningsInfo$_store_cell($ClaimWinningsInfo$_constructor_outcome_betAmount_walletAddress($self'outcome, $self'betAmount, __tact_context_get_sender()))));
     return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
 ((slice, slice, int, int, int), ()) $UserBet$_internal_text_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5((slice, slice, int, int, int) $self) impure inline {
     var ($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed) = $self;
+    throw_unless(25427, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
+    throw_unless(8274, ($self'isClaimed == false));
     $self'isClaimed = true;
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, 1000000, 2, __gen_cell_comment_dc3254938063499a385b056241eb24e38c8d52e6c5083310e0c3645ad8d02371()));
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, 0, (64 | 2), __gen_cell_comment_dc3254938063499a385b056241eb24e38c8d52e6c5083310e0c3645ad8d02371()));
     return (($self'owner, $self'parent, $self'betAmount, $self'outcome, $self'isClaimed), ());
 }
 
@@ -85,7 +89,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmRBkfkSsjMTG6hag7T7BkHaZYe7mpkwJwZNr82ZWZttHA";
+    return "ipfs://QmeS91QdktoXWbpdAExFuakFS89odVnnUrY8PJ6148CLqT";
 }
 
 _ lazy_deployment_completed() method_id {

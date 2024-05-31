@@ -28,7 +28,7 @@ const UserBet: React.FC<PredictionMarketDetails> = ({ predictionMarketDetails })
         <h2>{predictionMarketDetails.eventDescription}</h2>
         <div className="user-bet-info">
           <p><strong>End Time:</strong> {new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString()}</p>
-          <p><strong>Your Bet:</strong> {fromNano(userBet.betAmount)} TON on {userBet.outcome === 1n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2}</p>
+          <p><strong>Your Bet:</strong> {fromNano(userBet.betAmount)} TON on {userBet.outcome === 0n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2}</p>
         </div>
       </div>
       <div className="market-controls">
