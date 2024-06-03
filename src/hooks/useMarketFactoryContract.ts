@@ -31,8 +31,7 @@ export function useMarketFactoryContract() {
     if(!client) return;
 
     //TODO: remove hardcoded address
-    const contract = MarketFactory.fromAddress(Address.parse("EQDxIv76zWDH2SMU7onBk4X-WvQLYsoAaopUyHO2aKY0M4GI"))
-    console.log(contract)
+    const contract = MarketFactory.fromAddress(Address.parse("EQAXQ_8IGjCXrvLdoQ7JN23jq1DSXguVXGpxEVMICJN8qng9"))
     return client.open(contract) as OpenedContract<MarketFactory>
   }, [client])
 

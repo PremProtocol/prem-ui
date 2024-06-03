@@ -25,6 +25,7 @@ body {
 .header-top {
   display: flex;
   justify-content: space-between;
+  margin: 0.5rem 0;
 }
 
 .header h1 {
@@ -34,6 +35,7 @@ body {
 
 .header nav {
   display: flex;
+  margin-bottom: 0.5rem;
 }
 
 nav a {
@@ -45,6 +47,8 @@ nav a {
 
 .header .TonConnectButton {
   margin-left: 1rem;
+  display: flex;
+  align-self: center;
 }
 
 .logo {
