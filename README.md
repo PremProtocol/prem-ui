@@ -29,6 +29,7 @@ The following timeline presents the proposed stages of development for this proj
   - Changing the calculation of winnings depending on the pools at a specific moment and not on claiming
 
 - **Q4 2024: MVP Enhancements**
+  - Support place bet with stable coins (USDT)
   - New User Interface provided by the design team
   - Enrich UI to support telegram themes and platform
   - Gamification with NFT badges for active users (transaction amount/bet amount tiers, etc)
