@@ -1,6 +1,15 @@
 # Project Title & Description
 
-Prem - prediction market on The Open Network (TON)
+Prem is a prediction market on The Open Network (TON), addressing the need for a decentralized, transparent platform for betting on future events.
+
+Users can create markets, place bets, and claim winnings through TON's smart contracts. The app also caches data for performance. Future updates will bring a new UI, Telegram theme support, and NFT badges for active users.
+
+## Problem Statement
+
+Traditional prediction markets often lack transparency and are hard to use. Prem solves this by leveraging TON's blockchain for transparent transactions and offering a user-friendly Telegram mini-app.
+
+## TON Contracts repo link
+https://github.com/ArtemGontar/prem
 
 ## Installation & Start
 
