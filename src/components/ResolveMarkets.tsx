@@ -12,7 +12,7 @@ const ResolveMarkets: React.FC = () => {
   }
 
   return (
-    <div className="markets-list">
+    <div className="resolve-markets-list">
       {predictionMarketDetailsArray.map((market, index) => (
         <ResolveMarket key={index} market={market} />
       ))}
