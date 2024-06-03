@@ -20,7 +20,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1rem 0;
 }
 
 .header-top {
@@ -37,6 +36,13 @@ body {
   display: flex;
 }
 
+nav a {
+  color: #000; /* Change text color to black */
+  text-decoration: none;
+  margin: 0.5rem 1rem;
+  font-size: 1.2rem;
+}
+
 .header .TonConnectButton {
   margin-left: 1rem;
 }
@@ -45,13 +51,6 @@ body {
   height: 50px;
   width: 50px;
   margin-right: 1rem;
-}
-
-nav a {
-  color: #000; /* Change text color to black */
-  text-decoration: none;
-  margin-right: 2rem; /* Increase space between navigation items */
-  font-size: 1.2rem; /* Increase font size */
 }
 
 nav a:hover {

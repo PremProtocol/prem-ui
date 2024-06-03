@@ -10,6 +10,7 @@ export type PredictionMarketDetails = {
   selfAddress: Address;
   owner: Address;
   eventDescription: string;
+  eventType: string;
   endTime: bigint;
   outcomeName1: string;
   outcomeName2: string;
@@ -22,18 +23,18 @@ export type PredictionMarketDetails = {
 
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
-  const {wallet, sender} = useTonConnect()
+  const {sender} = useTonConnect()
   const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
   const [predictionMarketDetailsArray, setPredictionMarketDetailsArray] = useState<PredictionMarketDetails[]>()
 
   const marketFactoryContract = useAsyncInitialize(async () => {
-    if(!client || !wallet) return;
+    if(!client) return;
 
     //TODO: remove hardcoded address
     const contract = MarketFactory.fromAddress(Address.parse("EQDxIv76zWDH2SMU7onBk4X-WvQLYsoAaopUyHO2aKY0M4GI"))
-
+    console.log(contract)
     return client.open(contract) as OpenedContract<MarketFactory>
-  }, [client, wallet])
+  }, [client])
 
   useEffect(()=>{
     async function getPredictionMarketCount() {
@@ -59,6 +60,7 @@ export function useMarketFactoryContract() {
               selfAddress: childAddress,
               owner: predictionMarketDetailsRes.owner,
               eventDescription: predictionMarketDetailsRes.eventDescription,
+              eventType: predictionMarketDetailsRes.eventType,
               endTime: predictionMarketDetailsRes.endTime,
               outcomeName1: predictionMarketDetailsRes.outcomeName1,
               outcomeName2: predictionMarketDetailsRes.outcomeName2,
@@ -84,10 +86,11 @@ export function useMarketFactoryContract() {
     address: marketFactoryContract?.address.toString(),
     predictionMarketCount: predictionMarketCount,
     predictionMarketDetailsArray: predictionMarketDetailsArray,
-    createMarket: (eventDescription: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
+    createMarket: (eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
       const message: CreateMarket = {
           $$type: "CreateMarket",
           eventDescription: eventDescription,
+          eventType: eventType,
           endTime: BigInt(endTime),
           outcomeName1: outcomeName1,
           outcomeName2: outcomeName2,

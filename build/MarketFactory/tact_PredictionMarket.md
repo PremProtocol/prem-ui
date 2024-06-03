@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: PredictionMarket
-BOC Size: 2056 bytes
+BOC Size: 2110 bytes
 
 # Types
 Total Types: 18
@@ -42,12 +42,12 @@ TLB: `create_market_response#f0999b85 address:address = CreateMarketResponse`
 Signature: `CreateMarketResponse{address:address}`
 
 ## CreateMarket
-TLB: `create_market#1407949d eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = CreateMarket`
-Signature: `CreateMarket{eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8}`
+TLB: `create_market#52cb852e eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = CreateMarket`
+Signature: `CreateMarket{eventDescription:^string,eventType:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8}`
 
 ## MarketInitialize
-TLB: `market_initialize#8dadf0f6 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize`
-Signature: `MarketInitialize{owner:address,eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8}`
+TLB: `market_initialize#230b5159 owner:address eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize`
+Signature: `MarketInitialize{owner:address,eventDescription:^string,eventType:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8}`
 
 ## PlaceBet
 TLB: `place_bet#b863dd1f outcome:int8 = PlaceBet`
@@ -62,8 +62,8 @@ TLB: `claim_winnings_info#c8f68fe3 betAmount:uint64 walletAddress:address outcom
 Signature: `ClaimWinningsInfo{betAmount:uint64,walletAddress:address,outcome:int8}`
 
 ## PredictionMarketDetails
-TLB: `prediction_market_details#820ef6a8 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails`
-Signature: `PredictionMarketDetails{owner:address,eventDescription:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8,totalOutcomeBets:dict<uint8, uint64>,totalPool:uint64,outcome:int8,resolved:bool}`
+TLB: `prediction_market_details#ff8bfdc9 owner:address eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails`
+Signature: `PredictionMarketDetails{owner:address,eventDescription:^string,eventType:^string,endTime:uint64,outcomeName1:^string,outcomeName2:^string,numOutcomes:uint8,totalOutcomeBets:dict<uint8, uint64>,totalPool:uint64,outcome:int8,resolved:bool}`
 
 ## PlaceBetInternal
 TLB: `place_bet_internal#f5ea631d outcome:int8 betAmount:uint64 = PlaceBetInternal`
@@ -131,5 +131,6 @@ Argument: outcome
 38283: Invalid outcome
 38368: Event has not ended
 39401: Only owner can claim winnings
+51893: Event type has must be provided
 53624: Bet already placed
 55984: End time must be in the future

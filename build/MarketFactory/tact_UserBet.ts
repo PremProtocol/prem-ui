@@ -460,6 +460,7 @@ function dictValueParserCreateMarketResponse(): DictionaryValue<CreateMarketResp
 export type CreateMarket = {
     $$type: 'CreateMarket';
     eventDescription: string;
+    eventType: string;
     endTime: bigint;
     outcomeName1: string;
     outcomeName2: string;
@@ -469,38 +470,45 @@ export type CreateMarket = {
 export function storeCreateMarket(src: CreateMarket) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(336041117, 32);
+        b_0.storeUint(1389069614, 32);
         b_0.storeStringRefTail(src.eventDescription);
+        b_0.storeStringRefTail(src.eventType);
         b_0.storeUint(src.endTime, 64);
         b_0.storeStringRefTail(src.outcomeName1);
-        b_0.storeStringRefTail(src.outcomeName2);
-        b_0.storeUint(src.numOutcomes, 8);
+        let b_1 = new Builder();
+        b_1.storeStringRefTail(src.outcomeName2);
+        b_1.storeUint(src.numOutcomes, 8);
+        b_0.storeRef(b_1.endCell());
     };
 }
 
 export function loadCreateMarket(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 336041117) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 1389069614) { throw Error('Invalid prefix'); }
     let _eventDescription = sc_0.loadStringRefTail();
+    let _eventType = sc_0.loadStringRefTail();
     let _endTime = sc_0.loadUintBig(64);
     let _outcomeName1 = sc_0.loadStringRefTail();
-    let _outcomeName2 = sc_0.loadStringRefTail();
-    let _numOutcomes = sc_0.loadUintBig(8);
-    return { $$type: 'CreateMarket' as const, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    let sc_1 = sc_0.loadRef().beginParse();
+    let _outcomeName2 = sc_1.loadStringRefTail();
+    let _numOutcomes = sc_1.loadUintBig(8);
+    return { $$type: 'CreateMarket' as const, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
 }
 
 function loadTupleCreateMarket(source: TupleReader) {
     let _eventDescription = source.readString();
+    let _eventType = source.readString();
     let _endTime = source.readBigNumber();
     let _outcomeName1 = source.readString();
     let _outcomeName2 = source.readString();
     let _numOutcomes = source.readBigNumber();
-    return { $$type: 'CreateMarket' as const, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    return { $$type: 'CreateMarket' as const, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
 }
 
 function storeTupleCreateMarket(source: CreateMarket) {
     let builder = new TupleBuilder();
     builder.writeString(source.eventDescription);
+    builder.writeString(source.eventType);
     builder.writeNumber(source.endTime);
     builder.writeString(source.outcomeName1);
     builder.writeString(source.outcomeName2);
@@ -523,6 +531,7 @@ export type MarketInitialize = {
     $$type: 'MarketInitialize';
     owner: Address;
     eventDescription: string;
+    eventType: string;
     endTime: bigint;
     outcomeName1: string;
     outcomeName2: string;
@@ -532,42 +541,49 @@ export type MarketInitialize = {
 export function storeMarketInitialize(src: MarketInitialize) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(2376986870, 32);
+        b_0.storeUint(587944281, 32);
         b_0.storeAddress(src.owner);
         b_0.storeStringRefTail(src.eventDescription);
+        b_0.storeStringRefTail(src.eventType);
         b_0.storeUint(src.endTime, 64);
         b_0.storeStringRefTail(src.outcomeName1);
-        b_0.storeStringRefTail(src.outcomeName2);
-        b_0.storeUint(src.numOutcomes, 8);
+        let b_1 = new Builder();
+        b_1.storeStringRefTail(src.outcomeName2);
+        b_1.storeUint(src.numOutcomes, 8);
+        b_0.storeRef(b_1.endCell());
     };
 }
 
 export function loadMarketInitialize(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 2376986870) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 587944281) { throw Error('Invalid prefix'); }
     let _owner = sc_0.loadAddress();
     let _eventDescription = sc_0.loadStringRefTail();
+    let _eventType = sc_0.loadStringRefTail();
     let _endTime = sc_0.loadUintBig(64);
     let _outcomeName1 = sc_0.loadStringRefTail();
-    let _outcomeName2 = sc_0.loadStringRefTail();
-    let _numOutcomes = sc_0.loadUintBig(8);
-    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    let sc_1 = sc_0.loadRef().beginParse();
+    let _outcomeName2 = sc_1.loadStringRefTail();
+    let _numOutcomes = sc_1.loadUintBig(8);
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
 }
 
 function loadTupleMarketInitialize(source: TupleReader) {
     let _owner = source.readAddress();
     let _eventDescription = source.readString();
+    let _eventType = source.readString();
     let _endTime = source.readBigNumber();
     let _outcomeName1 = source.readString();
     let _outcomeName2 = source.readString();
     let _numOutcomes = source.readBigNumber();
-    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
 }
 
 function storeTupleMarketInitialize(source: MarketInitialize) {
     let builder = new TupleBuilder();
     builder.writeAddress(source.owner);
     builder.writeString(source.eventDescription);
+    builder.writeString(source.eventType);
     builder.writeNumber(source.endTime);
     builder.writeString(source.outcomeName1);
     builder.writeString(source.outcomeName2);
@@ -726,6 +742,7 @@ export type PredictionMarketDetails = {
     $$type: 'PredictionMarketDetails';
     owner: Address;
     eventDescription: string;
+    eventType: string;
     endTime: bigint;
     outcomeName1: string;
     outcomeName2: string;
@@ -739,14 +756,15 @@ export type PredictionMarketDetails = {
 export function storePredictionMarketDetails(src: PredictionMarketDetails) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(2182018728, 32);
+        b_0.storeUint(4287364553, 32);
         b_0.storeAddress(src.owner);
         b_0.storeStringRefTail(src.eventDescription);
+        b_0.storeStringRefTail(src.eventType);
         b_0.storeUint(src.endTime, 64);
         b_0.storeStringRefTail(src.outcomeName1);
-        b_0.storeStringRefTail(src.outcomeName2);
-        b_0.storeUint(src.numOutcomes, 8);
         let b_1 = new Builder();
+        b_1.storeStringRefTail(src.outcomeName2);
+        b_1.storeUint(src.numOutcomes, 8);
         b_1.storeDict(src.totalOutcomeBets, Dictionary.Keys.Uint(8), Dictionary.Values.BigUint(64));
         b_1.storeUint(src.totalPool, 64);
         b_1.storeInt(src.outcome, 8);
@@ -757,24 +775,26 @@ export function storePredictionMarketDetails(src: PredictionMarketDetails) {
 
 export function loadPredictionMarketDetails(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 2182018728) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 4287364553) { throw Error('Invalid prefix'); }
     let _owner = sc_0.loadAddress();
     let _eventDescription = sc_0.loadStringRefTail();
+    let _eventType = sc_0.loadStringRefTail();
     let _endTime = sc_0.loadUintBig(64);
     let _outcomeName1 = sc_0.loadStringRefTail();
-    let _outcomeName2 = sc_0.loadStringRefTail();
-    let _numOutcomes = sc_0.loadUintBig(8);
     let sc_1 = sc_0.loadRef().beginParse();
+    let _outcomeName2 = sc_1.loadStringRefTail();
+    let _numOutcomes = sc_1.loadUintBig(8);
     let _totalOutcomeBets = Dictionary.load(Dictionary.Keys.Uint(8), Dictionary.Values.BigUint(64), sc_1);
     let _totalPool = sc_1.loadUintBig(64);
     let _outcome = sc_1.loadIntBig(8);
     let _resolved = sc_1.loadBit();
-    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes, totalOutcomeBets: _totalOutcomeBets, totalPool: _totalPool, outcome: _outcome, resolved: _resolved };
+    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes, totalOutcomeBets: _totalOutcomeBets, totalPool: _totalPool, outcome: _outcome, resolved: _resolved };
 }
 
 function loadTuplePredictionMarketDetails(source: TupleReader) {
     let _owner = source.readAddress();
     let _eventDescription = source.readString();
+    let _eventType = source.readString();
     let _endTime = source.readBigNumber();
     let _outcomeName1 = source.readString();
     let _outcomeName2 = source.readString();
@@ -783,13 +803,14 @@ function loadTuplePredictionMarketDetails(source: TupleReader) {
     let _totalPool = source.readBigNumber();
     let _outcome = source.readBigNumber();
     let _resolved = source.readBoolean();
-    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventDescription: _eventDescription, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes, totalOutcomeBets: _totalOutcomeBets, totalPool: _totalPool, outcome: _outcome, resolved: _resolved };
+    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes, totalOutcomeBets: _totalOutcomeBets, totalPool: _totalPool, outcome: _outcome, resolved: _resolved };
 }
 
 function storeTuplePredictionMarketDetails(source: PredictionMarketDetails) {
     let builder = new TupleBuilder();
     builder.writeAddress(source.owner);
     builder.writeString(source.eventDescription);
+    builder.writeString(source.eventType);
     builder.writeNumber(source.endTime);
     builder.writeString(source.outcomeName1);
     builder.writeString(source.outcomeName2);
@@ -978,8 +999,8 @@ function initUserBet_init_args(src: UserBet_init_args) {
 }
 
 async function UserBet_init(owner: Address, parent: Address) {
-    const __code = Cell.fromBase64('te6ccgECGAEABHoAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCEAQFAgEgDg8E1u2i7fsBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQ9epjHbqPOjDTHwGCEPXqYx268uCB0gfTP1lsEjSCANF4A8D/E/L0+EFvJBNfA4IImJaAoXKIJ1Ugf1UwbW3bPH/gIIIQlGqYtrrjAsAABgwHCACoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CQPyj/P5ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuuMCgvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqPJYFjU/hCUlDHBfL0gSBSAcAA8vR/cIBCiCdVIH9VMG1t2zx/2zHgkTDicAoLDAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwMAbgwgSbd+EJSYMcF8vSBIFIhwADy9HCAQvhCVGRgWMhVIIIQyPaP41AEyx8Syz8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WygfJJlUgf1UwbW3bPH/bMQwAFgAAAAB3aW5uaW5nAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AA0AmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCEb7Rbtnm2eNilBARAgEgFBUBxO1E0NQB+GPSAAGOSvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IH0gBVQGwV4Pgo1wsKgwm68uCJEgAGUyEBAYr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB2zwTAAZwf3AAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSBYXABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbWVTOTFRZGt0b1hXYnBkQUV4RnVha0ZTODlvZFZublVyWThQSjYxNDhDTHFUgg');
-    const __system = Cell.fromBase64('te6cckECGgEABIQAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRTbPPLgghEFDgTW7aLt+wGWgCDXITB/4HAh10nCH5UwINcLH94gghD16mMduo86MNMfAYIQ9epjHbry4IHSB9M/WWwSNIIA0XgDwP8T8vT4QW8kE18DggiYloChcognVSB/VTBtbds8f+AgghCUapi2uuMCwAAGDAcJABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwMA/KP8/kBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG64wKC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo8lgWNT+EJSUMcF8vSBIFIBwADy9H9wgEKIJ1Ugf1UwbW3bPH/bMeCRMOJwCgsMAbgwgSbd+EJSYMcF8vSBIFIhwADy9HCAQvhCVGRgWMhVIIIQyPaP41AEyx8Syz8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WygfJJlUgf1UwbW3bPH/bMQwAFgAAAAB3aW5uaW5nAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AA0AmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwAqMj4QwHMfwHKAFVAUFQg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZYINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wyz8SygfKAMntVAIBIBAVAhG+0W7Z5tnjYpQRFAHE7UTQ1AH4Y9IAAY5K+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdM/0gfSAFVAbBXg+CjXCwqDCbry4IkSAYr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB2zwTAAZwf3AABlMhAQIBIBYXAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgYGQARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1lUzkxUWRrdG9YV2JwZEFFeEZ1YWtGUzg5b2RWbm5Vclk4UEo2MTQ4Q0xxVIIFBMI3o=');
+    const __code = Cell.fromBase64('te6ccgECGAEABHsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCEAQFAgEgDg8E1u2i7fsBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQ9epjHbqPOjDTHwGCEPXqYx268uCB0gfTP1lsEjSCANF4A8D/E/L0+EFvJBNfA4IImJaAoXKIJ1Ugf1UwbW3bPH/gIIIQlGqYtrrjAsAABgwHCACoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CQP0j/T5ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuuMCgvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqPJoFjU/hCUlDHBfL0gSBSAcAA8vR/cIEAgognVSB/VTBtbds8f9sx4JEw4nAKCwwBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEMj2j+NQBMsfEss/ASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+0W7Z5tnjYpQQEQIBIBQVAcTtRNDUAfhj0gABjkr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB9IAVUBsFeD4KNcLCoMJuvLgiRIABlMhAQGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgWFwARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1XR2JKNmRSWEhac1VXdlBYM3Z3SmdvSkRvRUVQQjZIV3NCcFp4REZpNUFnOIIA==');
+    const __system = Cell.fromBase64('te6cckECGgEABIUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRTbPPLgghEFDgTW7aLt+wGWgCDXITB/4HAh10nCH5UwINcLH94gghD16mMduo86MNMfAYIQ9epjHbry4IHSB9M/WWwSNIIA0XgDwP8T8vT4QW8kE18DggiYloChcognVSB/VTBtbds8f+AgghCUapi2uuMCwAAGDAcJABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwMA/SP9PkBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG64wKC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo8mgWNT+EJSUMcF8vSBIFIBwADy9H9wgQCCiCdVIH9VMG1t2zx/2zHgkTDicAoLDAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEMj2j+NQBMsfEss/ASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAKjI+EMBzH8BygBVQFBUINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WWCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFss/EsoHygDJ7VQCASAQFQIRvtFu2ebZ42KUERQBxO1E0NQB+GPSAAGOSvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IH0gBVQGwV4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAAZTIQECASAWFwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIGBkAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtV0diSjZkUlhIWnNVV3ZQWDN2d0pnb0pEb0VFUEI2SFdzQnBaeERGaTVBZziCB17zWe');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -1028,6 +1049,7 @@ const UserBet_errors: { [key: number]: { message: string } } = {
     38283: { message: `Invalid outcome` },
     38368: { message: `Event has not ended` },
     39401: { message: `Only owner can claim winnings` },
+    51893: { message: `Event type has must be provided` },
     53624: { message: `Bet already placed` },
     55984: { message: `End time must be in the future` },
 }
@@ -1042,12 +1064,12 @@ const UserBet_types: ABIType[] = [
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"CreateMarketResponse","header":4036598661,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"CreateMarket","header":336041117,"fields":[{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
-    {"name":"MarketInitialize","header":2376986870,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
+    {"name":"CreateMarket","header":1389069614,"fields":[{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
+    {"name":"MarketInitialize","header":587944281,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
     {"name":"PlaceBet","header":3093552415,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ResolveMarket","header":1189540808,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ClaimWinningsInfo","header":3371601891,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"walletAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
-    {"name":"PredictionMarketDetails","header":2182018728,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalOutcomeBets","type":{"kind":"dict","key":"uint","keyFormat":8,"value":"uint","valueFormat":64}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}}]},
+    {"name":"PredictionMarketDetails","header":4287364553,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalOutcomeBets","type":{"kind":"dict","key":"uint","keyFormat":8,"value":"uint","valueFormat":64}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}}]},
     {"name":"PlaceBetInternal","header":4125778717,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"UserBetInfo","header":4155719743,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"ClaimWinningsInternal","header":3696625672,"fields":[{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}},{"name":"winningOutcome","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"totalOutcomeBets","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},

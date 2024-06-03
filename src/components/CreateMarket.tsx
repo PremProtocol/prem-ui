@@ -10,11 +10,13 @@ const CreateMarket: React.FC = () => {
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
+  const [eventType, setEventType] = useState('');
+  const eventTypes = ['Crypto', 'Elections', 'Awards', 'Sports', 'Other'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const endTimeNumber = Date.parse(endTime) / 1000;
-    createMarket(eventDescription, endTimeNumber, outcomeName1, outcomeName2);
+    createMarket(eventDescription, eventType, endTimeNumber, outcomeName1, outcomeName2);
     addNewPredictionMarket();
   };
 
@@ -30,8 +32,19 @@ const CreateMarket: React.FC = () => {
           />
         </label>
         <label>
+          Event Type:
+          <select className="select-dropdown" value={eventType} onChange={(e) => setEventType(e.target.value)}>
+            {eventTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
           End Time:
           <input
+            className="datetime-input"
             type="datetime-local"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}

@@ -64,13 +64,13 @@ builder $ChangeOwnerOk$_store(builder build_0, (int, slice) v) inline;
 cell $ChangeOwnerOk$_store_cell((int, slice) v) inline;
 
 ;; $CreateMarket$_load
-(slice, ((slice, int, slice, slice, int))) $CreateMarket$_load(slice sc_0) inline;
+(slice, ((slice, slice, int, slice, slice, int))) $CreateMarket$_load(slice sc_0) inline_ref;
 
 ;; $MarketInitialize$_store
-builder $MarketInitialize$_store(builder build_0, (slice, slice, int, slice, slice, int) v) inline_ref;
+builder $MarketInitialize$_store(builder build_0, (slice, slice, slice, int, slice, slice, int) v) inline_ref;
 
 ;; $MarketInitialize$_store_cell
-cell $MarketInitialize$_store_cell((slice, slice, int, slice, slice, int) v) inline;
+cell $MarketInitialize$_store_cell((slice, slice, slice, int, slice, slice, int) v) inline;
 
 ;; $MarketFactory$_store
 builder $MarketFactory$_store(builder build_0, (slice, int) v) inline;
@@ -132,8 +132,8 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $MarketFactory$_fun_owner
 ((slice, int), slice) $MarketFactory$_fun_owner((slice, int) $self) impure inline_ref;
 
-;; $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes
-((slice, slice, int, slice, slice, int)) $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(slice owner, slice eventDescription, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes) inline;
+;; $MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes
+((slice, slice, slice, int, slice, slice, int)) $MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes(slice owner, slice eventDescription, slice eventType, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes) inline;
 
 ;; $DeployOk$_constructor_queryId
 ((int)) $DeployOk$_constructor_queryId(int queryId) inline;

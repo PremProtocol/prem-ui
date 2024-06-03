@@ -42,7 +42,7 @@ PROGRAM{
   DECLPROC $MarketFactory$_fun_notify
   DECLPROC $MarketFactory$_fun_requireOwner
   DECLPROC $MarketFactory$_fun_owner
-  DECLPROC $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes
+  DECLPROC $MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $ChangeOwnerOk$_constructor_queryId_newOwner
   DECLPROC $MarketFactory$_internal_binary_CreateMarket
@@ -205,12 +205,16 @@ PROGRAM{
     $ChangeOwnerOk$_store INLINECALLDICT
     ENDC
   }>
-  $CreateMarket$_load PROCINLINE:<{
+  $CreateMarket$_load PROCREF:<{
     32 LDU
     SWAP
-    336041117 PUSHINT
+    1389069614 PUSHINT
     EQUAL
     129 THROWIFNOT
+    LDREF
+    SWAP
+    CTOS
+    SWAP
     LDREF
     SWAP
     CTOS
@@ -223,21 +227,34 @@ PROGRAM{
     LDREF
     SWAP
     CTOS
+    LDREF
+    SWAP
+    CTOS
     SWAP
     8 LDU
-    5 -ROLL
+    DROP
+    s2 s6 XCHG
+    s2 s5 XCHG
+    s2 s4 XCHG
+    s2 s3 XCHG
   }>
   $MarketInitialize$_store PROCREF:<{
-    2376986870 PUSHINT
-    s0 s7 XCHG2
+    587944281 PUSHINT
+    s0 s8 XCHG2
     32 STU
-    s0 s5 XCHG2
+    s0 s6 XCHG2
     __tact_store_address INLINECALLDICT
     NEWC
-    s0 s4 XCHG2
+    s0 s5 XCHG2
     STSLICER
     ENDC
+    s0 s4 XCHG2
+    STREF
+    NEWC
     s0 s3 XCHG2
+    STSLICER
+    ENDC
+    ROT
     STREF
     64 STU
     NEWC
@@ -247,16 +264,21 @@ PROGRAM{
     SWAP
     STREF
     NEWC
-    ROT
+    NEWC
+    s0 s3 XCHG2
     STSLICER
+    ENDC
+    ROT
+    STREF
+    s1 s2 XCHG
+    8 STU
     ENDC
     SWAP
     STREF
-    8 STU
   }>
   $MarketInitialize$_store_cell PROCINLINE:<{
     NEWC
-    6 -ROLL
+    7 -ROLL
     $MarketInitialize$_store INLINECALLDICT
     ENDC
   }>
@@ -529,7 +551,7 @@ PROGRAM{
   $MarketFactory$_fun_owner PROCREF:<{
     OVER
   }>
-  $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes PROCINLINE:<{
+  $MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes PROCINLINE:<{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
@@ -557,10 +579,15 @@ PROGRAM{
     THROWANYIFNOT
     17847 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    s7 PUSH
+    __tact_slice_neq INLINECALLDICT
+    THROWANYIFNOT
+    51893 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     s6 PUSH
     __tact_slice_neq INLINECALLDICT
     THROWANYIFNOT
-    s6 s5 XCHG2
+    s7 s6 XCHG2
     $MarketFactory$_fun_requireOwner INLINECALLDICT
     __tact_context_sys GETGLOB
     MYADDR
@@ -583,16 +610,17 @@ PROGRAM{
     }>
     2 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s0 s5 XCHG
+    s0 s6 XCHG
+    s5 s11 XCHG
     s4 s10 XCHG
     s3 s9 XCHG
-    s8 s12 s11 XCHG3
-    $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes INLINECALLDICT
+    s8 s13 s12 XCHG3
+    $MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes INLINECALLDICT
     $MarketInitialize$_store_cell INLINECALLDICT
-    s1 s5 XCHG
-    s3 s4 XCHG
+    s5 s6 XCHG
+    s2 s4 XCHG
     s3 s7 XCHG
-    s2 s6 XCHG
+    s6 s6 s0 XCHG3
     $SendParameters$_constructor_to_value_mode_code_data_body INLINECALLDICT
     $global_send INLINECALLDICT
     SWAP
@@ -637,7 +665,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d57747a635a7a50744e4761595175436775706547343764576a716d47596478545a653456634b734247435473} PUSHSLICE
+    x{697066733a2f2f516d5062514341564b426e4a4b59567a51375636684c52534d6333664c7451554c6b6331337a596b776345596b63} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -661,12 +689,12 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    336041117 PUSHINT
+    1389069614 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $CreateMarket$_load INLINECALLDICT
-      1 5 BLKDROP2
+      1 6 BLKDROP2
       $MarketFactory$_internal_binary_CreateMarket INLINECALLDICT
       TRUE
     }>

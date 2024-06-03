@@ -102,44 +102,49 @@ cell $ChangeOwnerOk$_store_cell((int, slice) v) inline {
 
 ;;
 ;; Type: CreateMarket
-;; Header: 0x1407949d
-;; TLB: create_market#1407949d eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = CreateMarket
+;; Header: 0x52cb852e
+;; TLB: create_market#52cb852e eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = CreateMarket
 ;;
 
-(slice, ((slice, int, slice, slice, int))) $CreateMarket$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 336041117);
+(slice, ((slice, slice, int, slice, slice, int))) $CreateMarket$_load(slice sc_0) inline_ref {
+    throw_unless(129, sc_0~load_uint(32) == 1389069614);
     var v'eventDescription = sc_0~load_ref().begin_parse();
+    var v'eventType = sc_0~load_ref().begin_parse();
     var v'endTime = sc_0~load_uint(64);
     var v'outcomeName1 = sc_0~load_ref().begin_parse();
-    var v'outcomeName2 = sc_0~load_ref().begin_parse();
-    var v'numOutcomes = sc_0~load_uint(8);
-    return (sc_0, (v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes));
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'outcomeName2 = sc_1~load_ref().begin_parse();
+    var v'numOutcomes = sc_1~load_uint(8);
+    return (sc_0, (v'eventDescription, v'eventType, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes));
 }
 
 ;;
 ;; Type: MarketInitialize
-;; Header: 0x8dadf0f6
-;; TLB: market_initialize#8dadf0f6 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize
+;; Header: 0x230b5159
+;; TLB: market_initialize#230b5159 owner:address eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize
 ;;
 
-builder $MarketInitialize$_store(builder build_0, (slice, slice, int, slice, slice, int) v) inline_ref {
-    var (v'owner, v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes) = v;
-    build_0 = store_uint(build_0, 2376986870, 32);
+builder $MarketInitialize$_store(builder build_0, (slice, slice, slice, int, slice, slice, int) v) inline_ref {
+    var (v'owner, v'eventDescription, v'eventType, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes) = v;
+    build_0 = store_uint(build_0, 587944281, 32);
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = build_0.store_ref(begin_cell().store_slice(v'eventDescription).end_cell());
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'eventType).end_cell());
     build_0 = build_0.store_uint(v'endTime, 64);
     build_0 = build_0.store_ref(begin_cell().store_slice(v'outcomeName1).end_cell());
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'outcomeName2).end_cell());
-    build_0 = build_0.store_uint(v'numOutcomes, 8);
+    var build_1 = begin_cell();
+    build_1 = build_1.store_ref(begin_cell().store_slice(v'outcomeName2).end_cell());
+    build_1 = build_1.store_uint(v'numOutcomes, 8);
+    build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-cell $MarketInitialize$_store_cell((slice, slice, int, slice, slice, int) v) inline {
+cell $MarketInitialize$_store_cell((slice, slice, slice, int, slice, slice, int) v) inline {
     return $MarketInitialize$_store(begin_cell(), v).end_cell();
 }
 
-((slice, slice, int, slice, slice, int)) $MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(slice owner, slice eventDescription, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes) inline {
-    return (owner, eventDescription, endTime, outcomeName1, outcomeName2, numOutcomes);
+((slice, slice, slice, int, slice, slice, int)) $MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes(slice owner, slice eventDescription, slice eventType, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes) inline {
+    return (owner, eventDescription, eventType, endTime, outcomeName1, outcomeName2, numOutcomes);
 }
 
 ;;

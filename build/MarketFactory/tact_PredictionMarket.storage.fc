@@ -71,19 +71,21 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: MarketInitialize
-;; Header: 0x8dadf0f6
-;; TLB: market_initialize#8dadf0f6 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize
+;; Header: 0x230b5159
+;; TLB: market_initialize#230b5159 owner:address eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 = MarketInitialize
 ;;
 
-(slice, ((slice, slice, int, slice, slice, int))) $MarketInitialize$_load(slice sc_0) inline_ref {
-    throw_unless(129, sc_0~load_uint(32) == 2376986870);
+(slice, ((slice, slice, slice, int, slice, slice, int))) $MarketInitialize$_load(slice sc_0) inline_ref {
+    throw_unless(129, sc_0~load_uint(32) == 587944281);
     var v'owner = sc_0~__tact_load_address();
     var v'eventDescription = sc_0~load_ref().begin_parse();
+    var v'eventType = sc_0~load_ref().begin_parse();
     var v'endTime = sc_0~load_uint(64);
     var v'outcomeName1 = sc_0~load_ref().begin_parse();
-    var v'outcomeName2 = sc_0~load_ref().begin_parse();
-    var v'numOutcomes = sc_0~load_uint(8);
-    return (sc_0, (v'owner, v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes));
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'outcomeName2 = sc_1~load_ref().begin_parse();
+    var v'numOutcomes = sc_1~load_uint(8);
+    return (sc_0, (v'owner, v'eventDescription, v'eventType, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes));
 }
 
 ;;
@@ -126,17 +128,17 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: PredictionMarketDetails
-;; Header: 0x820ef6a8
-;; TLB: prediction_market_details#820ef6a8 owner:address eventDescription:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails
+;; Header: 0xff8bfdc9
+;; TLB: prediction_market_details#ff8bfdc9 owner:address eventDescription:^string eventType:^string endTime:uint64 outcomeName1:^string outcomeName2:^string numOutcomes:uint8 totalOutcomeBets:dict<uint8, uint64> totalPool:uint64 outcome:int8 resolved:bool = PredictionMarketDetails
 ;;
 
-(slice, slice, int, slice, slice, int, cell, int, int, int) $PredictionMarketDetails$_to_external(((slice, slice, int, slice, slice, int, cell, int, int, int)) v) inline {
-    var (v'owner, v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool, v'outcome, v'resolved) = v; 
-    return (v'owner, v'eventDescription, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool, v'outcome, v'resolved);
+(slice, slice, slice, int, slice, slice, int, cell, int, int, int) $PredictionMarketDetails$_to_external(((slice, slice, slice, int, slice, slice, int, cell, int, int, int)) v) inline {
+    var (v'owner, v'eventDescription, v'eventType, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool, v'outcome, v'resolved) = v; 
+    return (v'owner, v'eventDescription, v'eventType, v'endTime, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool, v'outcome, v'resolved);
 }
 
-((slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome(slice owner, slice eventDescription, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes, cell totalOutcomeBets, int totalPool, int resolved, int outcome) inline {
-    return (owner, eventDescription, endTime, outcomeName1, outcomeName2, numOutcomes, totalOutcomeBets, totalPool, outcome, resolved);
+((slice, slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarketDetails$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome(slice owner, slice eventDescription, slice eventType, int endTime, slice outcomeName1, slice outcomeName2, int numOutcomes, cell totalOutcomeBets, int totalPool, int resolved, int outcome) inline {
+    return (owner, eventDescription, eventType, endTime, outcomeName1, outcomeName2, numOutcomes, totalOutcomeBets, totalPool, outcome, resolved);
 }
 
 ;;
@@ -165,17 +167,18 @@ cell $PlaceBetInternal$_store_cell((int, int) v) inline {
 ;; Type: PredictionMarket
 ;;
 
-builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) v) inline {
-    var (v'owner, v'parent, v'seqno, v'eventDescription, v'endTime, v'resolved, v'outcome, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool) = v;
+builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) v) inline {
+    var (v'owner, v'parent, v'seqno, v'eventDescription, v'eventType, v'endTime, v'resolved, v'outcome, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool) = v;
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = __tact_store_address(build_0, v'parent);
     build_0 = build_0.store_uint(v'seqno, 64);
     build_0 = build_0.store_ref(begin_cell().store_slice(v'eventDescription).end_cell());
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'eventType).end_cell());
     build_0 = build_0.store_uint(v'endTime, 64);
     build_0 = build_0.store_int(v'resolved, 1);
     build_0 = build_0.store_int(v'outcome, 8);
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'outcomeName1).end_cell());
     var build_1 = begin_cell();
+    build_1 = build_1.store_ref(begin_cell().store_slice(v'outcomeName1).end_cell());
     build_1 = build_1.store_ref(begin_cell().store_slice(v'outcomeName2).end_cell());
     build_1 = build_1.store_uint(v'numOutcomes, 8);
     build_1 = build_1.store_dict(v'totalOutcomeBets);
@@ -184,21 +187,22 @@ builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int
     return build_0;
 }
 
-(slice, ((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int))) $PredictionMarket$_load(slice sc_0) inline {
+(slice, ((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int))) $PredictionMarket$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
     var v'parent = sc_0~__tact_load_address();
     var v'seqno = sc_0~load_uint(64);
     var v'eventDescription = sc_0~load_ref().begin_parse();
+    var v'eventType = sc_0~load_ref().begin_parse();
     var v'endTime = sc_0~load_uint(64);
     var v'resolved = sc_0~load_int(1);
     var v'outcome = sc_0~load_int(8);
-    var v'outcomeName1 = sc_0~load_ref().begin_parse();
     slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'outcomeName1 = sc_1~load_ref().begin_parse();
     var v'outcomeName2 = sc_1~load_ref().begin_parse();
     var v'numOutcomes = sc_1~load_uint(8);
     var v'totalOutcomeBets = sc_1~load_dict();
     var v'totalPool = sc_1~load_uint(64);
-    return (sc_0, (v'owner, v'parent, v'seqno, v'eventDescription, v'endTime, v'resolved, v'outcome, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool));
+    return (sc_0, (v'owner, v'parent, v'seqno, v'eventDescription, v'eventType, v'endTime, v'resolved, v'outcome, v'outcomeName1, v'outcomeName2, v'numOutcomes, v'totalOutcomeBets, v'totalPool));
 }
 
 (slice, ((slice, int))) $PredictionMarket$init$_load(slice sc_0) inline {
@@ -207,7 +211,7 @@ builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int
     return (sc_0, (v'parent, v'seqno));
 }
 
-(slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_load() impure inline_ref {
+(slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -222,7 +226,7 @@ builder $PredictionMarket$_store(builder build_0, (slice, slice, int, slice, int
     }
 }
 
-() $PredictionMarket$_contract_store((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) v) impure inline {
+() $PredictionMarket$_contract_store((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

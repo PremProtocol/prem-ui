@@ -11,12 +11,13 @@
 ;; Contract PredictionMarket functions
 ;;
 
-(slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_init(slice $parent, int $seqno) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = (null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null());
+(slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $PredictionMarket$_contract_init(slice $parent, int $seqno) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = (null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null());
     $self'owner = __tact_create_address(0, 0);
     $self'parent = $parent;
     $self'seqno = $seqno;
     $self'eventDescription = __gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7();
+    $self'eventType = __gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7();
     $self'endTime = 0;
     $self'outcomeName1 = __gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7();
     $self'outcomeName2 = __gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7();
@@ -24,58 +25,60 @@
     $self'resolved = false;
     $self'outcome = (- 1);
     $self'totalPool = 0;
-    return ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool);
+    return ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool);
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_placeUserBet((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, slice $owner, slice $parent, int $betAmount, int $outcome) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_fun_placeUserBet((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, slice $owner, slice $parent, int $betAmount, int $outcome) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
     var ($userBetInitState'code, $userBetInitState'data) = $UserBet$_init_child(__tact_context_sys, $owner, $parent);
     slice $userBetAddress = $global_contractAddress(($userBetInitState'code, $userBetInitState'data));
     $global_send($SendParameters$_constructor_to_value_mode_code_data_body($userBetAddress, 25000000, 2, $userBetInitState'code, $userBetInitState'data, $PlaceBetInternal$_store_cell($PlaceBetInternal$_constructor_outcome_betAmount($outcome, $betAmount))));
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), (slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarket$_fun_predictionMarketDetails((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $PredictionMarketDetails$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome($self'owner, $self'eventDescription, $self'endTime, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool, $self'resolved, $self'outcome));
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), (slice, slice, slice, int, slice, slice, int, cell, int, int, int)) $PredictionMarket$_fun_predictionMarketDetails((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $PredictionMarketDetails$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes_totalOutcomeBets_totalPool_resolved_outcome($self'owner, $self'eventDescription, $self'eventType, $self'endTime, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool, $self'resolved, $self'outcome));
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalPool((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'totalPool);
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalPool((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'totalPool);
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalBetForOutcome((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, int $outcome) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_totalBetForOutcome((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, int $outcome) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
     throw_unless(38283, ( (($outcome >= 0)) ? (($outcome < $self'numOutcomes)) : (false) ));
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $outcome, 64)));
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $outcome, 64)));
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_resolvedOutcome((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'outcome);
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_resolvedOutcome((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'outcome);
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_isResolved((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
-    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'resolved);
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_fun_isResolved((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self) impure inline_ref {
+    var (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)) = $self;
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), $self'resolved);
 }
 
 ;;
 ;; Receivers of a Contract PredictionMarket
 ;;
 
-(((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_MarketInitialize((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, (slice, slice, int, slice, slice, int) $msg) impure inline {
-    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
-    var ($msg'owner, $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
+(((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_MarketInitialize((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, (slice, slice, slice, int, slice, slice, int) $msg) impure inline {
+    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
+    var ($msg'owner, $msg'eventDescription, $msg'eventType, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
     throw_unless(24122, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
     throw_unless(55984, ($msg'endTime > now()));
     throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName1));
     throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName2));
     throw_unless(16210, ($msg'numOutcomes == 2));
     throw_unless(17847, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventDescription));
+    throw_unless(51893, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventType));
     $self'owner = $msg'owner;
     $self'eventDescription = $msg'eventDescription;
+    $self'eventType = $msg'eventType;
     $self'endTime = $msg'endTime;
     $self'outcomeName1 = $msg'outcomeName1;
     $self'outcomeName2 = $msg'outcomeName2;
@@ -85,11 +88,11 @@
     if (($Context$_get_value(__tact_context_get()) > 20000000)) {
         $global_send($SendParameters$_constructor_to_value_mode_body($self'owner, ($Context$_get_value(__tact_context_get()) - 20000000), 2, __gen_cell_comment_b0ff00cda639475b5e711360e99508a2790d5ee34d0598e7d8066850f3ac6c11()));
     }
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
-(((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_PlaceBet((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, (int) $msg) impure inline {
-    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
+(((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_PlaceBet((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, (int) $msg) impure inline {
+    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
     var ($msg'outcome) = $msg;
     throw_unless(24032, (now() < $self'endTime));
     throw_unless(38283, ( (($msg'outcome >= 0)) ? (($msg'outcome < $self'numOutcomes)) : (false) ));
@@ -97,12 +100,12 @@
     int $newBetAmount = ($Context$_get_value(__tact_context_get()) - 30000000);
     $self'totalOutcomeBets~__tact_dict_set_uint_uint(8, $msg'outcome, (0 + $newBetAmount), 64);
     $self'totalPool = $self'totalPool + $newBetAmount;
-    ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_placeUserBet(__tact_context_get_sender(), my_address(), $newBetAmount, $msg'outcome);
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+    ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_placeUserBet(__tact_context_get_sender(), my_address(), $newBetAmount, $msg'outcome);
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
-(((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_ResolveMarket((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, (int) $msg) impure inline {
-    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
+(((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_ResolveMarket((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, (int) $msg) impure inline {
+    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
     var ($msg'outcome) = $msg;
     throw_unless(24933, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
     throw_unless(38368, (now() >= $self'endTime));
@@ -110,12 +113,12 @@
     throw_unless(38283, ( (($msg'outcome >= 0)) ? (($msg'outcome < $self'numOutcomes)) : (false) ));
     $self'resolved = true;
     $self'outcome = $msg'outcome;
-    ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_reply(__gen_cell_comment_2c6b6b865e2040850946d4affb813aa640fc59bf74d62a27acb5af4c6537968f());
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+    ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_reply(__gen_cell_comment_2c6b6b865e2040850946d4affb813aa640fc59bf74d62a27acb5af4c6537968f());
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
-(((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_ClaimWinningsInfo((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, (int, slice, int) $msg) impure inline {
-    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
+(((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_ClaimWinningsInfo((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, (int, slice, int) $msg) impure inline {
+    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
     var ($msg'betAmount, $msg'walletAddress, $msg'outcome) = $msg;
     throw_unless(10454, $self'resolved);
     throw_unless(22516, ($self'outcome == $msg'outcome));
@@ -123,20 +126,20 @@
     slice $userBetAddress = $global_contractAddress(($userBetInitState'code, $userBetInitState'data));
     throw_unless(39401, ( __tact_slice_eq_bits($userBetAddress, __tact_context_get_sender()) ));
     int $userShare = (($msg'betAmount * $self'totalPool) / __tact_not_null(__tact_dict_get_uint_uint($self'totalOutcomeBets, 8, $msg'outcome, 64)));
-    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $userShare, (64 | 2), __gen_cell_comment_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5()));
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $userShare, (64 + 2), __gen_cell_comment_228c29575099cca128304cdf5d00b4fd7f72c972ed919e669959f65c46c034c5()));
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_receive_bounce((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, slice $src) impure inline {
-    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), ()) $PredictionMarket$_receive_bounce((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, slice $src) impure inline {
+    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
-(((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_Deploy((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) $self, (int) $deploy) impure inline {
-    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
+(((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int)), ()) $PredictionMarket$_internal_binary_Deploy((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool) = $self;
     var ($deploy'queryId) = $deploy;
-    ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
-    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
+    ($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool)~$PredictionMarket$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'parent, $self'seqno, $self'eventDescription, $self'eventType, $self'endTime, $self'resolved, $self'outcome, $self'outcomeName1, $self'outcomeName2, $self'numOutcomes, $self'totalOutcomeBets, $self'totalPool), ());
 }
 
 ;;
@@ -184,7 +187,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmZUbrYzMg2DtTgePyn2TucoSG8z8YPhh1eRLXSrAbzTS1";
+    return "ipfs://QmPmhDTXiTnWNPonrnSwzBghacoGycsxCDyRXGCHhQm8e3";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -195,7 +198,7 @@ _ lazy_deployment_completed() method_id {
 ;; Routing of a Contract PredictionMarket
 ;;
 
-((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_contract_router_internal((slice, slice, int, slice, int, int, int, slice, slice, int, cell, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int), int) $PredictionMarket$_contract_router_internal((slice, slice, int, slice, slice, int, int, int, slice, slice, int, cell, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
         
@@ -216,7 +219,7 @@ _ lazy_deployment_completed() method_id {
     
     
     ;; Receive MarketInitialize message
-    if (op == 2376986870) {
+    if (op == 587944281) {
         var msg = in_msg~$MarketInitialize$_load();
         self~$PredictionMarket$_internal_binary_MarketInitialize(msg);
         return (self, true);

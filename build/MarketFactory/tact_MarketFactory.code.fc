@@ -45,14 +45,15 @@
 ;; Receivers of a Contract MarketFactory
 ;;
 
-(((slice, int)), ()) $MarketFactory$_internal_binary_CreateMarket((slice, int) $self, (slice, int, slice, slice, int) $msg) impure inline {
+(((slice, int)), ()) $MarketFactory$_internal_binary_CreateMarket((slice, int) $self, (slice, slice, int, slice, slice, int) $msg) impure inline {
     var ($self'owner, $self'predictionMarketCount) = $self;
-    var ($msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
+    var ($msg'eventDescription, $msg'eventType, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes) = $msg;
     throw_unless(55984, ($msg'endTime > now()));
     throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName1));
     throw_unless(11074, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'outcomeName2));
     throw_unless(16210, ($msg'numOutcomes == 2));
     throw_unless(17847, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventDescription));
+    throw_unless(51893, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'eventType));
     ($self'owner, $self'predictionMarketCount)~$MarketFactory$_fun_requireOwner();
     var ($initState'code, $initState'data) = $PredictionMarket$_init_child(__tact_context_sys, my_address(), $self'predictionMarketCount);
     slice $preMarketContractAddress = $global_contractAddress(($initState'code, $initState'data));
@@ -61,7 +62,7 @@
     if ((__tact_my_balance() < 20000000)) {
         $messageValue = ($messageValue - 20000000);
     }
-    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($preMarketContractAddress, $messageValue, 2, $initState'code, $initState'data, $MarketInitialize$_store_cell($MarketInitialize$_constructor_owner_eventDescription_endTime_outcomeName1_outcomeName2_numOutcomes(__tact_context_get_sender(), $msg'eventDescription, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes))));
+    $global_send($SendParameters$_constructor_to_value_mode_code_data_body($preMarketContractAddress, $messageValue, 2, $initState'code, $initState'data, $MarketInitialize$_store_cell($MarketInitialize$_constructor_owner_eventDescription_eventType_endTime_outcomeName1_outcomeName2_numOutcomes(__tact_context_get_sender(), $msg'eventDescription, $msg'eventType, $msg'endTime, $msg'outcomeName1, $msg'outcomeName2, $msg'numOutcomes))));
     return (($self'owner, $self'predictionMarketCount), ());
 }
 
@@ -116,7 +117,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmWtzcZzPtNGaYQuCgupeG47dWjqmGYdxTZe4VcKsBGCTs";
+    return "ipfs://QmPbQCAVKBnJKYVzQ7V6hLRSMc3fLtQULkc13zYkwcEYkc";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -141,7 +142,7 @@ _ lazy_deployment_completed() method_id {
     
     
     ;; Receive CreateMarket message
-    if (op == 336041117) {
+    if (op == 1389069614) {
         var msg = in_msg~$CreateMarket$_load();
         self~$MarketFactory$_internal_binary_CreateMarket(msg);
         return (self, true);
