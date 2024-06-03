@@ -18,14 +18,14 @@ function App() {
           </div>
           <nav>
             <Link to="/prem-ui/">Home</Link>
-            <Link to="/prem-ui/pre-markets">Pre-Markets</Link>
+            <Link to="/prem-ui/create-market">Create Market</Link>
             <Link to="/prem-ui/user-bets">User Bets</Link>
           </nav>
         </header>
         <Routes>
-          <Route path="/prem-ui/" element={<CreateMarket />} />
-          <Route path="/prem-ui/pre-markets" element={<PredictionMarkets />} />
+          <Route path="/prem-ui/" element={<PredictionMarkets />} />
           <Route path="/prem-ui/user-bets" element={<UserBets />} />
+          <Route path="/prem-ui/create-market" element={<CreateMarket />} />
         </Routes>
       </div>
     </Router>
