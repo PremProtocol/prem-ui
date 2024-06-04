@@ -1,1 +1,1 @@
-export * from '../../build/MarketFactory/tact_MarketFactory';
+export * from '../../contracts/tact_MarketFactory';

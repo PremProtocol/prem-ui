@@ -1,1 +1,1 @@
-export * from '../../build/MarketFactory/tact_UserBet';
+export * from '../../contracts/tact_UserBet';

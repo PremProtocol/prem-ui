@@ -23,8 +23,8 @@ npm run dev
 The following timeline presents the proposed stages of development for this project:
 
 - **Q3 2024: (MVP) Minimim Valuable Product**
-  - TON Contracts for creating/resolving market, betting on events, and claiming winnings
-  - Telegram mini-app for interaction with contracts
+  - [✅] TON Contracts for creating/resolving market, betting on events, and claiming winnings
+  - [✅] Telegram mini-app for interaction with contracts
   - Caching data for improving performance and user experience
   - Changing the calculation of winnings depending on the pools at a specific moment and not on claiming
 
