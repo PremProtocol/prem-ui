@@ -21,7 +21,6 @@ const PredictionMarket: React.FC<{ market: PredictionMarketDetails }> = ({ marke
   const handleBetSubmit = (e) => {
     e.preventDefault();
     const outcome = e.nativeEvent.submitter.value;
-    console.log(outcome);
     placeUserBet(bet, Number(outcome));
   };
 

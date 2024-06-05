@@ -29,14 +29,11 @@ export function useMarketFactoryContract() {
     async function getPredictionMarketCount() {
         if(!marketFactoryContract) return 
         let predictionMarketCount = undefined;
-        try {
-          predictionMarketCount = await redisService.get(PREDICTION_MARKET_COUNT_CACHE_PREFIX);
-        } catch (error) {
-          console.error('Error getting object from Redis:', error);
-        }
+        predictionMarketCount = await redisService.get(PREDICTION_MARKET_COUNT_CACHE_PREFIX);
+        
         if(predictionMarketCount === undefined) {
           predictionMarketCount = await marketFactoryContract.getPredictionMarketCount();
-          predictionMarketCount = await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount);
+          await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount);
         }
         
         setPredictionMarketCount(Number(predictionMarketCount));
@@ -51,24 +48,21 @@ export function useMarketFactoryContract() {
         if(predictionMarketCount == undefined) return;
         for (let i = 0; i < predictionMarketCount; i++) {
           try {
-            try {
-              const cachedPredictionMarketDetails = await redisService.getObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i);
-              const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
+            const cachedPredictionMarketDetails = await redisService.getObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i);
+            const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
+            if(cachedPredictionMarketDetails) {
               cachedPredictionMarketDetails.selfAddress = childAddress;
               tempArray.push(cachedPredictionMarketDetails);
               continue;
-            } catch (error) {
-              console.error('Error getting object from Redis:', error);
             }
             
-            const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
             const childContract = PredictionMarket.fromAddress(childAddress)
             const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
             const predictionMarketDetailsRes = await openedChildContract.getPredictionMarketDetails();
             const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, childAddress);
-            console.log(predictionMarketDetails.selfAddress);
             await redisService.setObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i, predictionMarketDetails);
             tempArray.push(predictionMarketDetails);
+          
           } catch (e) {
             console.log(e)
           }
@@ -102,7 +96,6 @@ export function useMarketFactoryContract() {
     predictionMarketDetailsArray: predictionMarketDetailsArray,
     createMarket: async (eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
       if(!wallet || !marketFactoryContract) return;
-      console.log(eventType);
       const message: CreateMarket = {
           $$type: "CreateMarket",
           eventDescription: eventDescription,

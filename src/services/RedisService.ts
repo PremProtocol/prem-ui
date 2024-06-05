@@ -16,7 +16,6 @@ class RedisService {
       return response.data.GET;
     } catch (error) {
       console.error('Error getting object from Redis:', error);
-      throw error;
     }
   }
 
@@ -26,7 +25,6 @@ class RedisService {
       return response.data;
     } catch (error) {
       console.error('Error setting object in Redis:', error);
-      throw error;
     }
   }
 
@@ -36,7 +34,6 @@ class RedisService {
       return JSON.parse(response.data.GET);
     } catch (error) {
       console.error('Error getting object from Redis:', error);
-      throw error;
     }
   }
   
@@ -46,7 +43,6 @@ class RedisService {
       return response.data;
     } catch (error) {
       console.error('Error setting object in Redis:', error);
-      throw error;
     }
   }
 
@@ -56,7 +52,6 @@ class RedisService {
       return response.data;
     } catch (error) {
       console.error('Error deleting key from Redis:', error);
-      throw error;
     }
   }
 }
