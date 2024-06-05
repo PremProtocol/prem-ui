@@ -31,7 +31,7 @@ export function useMarketFactoryContract() {
         let predictionMarketCount = undefined;
         predictionMarketCount = await redisService.get(PREDICTION_MARKET_COUNT_CACHE_PREFIX);
         
-        if(predictionMarketCount === undefined) {
+        if(predictionMarketCount === undefined || predictionMarketCount === null) {
           predictionMarketCount = await marketFactoryContract.getPredictionMarketCount();
           await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount);
         }
