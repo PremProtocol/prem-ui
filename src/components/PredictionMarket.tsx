@@ -3,8 +3,9 @@ import './PredictionMarket.css';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import { useUserBetContract } from '../hooks/useUserBetContract';
 import { fromNano } from '@ton/core';
+import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 
-const PredictionMarket = ({ market }) => {
+const PredictionMarket: React.FC<{ market: PredictionMarketDetails }> = ({ market }) => {
   const { placeUserBet } = usePredictionMarketContract(market.selfAddress);
   const { userBet, claimWinnings } = useUserBetContract(market.selfAddress);
   const [bet, setBet] = useState(0);

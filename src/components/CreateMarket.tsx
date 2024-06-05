@@ -3,25 +3,35 @@ import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import ResolveMarkets from './ResolveMarkets';
+//import { message } from 'antd';
 
 const CreateMarket: React.FC = () => {
-  const {addNewPredictionMarket, createMarket} = useMarketFactoryContract();
+  const {createMarket} = useMarketFactoryContract();
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
-  const [eventType, setEventType] = useState('');
   const eventTypes = ['Crypto', 'Elections', 'Awards', 'Sports', 'Other'];
+  const [eventType, setEventType] = useState(eventTypes[0]);
+  //const [messageApi, contextHolder] = message.useMessage();
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // messageApi.open({
+    //   type: 'loading',
+    //   content: 'Action in progress..',
+    //   duration: 0,
+    // });
     const endTimeNumber = Date.parse(endTime) / 1000;
-    createMarket(eventDescription, eventType, endTimeNumber, outcomeName1, outcomeName2);
-    addNewPredictionMarket();
+    await createMarket(eventDescription, eventType, endTimeNumber, outcomeName1, outcomeName2);
+    //messageApi.success("Cool!");
   };
 
   return (
     <div className="create-market-container">
+      {/* {contextHolder} */}
       <form className="form" onSubmit={handleSubmit}>
         <label>
           Event Description:

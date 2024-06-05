@@ -8,6 +8,7 @@ import PredictionMarkets from './components/PredictionMarkets';
 import '@twa-dev/sdk';
 
 function App() {
+  
   return (
     <Router>
       <div className="container">
