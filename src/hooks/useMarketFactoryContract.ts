@@ -5,14 +5,14 @@ import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
 import { PredictionMarket } from '../wrappers/PredictionMarket';
-import RedisService from '../services/RedisService';
+//import RedisService from '../services/RedisService';
 import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 
-const redisService = new RedisService(import.meta.env.VITE_REDIS_SERVICE_URL);
+//const redisService = new RedisService(import.meta.env.VITE_REDIS_SERVICE_URL);
 
 export function useMarketFactoryContract() {
-  const PREDICTION_MARKET_DETAILS_CACHE_PREFIX = "PredictionMarketDetailsArray";
-  const PREDICTION_MARKET_COUNT_CACHE_PREFIX = "PredictionMarketCount";
+  //const PREDICTION_MARKET_DETAILS_CACHE_PREFIX = "PredictionMarketDetailsArray";
+  //const PREDICTION_MARKET_COUNT_CACHE_PREFIX = "PredictionMarketCount";
   const {client} = useTonClient()
   const {sender, wallet} = useTonConnect()
   const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
@@ -29,11 +29,11 @@ export function useMarketFactoryContract() {
     async function getPredictionMarketCount() {
         if(!marketFactoryContract) return 
         let predictionMarketCount = undefined;
-        predictionMarketCount = await redisService.get(PREDICTION_MARKET_COUNT_CACHE_PREFIX);
+        //predictionMarketCount = await redisService.get(PREDICTION_MARKET_COUNT_CACHE_PREFIX);
         
         if(predictionMarketCount === undefined || predictionMarketCount === null) {
           predictionMarketCount = await marketFactoryContract.getPredictionMarketCount();
-          await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount);
+          //await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount);
         }
         
         setPredictionMarketCount(Number(predictionMarketCount));
@@ -48,19 +48,19 @@ export function useMarketFactoryContract() {
         if(predictionMarketCount == undefined) return;
         for (let i = 0; i < predictionMarketCount; i++) {
           try {
-            const cachedPredictionMarketDetails = await redisService.getObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i);
+            //const cachedPredictionMarketDetails = await redisService.getObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i);
             const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
-            if(cachedPredictionMarketDetails) {
-              cachedPredictionMarketDetails.selfAddress = childAddress;
-              tempArray.push(cachedPredictionMarketDetails);
-              continue;
-            }
+            // if(cachedPredictionMarketDetails) {
+            //   cachedPredictionMarketDetails.selfAddress = childAddress;
+            //   tempArray.push(cachedPredictionMarketDetails);
+            //   continue;
+            // }
             
             const childContract = PredictionMarket.fromAddress(childAddress)
             const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
             const predictionMarketDetailsRes = await openedChildContract.getPredictionMarketDetails();
             const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, childAddress);
-            await redisService.setObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i, predictionMarketDetails);
+            //await redisService.setObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i, predictionMarketDetails);
             tempArray.push(predictionMarketDetails);
           
           } catch (e) {
@@ -132,7 +132,7 @@ export function useMarketFactoryContract() {
           //Push notification about transaction success
           console.log('Transaction succeeded:');
           setPredictionMarketCount(predictionMarketCount! + 1);
-          await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount!);
+          //await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount!);
         } 
         iterations--;
       }
