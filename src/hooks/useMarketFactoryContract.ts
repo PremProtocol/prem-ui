@@ -4,19 +4,13 @@ import { CreateMarket, MarketFactory } from '../wrappers/MarketFactory';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
-import { PredictionMarket } from '../wrappers/PredictionMarket';
-//import RedisService from '../services/RedisService';
-import { PredictionMarketDetails } from '../models/predictionMarketDetails';
-
-//const redisService = new RedisService(import.meta.env.VITE_REDIS_SERVICE_URL);
+//import { PredictionMarket } from '../wrappers/PredictionMarket';
+//import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 
 export function useMarketFactoryContract() {
-  //const PREDICTION_MARKET_DETAILS_CACHE_PREFIX = "PredictionMarketDetailsArray";
-  //const PREDICTION_MARKET_COUNT_CACHE_PREFIX = "PredictionMarketCount";
   const {client} = useTonClient()
   const {sender, wallet} = useTonConnect()
   const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
-  const [predictionMarketDetailsArray, setPredictionMarketDetailsArray] = useState<PredictionMarketDetails[]>()
 
   const marketFactoryContract = useAsyncInitialize(async () => {
     if(!client) return;
@@ -29,11 +23,9 @@ export function useMarketFactoryContract() {
     async function getPredictionMarketCount() {
         if(!marketFactoryContract) return 
         let predictionMarketCount = undefined;
-        //predictionMarketCount = await redisService.get(PREDICTION_MARKET_COUNT_CACHE_PREFIX);
         
         if(predictionMarketCount === undefined || predictionMarketCount === null) {
           predictionMarketCount = await marketFactoryContract.getPredictionMarketCount();
-          //await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount);
         }
         
         setPredictionMarketCount(Number(predictionMarketCount));
@@ -41,59 +33,9 @@ export function useMarketFactoryContract() {
     getPredictionMarketCount()
   }, [marketFactoryContract])
 
-  useEffect(() => {
-    async function fetchPredictionMarketDetailsArray() {
-      if (marketFactoryContract) {
-        const tempArray = [];
-        if(predictionMarketCount == undefined) return;
-        for (let i = 0; i < predictionMarketCount; i++) {
-          try {
-            //const cachedPredictionMarketDetails = await redisService.getObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i);
-            const childAddress = await marketFactoryContract?.getChildAddress(BigInt(i));
-            // if(cachedPredictionMarketDetails) {
-            //   cachedPredictionMarketDetails.selfAddress = childAddress;
-            //   tempArray.push(cachedPredictionMarketDetails);
-            //   continue;
-            // }
-            
-            const childContract = PredictionMarket.fromAddress(childAddress)
-            const openedChildContract = client?.open(childContract) as OpenedContract<PredictionMarket>
-            const predictionMarketDetailsRes = await openedChildContract.getPredictionMarketDetails();
-            const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, childAddress);
-            //await redisService.setObject(PREDICTION_MARKET_DETAILS_CACHE_PREFIX + i, predictionMarketDetails);
-            tempArray.push(predictionMarketDetails);
-          
-          } catch (e) {
-            console.log(e)
-          }
-        }
-        setPredictionMarketDetailsArray(tempArray)
-      }
-    }
-    fetchPredictionMarketDetailsArray();
-  }, [client, marketFactoryContract, predictionMarketCount]);
-
-  function createPredictionMarketDetails(predictionMarketDetailsRes: any, childAddress: Address): PredictionMarketDetails {
-    return {
-      selfAddress: childAddress,
-      owner: predictionMarketDetailsRes.owner,
-      eventDescription: predictionMarketDetailsRes.eventDescription,
-      eventType: predictionMarketDetailsRes.eventType,
-      endTime: predictionMarketDetailsRes.endTime,
-      outcomeName1: predictionMarketDetailsRes.outcomeName1,
-      outcomeName2: predictionMarketDetailsRes.outcomeName2,
-      numOutcomes: predictionMarketDetailsRes.numOutcomes,
-      totalOutcomeBets: predictionMarketDetailsRes.totalOutcomeBets || {},
-      totalPool: predictionMarketDetailsRes.totalPool || 0n,
-      outcome: predictionMarketDetailsRes.outcome || -1n,
-      resolved: predictionMarketDetailsRes.resolved || false,
-    };
-  }
-
   return {
     address: marketFactoryContract?.address.toString(),
     predictionMarketCount: predictionMarketCount,
-    predictionMarketDetailsArray: predictionMarketDetailsArray,
     createMarket: async (eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
       if(!wallet || !marketFactoryContract) return;
       const message: CreateMarket = {

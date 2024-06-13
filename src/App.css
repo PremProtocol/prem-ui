@@ -25,6 +25,7 @@ body {
 .header-top {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 0.5rem 0;
 }
 
@@ -39,7 +40,7 @@ body {
 }
 
 nav a {
-  color: #000; /* Change text color to black */
+  color: #f7f7f7;
   text-decoration: none;
   margin: 0.5rem 1rem;
   font-size: 1.2rem;
@@ -53,7 +54,7 @@ nav a {
 
 .logo {
   height: 50px;
-  width: 50px;
+  width: 120px;
   margin-right: 1rem;
 }
 

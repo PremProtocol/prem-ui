@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import ResolveMarkets from './ResolveMarkets';
+import { Input } from '@telegram-apps/telegram-ui';
 //import { message } from 'antd';
 
 const CreateMarket: React.FC = () => {
@@ -18,20 +19,13 @@ const CreateMarket: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // messageApi.open({
-    //   type: 'loading',
-    //   content: 'Action in progress..',
-    //   duration: 0,
-    // });
     const endTimeNumber = Date.parse(endTime) / 1000;
     await createMarket(eventDescription, eventType, endTimeNumber, outcomeName1, outcomeName2);
-    //messageApi.success("Cool!");
   };
 
   return (
     <div className="create-market-container">
-      {/* {contextHolder} */}
+      <h1>Event Information</h1>
       <form className="form" onSubmit={handleSubmit}>
         <label>
           Event Description:

@@ -8,14 +8,14 @@ import PredictionMarkets from './components/PredictionMarkets';
 import '@twa-dev/sdk';
 
 function App() {
-  
+
   return (
     <Router>
       <div className="container">
         <header className="header">
           <div className="header-top">
-            <img src={logo} alt="Logo" className="logo" /> {/* Icon on the left */}
-            <TonConnectButton /> {/* TonConnectButton on the right */}
+            <img src={logo} alt="Logo" className="logo" />
+            <TonConnectButton />
           </div>
           <nav>
             <Link to="/prem-ui/">Home</Link>

@@ -4,23 +4,58 @@ import { PredictionMarket, ResolveMarket } from '../wrappers/PredictionMarket';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { PlaceBet } from '../wrappers/UserBet';
+import { useEffect, useState } from 'react';
+import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 
-export function usePredictionMarketContract(predictionMarketAddress: Address) {
-  //const redisService = new RedisService(import.meta.env.VITE_REDIS_SERVICE_URL);
-  //const PREDICTION_MARKET_DETAILS_CACHE_PREFIX = "PredictionMarketDetails";
+export function usePredictionMarketContract(marketFactoryContractAddress: string, seqno: number) {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
+  const [predictionMarketDetails, setPredictionMarketDetails] = useState<PredictionMarketDetails>()
 
   const predictionMarketContract = useAsyncInitialize(async () => {
     if(!client || !wallet) return;
-
-    if (predictionMarketAddress != null && predictionMarketAddress != undefined) {
-      const contract = PredictionMarket.fromAddress(predictionMarketAddress)
+    
+    if (marketFactoryContractAddress != null || marketFactoryContractAddress != undefined) {
+      const contract = await PredictionMarket.fromInit(Address.parse(marketFactoryContractAddress), BigInt(seqno)); 
       return client.open(contract) as OpenedContract<PredictionMarket>
     }
 
     return null;
-  }, [client, wallet, predictionMarketAddress])
+  }, [client, wallet, marketFactoryContractAddress])
+
+  useEffect(() => {
+    async function fetchPredictionMarketDetailsArray() {
+      if (predictionMarketContract) {
+        try {
+          console.time("fetchPredictionMarketDetailsArray");
+          const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
+          const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
+          setPredictionMarketDetails(predictionMarketDetails);
+          console.timeEnd("fetchPredictionMarketDetailsArray");
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+    fetchPredictionMarketDetailsArray();
+  }, [client, predictionMarketContract]);
+
+  function createPredictionMarketDetails(predictionMarketDetailsRes: any, childAddress: Address): PredictionMarketDetails {
+    return {
+      selfAddress: childAddress,
+      owner: predictionMarketDetailsRes.owner,
+      eventDescription: predictionMarketDetailsRes.eventDescription,
+      eventType: predictionMarketDetailsRes.eventType,
+      endTime: predictionMarketDetailsRes.endTime,
+      outcomeName1: predictionMarketDetailsRes.outcomeName1,
+      outcomeName2: predictionMarketDetailsRes.outcomeName2,
+      numOutcomes: predictionMarketDetailsRes.numOutcomes,
+      totalOutcomeBets: predictionMarketDetailsRes.totalOutcomeBets || {},
+      totalPool: predictionMarketDetailsRes.totalPool || 0n,
+      outcome: predictionMarketDetailsRes.outcome || -1n,
+      resolved: predictionMarketDetailsRes.resolved || false,
+    };
+  }
 
   async function sendTransaction(message: PlaceBet | ResolveMarket, value: bigint) {
     const lastTrx = await client?.getTransactions(sender.address!, {
@@ -55,6 +90,7 @@ export function usePredictionMarketContract(predictionMarketAddress: Address) {
 
   return {
     address: predictionMarketContract?.address.toString(),
+    predictionMarketDetails: predictionMarketDetails,
     placeUserBet: async (betAmount: number, outcome: number) => {
       const message: PlaceBet = {
           $$type: "PlaceBet",

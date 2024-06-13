@@ -6,17 +6,17 @@ import { Address, OpenedContract, toNano } from "@ton/core"
 import { useEffect, useState } from "react"
 import { UserBetInfo } from "../wrappers/PredictionMarket"
 
-export function useUserBetContract(predictionMarketContractAddress: Address) {
+export function useUserBetContract(predictionMarketContractAddress: string) {
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
   const [userBet, setUserBet] = useState<UserBetInfo>();
   const [isNotUserBetContract, setIsNotUserBetContract] = useState<boolean>(false);
 
   const userBetContract = useAsyncInitialize(async () => {
-    if(!client || !wallet) return;
-    const contract = await UserBet.fromInit(Address.parse(wallet), predictionMarketContractAddress)
+    if(!client || !wallet || !predictionMarketContractAddress) return;
+    const contract = await UserBet.fromInit(Address.parse(wallet), Address.parse(predictionMarketContractAddress))
     return client.open(contract) as OpenedContract<UserBet>
-  }, [client, wallet])
+  }, [client, wallet, predictionMarketContractAddress])
 
   useEffect(() => {
     async function fetchData() {
