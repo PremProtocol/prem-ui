@@ -20,3 +20,15 @@ a:hover {
 .centered-text {
   text-align: center;
 }
+
+.blue-text {
+  color: #2990FF;
+}
+
+.red-text {
+  color: #E53935;
+}
+
+.white-text {
+  color: #fff;
+}

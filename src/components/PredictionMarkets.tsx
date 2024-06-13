@@ -3,15 +3,12 @@ import PredictionMarket from './PredictionMarket';
 import "./PredictionMarkets.css";
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import searchIcon from '../assets/search-icon.svg';
-
-interface Tab {
-  id: number;
-  label: string;
-}
+import { EventType } from '../models/eventType';
+import { Filter } from '../models/filter';
 
 const PredictionMarkets: React.FC = () => {
   const { address, predictionMarketCount } = useMarketFactoryContract();
-  const tabs: Tab[] = [
+  const categories: EventType[] = [
     { id: 1, label: 'All' },
     { id: 2, label: 'Politics' },
     { id: 3, label: 'Sports' },
@@ -19,12 +16,21 @@ const PredictionMarkets: React.FC = () => {
     { id: 5, label: 'Business' },
   ];
   const [activeTab, setActiveTab] = React.useState(1);
-
+  const [searchQuery, setSearchQuery] = React.useState<string | undefined>(undefined);
+  const filter: Filter = {
+    searchQuery: undefined,
+    eventType: categories[0].label,
+  }
   if (!address || !predictionMarketCount) {
     return ;
   }
-  const handleSearchClick = () => {
-    console.log('search clicked');
+  const handleCategoryChange = (category: EventType) => {
+    setActiveTab(category.id);
+    filter.eventType = category.label;
+  }
+  const handleSearchClick = (e) => {
+    filter.searchQuery = searchQuery;
+    console.log('search clicked: ' + e.target.value);
   };
   return (
     <div className="markets-list">
@@ -33,24 +39,24 @@ const PredictionMarkets: React.FC = () => {
         ) : (
           <div>
             <div className="search-container">
-              <input type="text" className="search-input" placeholder="Search" />
+              <input type="text" className="search-input" placeholder="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
               <i className="search-icon"><img src={searchIcon} alt="searchIcon" className="searchIcon" onClick={handleSearchClick}/></i>
             </div>
 
             <div className="tab-container">
               <div className="tab-buttons">
-                {tabs.map((tab) => (
-                  <label key={tab.id} className="tab-label">
+                {categories.map((category) => (
+                  <label key={category.id} className="tab-label">
                     <input
                       type="radio"
                       name="tab"
-                      value={tab.id}
-                      checked={activeTab === tab.id}
-                      onChange={() => setActiveTab(tab.id)}
+                      value={category.id}
+                      checked={activeTab === category.id}
+                      onChange={() => handleCategoryChange(category)}
                       className="tab-input"
                     />
-                    <span className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}>
-                      {tab.label}
+                    <span className={`tab-button ${activeTab === category.id ? 'active' : ''}`}>
+                      {category.label}
                     </span>
                   </label>
                 ))}
@@ -58,7 +64,7 @@ const PredictionMarkets: React.FC = () => {
             </div>
             
             {Array.from({ length: predictionMarketCount }).map((_, index) => (
-              <PredictionMarket key={index} marketFactoryContractAddress={address} seqno={index}/>
+              <PredictionMarket key={index} marketFactoryContractAddress={address} seqno={index} filter={filter}/>
             ))}
           </div>
       )}

@@ -1,22 +1,24 @@
 .market-card {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  border: 1px solid #ddd;
+  padding: 1.2rem;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: #1E1E1E;
+  margin-bottom: 1rem;
+  border: none;
 }
 
-.market-card h2 {
-  margin-bottom: 10px;
-  color: #333;
+.market-card>h2 {
+  margin: 0;
+  color: #fff;
 }
 
 .market-content {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 0.5rem;
 }
 
 .market-info {

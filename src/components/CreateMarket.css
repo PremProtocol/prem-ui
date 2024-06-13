@@ -1,11 +1,3 @@
-/* src/components/CreateMarket.css */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-}
-
 .create-market-container {
   display: flex;
   flex-direction: column;
@@ -13,6 +5,14 @@
   justify-content: center;
   max-width: 320px;
   color: #FFFFFF;
+  margin-bottom: 80px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
 }
 
 label {

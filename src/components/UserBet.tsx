@@ -16,7 +16,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
   const { address, predictionMarketDetails } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(address!);
   
-  if (!userBet || !predictionMarketDetails || !address) {
+  if (!predictionMarketDetails || !address) {
     return <Skeleton active />;
   }
   
@@ -26,7 +26,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
     claimWinnings();
   };
   
-  if(isNotUserBetContract) {
+  if(!userBet || isNotUserBetContract) {
     return;
   }
 
