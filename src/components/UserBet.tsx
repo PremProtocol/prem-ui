@@ -2,21 +2,29 @@
 import React from 'react';
 import './UserBet.css';
 import { useUserBetContract } from '../hooks/useUserBetContract';
-import { PredictionMarketDetails } from '../hooks/useMarketFactoryContract';
 import { fromNano } from '@ton/core';
-import Loader from "react-js-loader";
+import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
+import { Skeleton } from 'antd';
 
-const UserBet: React.FC<PredictionMarketDetails> = ({ predictionMarketDetails }) => {
-  const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(predictionMarketDetails.selfAddress);
+interface UserBetProps {
+  key: number;
+  marketFactoryContractAddress: string;
+  seqno: number;
+}
+
+const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }) => {
+  const { address, predictionMarketDetails } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(address!);
+  
+  if (!userBet || !predictionMarketDetails || !address) {
+    return <Skeleton active />;
+  }
+  
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
+  
   const handleClaim = () => {
     claimWinnings();
   };
-
-  if (!userBet && !isNotUserBetContract) {
-    return <Loader type="spinner-default" bgColor="#000" color="#000" title={"Loading..."} size={100} />;
-  }
-
   
   if(isNotUserBetContract) {
     return;

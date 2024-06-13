@@ -70,7 +70,7 @@ const CreateMarket: React.FC = () => {
             onChange={(e) => setOutcomeName2(e.target.value)}
           />
         </label>
-        <button type="submit">Create Market</button>
+        <button className="create-market-button" type="submit">Create Market</button>
       </form>
       <ResolveMarkets />
     </div>

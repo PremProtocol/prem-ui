@@ -33,7 +33,7 @@ input, .select-dropdown, .datetime-input {
   color: #78797E !important;
 }
 
-button {
+.create-market-button {
   padding: 10px 20px;
   background-color: #2990FF;
   color: white;
@@ -43,6 +43,6 @@ button {
   font-size: 16px;
 }
 
-button:hover {
+.create-market-button:hover {
   background-color: #2990FF;
 }

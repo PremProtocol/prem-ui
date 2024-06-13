@@ -21,15 +21,12 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   }
 
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
-  const handleBetChange = (e) => {
-    setBet(e.target.value);
-  };
 
   const handleClaim = () => {
     claimWinnings();
   };
 
-  const handleBetSubmit = (e) => {
+  const handleBet = (e) => {
     e.preventDefault();
     const outcome = e.nativeEvent.submitter.value;
     placeUserBet(bet, Number(outcome));
@@ -58,17 +55,10 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
               <p>Wait until host resolve the market</p>
              )
           ) : (
-            <form onSubmit={handleBetSubmit} className="bet-form">
-            <div className="bet-control">
-              <label>Bet:</label>
-              <input type="number" value={bet} onChange={handleBetChange} style={{ textAlign: 'center' }} />
-              <strong>TON</strong>
+            <div className="bet-buttons">
+              <button className="outcome-one-button" type="button" value="0" onClick={() => handleBet(predictionMarketDetails.outcomeName1)}>Bet on #1</button>
+              <button className="outcome-two-button" type="button" value="1" onClick={() => handleBet(predictionMarketDetails.outcomeName2)}>Bet on #2</button>
             </div>
-              <div className="bet-buttons">
-                <button type="submit" value="0">Bet on {predictionMarketDetails.outcomeName1}</button>
-                <button type="submit" value="1">Bet on {predictionMarketDetails.outcomeName2}</button>
-              </div>
-            </form>
           )}
         </div>
       </div>

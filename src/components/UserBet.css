@@ -1,11 +1,11 @@
 .user-bet-card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #f9f9f9;
   display: flex;
+  border-radius: 5px;
+  padding: 16px;
+  background-color: #1E1E1E;
+  margin-bottom: 1rem;
   justify-content: space-between;
+  border: none;
 }
 
 .user-bet-content {
@@ -15,18 +15,4 @@
 .market-controls {
   flex: 0;
   align-self: center;
-}
-
-h2 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-p {
-  color: #666;
-  margin-bottom: 5px;
-}
-
-strong {
-  color: #333;
 }

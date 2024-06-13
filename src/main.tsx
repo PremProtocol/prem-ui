@@ -1,8 +1,10 @@
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import './index.css';
 import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react';
+import App from './App';
 import { AppRoot } from '@telegram-apps/telegram-ui';
+import '@telegram-apps/telegram-ui/dist/styles.css';
+import { BrowserRouter } from 'react-router-dom';
 
 // this manifest is used temporarily for development purposes
 const manifestUrl = 'https://artemgontar.github.io/prem-ui/tonconnect-manifest.json';
@@ -15,6 +17,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     //   twaReturnUrl: 'https://t.me/<YOUR_APP_NAME>'
     // }}
   >
-      <App />
-  </TonConnectUIProvider>,
+    <AppRoot>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AppRoot>
+  </TonConnectUIProvider>
 )

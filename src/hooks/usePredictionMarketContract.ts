@@ -27,11 +27,9 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     async function fetchPredictionMarketDetailsArray() {
       if (predictionMarketContract) {
         try {
-          console.time("fetchPredictionMarketDetailsArray");
           const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
           const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
           setPredictionMarketDetails(predictionMarketDetails);
-          console.timeEnd("fetchPredictionMarketDetailsArray");
         } catch (e) {
           console.log(e)
         }

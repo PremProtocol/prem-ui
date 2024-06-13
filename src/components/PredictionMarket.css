@@ -1,16 +1,18 @@
 .market-card {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
-  border: 1px solid #ddd;
+  padding: 1.2rem;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: #1E1E1E;
+  margin-bottom: 1rem;
+  border: none;
 }
 
 .market-card h2 {
-  margin-bottom: 10px;
-  color: #333;
+  margin: 0;
+  color: #fff;
+
 }
 
 .market-content {
@@ -47,6 +49,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  color: #78797E;
 }
 
 .market-details p {
@@ -89,4 +92,26 @@ button:disabled, button:disabled:hover {
 .bet-buttons {
   display: flex;
   gap: 10px;
+}
+
+.outcome-one-button {
+  background-color: rgba(67, 120, 255, 0.12);
+  color: #2990FF;
+  border: none;
+  border-radius: 12px;
+  padding: 23px 31px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.outcome-two-button {
+  background-color: rgba(241, 46, 46, 0.12);
+  color: #E53935;
+  border: none;
+  border-radius: 12px;
+  padding: 23px 31px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
 }
