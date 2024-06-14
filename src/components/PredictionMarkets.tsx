@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PredictionMarket from './PredictionMarket';
 import "./PredictionMarkets.css";
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
@@ -10,27 +10,31 @@ const PredictionMarkets: React.FC = () => {
   const { address, predictionMarketCount } = useMarketFactoryContract();
   const categories: EventType[] = [
     { id: 1, label: 'All' },
-    { id: 2, label: 'Politics' },
-    { id: 3, label: 'Sports' },
-    { id: 4, label: 'Crypto' },
-    { id: 5, label: 'Business' },
+    { id: 2, label: 'Elections' },
+    { id: 3, label: 'Crypto' },
+    { id: 4, label: 'Awards' },
+    { id: 5, label: 'Sports' },
   ];
   const [activeTab, setActiveTab] = React.useState(1);
-  const [searchQuery, setSearchQuery] = React.useState<string | undefined>(undefined);
-  const filter: Filter = {
-    searchQuery: undefined,
-    eventType: categories[0].label,
-  }
+  const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [filter, setFilter] = useState<Filter>(new Filter());
   if (!address || !predictionMarketCount) {
     return ;
   }
   const handleCategoryChange = (category: EventType) => {
     setActiveTab(category.id);
     filter.eventType = category.label;
+    setFilter(filter);
+    console.log(filter);
+  }
+
+  const onChangeSearch = (e) => {
+    setSearchQuery(e.target.value);
+    filter.searchQuery = searchQuery;
+    setFilter(filter);
   }
   const handleSearchClick = (e) => {
-    filter.searchQuery = searchQuery;
-    console.log('search clicked: ' + e.target.value);
+    console.log(filter);
   };
   return (
     <div className="markets-list">
@@ -39,7 +43,7 @@ const PredictionMarkets: React.FC = () => {
         ) : (
           <div>
             <div className="search-container">
-              <input type="text" className="search-input" placeholder="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+            <input type="text" className="search-input" placeholder="Search" value={searchQuery} onChange={(e) => onChangeSearch(e)}/>
               <i className="search-icon"><img src={searchIcon} alt="searchIcon" className="searchIcon" onClick={handleSearchClick}/></i>
             </div>
 

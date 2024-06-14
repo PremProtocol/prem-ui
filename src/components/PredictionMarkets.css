@@ -68,3 +68,9 @@
   border-bottom: 2px solid #007bff;
   color: #007bff;
 }
+
+@media (min-width: 450px) {
+  .markets-list {
+    max-width: 420px;
+  }
+}
