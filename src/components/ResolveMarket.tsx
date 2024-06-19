@@ -9,9 +9,9 @@ interface ResolveMarketProps {
 }
 
 const ResolveMarket: React.FC<ResolveMarketProps> = ({ marketFactoryContractAddress, seqno }) => {
-  const { predictionMarketDetails, resolveMarket } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
-  
-  if (!predictionMarketDetails) {
+  const { currentAttempt, predictionMarketDetails, resolveMarket } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
+  if (!predictionMarketDetails || currentAttempt !== MAX_RETRY_AMOUNT) {
     return <Skeleton active />;
   }
   

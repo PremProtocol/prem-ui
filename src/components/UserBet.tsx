@@ -13,10 +13,11 @@ interface UserBetProps {
 }
 
 const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }) => {
-  const { address, predictionMarketDetails } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
+  const { currentAttempt, address, predictionMarketDetails } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(address!);
   
-  if (!predictionMarketDetails || !address) {
+  if ((!predictionMarketDetails || !address) && currentAttempt !== MAX_RETRY_AMOUNT) {
     return <Skeleton active />;
   }
   

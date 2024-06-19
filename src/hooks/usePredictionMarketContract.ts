@@ -8,9 +8,11 @@ import { useEffect, useState } from 'react';
 import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 
 export function usePredictionMarketContract(marketFactoryContractAddress: string, seqno: number) {
+  const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
   const {client} = useTonClient()
   const {wallet, sender} = useTonConnect()
   const [predictionMarketDetails, setPredictionMarketDetails] = useState<PredictionMarketDetails>()
+  const [currentAttempt, setCurrentAttempt] = useState(0);
 
   const predictionMarketContract = useAsyncInitialize(async () => {
     if(!client || !wallet) return;
@@ -26,17 +28,24 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
   useEffect(() => {
     async function fetchPredictionMarketDetailsArray() {
       if (predictionMarketContract) {
-        try {
-          const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
-          const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
-          setPredictionMarketDetails(predictionMarketDetails);
-        } catch (e) {
-          console.log(e)
+        const attempts = MAX_RETRY_AMOUNT;
+        for(let i = 0; i < attempts; i++) {
+          try {
+            const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
+            const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
+            setPredictionMarketDetails(predictionMarketDetails);
+            break; // If successful, break the loop
+          } catch (e) {
+            setCurrentAttempt(i + 1);
+            if(i === attempts - 1) {
+              console.log(e); // If this was the last attempt, log the error
+            }
+          }
         }
       }
     }
     fetchPredictionMarketDetailsArray();
-  }, [client, predictionMarketContract]);
+  }, [client, predictionMarketContract, MAX_RETRY_AMOUNT]);
 
   function createPredictionMarketDetails(predictionMarketDetailsRes: any, childAddress: Address): PredictionMarketDetails {
     return {
@@ -88,6 +97,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
 
   return {
     address: predictionMarketContract?.address.toString(),
+    currentAttempt: currentAttempt,
     predictionMarketDetails: predictionMarketDetails,
     placeUserBet: async (betAmount: number, outcome: number) => {
       const message: PlaceBet = {

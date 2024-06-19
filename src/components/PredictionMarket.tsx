@@ -15,14 +15,15 @@ interface PredictionMarketProps {
 }
 
 const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContractAddress, seqno, filter }) => {
-  const { address, predictionMarketDetails, placeUserBet } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
+  const { currentAttempt, address, predictionMarketDetails, placeUserBet } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const { userBet, claimWinnings } = useUserBetContract(address!);
   const [bet, setBet] = useState(0);
   const [outcomeText, setOutcomeText] = useState("");
   const [outcome, setOutcome] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
-  if (!predictionMarketDetails || !address) {
+  if ((!predictionMarketDetails || !address) && currentAttempt !== MAX_RETRY_AMOUNT) {
     return <Skeleton active />;
   }
 
