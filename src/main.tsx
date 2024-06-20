@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 // this manifest is used temporarily for development purposes
 const manifestUrl = 'https://artemgontar.github.io/prem-ui/tonconnect-manifest.json';
 
-window.Telegram.WebApp.expand();
+//window.Telegram.WebApp.expand();
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <TonConnectUIProvider 
     manifestUrl={manifestUrl}
