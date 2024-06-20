@@ -22,14 +22,17 @@ input, select, textarea {
   box-sizing: border-box;
 }
 
-input, .select-dropdown, .datetime-input {
+.input-field, .select-dropdown, .datetime-input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border-radius: 12px;
-  background-color: var(--primary-background-color);
-  border: none;
+  border-radius: 12px !important;
+  background-color: var(--primary-background-color) !important;
   color: var(--primary-text-color) !important;
+}
+
+.select-dropdown, .datetime-input {
+  cursor: pointer;
 }
 
 .create-market-button {

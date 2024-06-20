@@ -7,6 +7,7 @@ import { Skeleton } from 'antd';
 import Modal from './internal/Modal';
 import { Filter } from '../models/filter';
 import usdtIcon from "./../assets/usdt-icon.svg";
+import tonIcon from "./../assets/ton-icon.svg";
 
 interface PredictionMarketProps {
   key: number;
@@ -23,6 +24,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   const [outcomeText, setOutcomeText] = useState("");
   const [outcome, setOutcome] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('TON');
 
   if (currentAttempt === MAX_RETRY_AMOUNT) {
     return;
@@ -108,18 +110,18 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
         </div>
         <div className="info-row">
             <span className="info-title">Your Outcome:</span>
-            <span className="info-value">{outcomeText}</span>
+            <span className={`info-value ${outcome === 0 ? 'blue-text' : 'red-text'}`}>{outcomeText}</span>
         </div>
         <div className="bet-input">
         <div className="custom-input">
-              <input className="main-input" type="number" placeholder='10' value={bet} onChange={(e) => setBet(Number(e.target.value))}/>
+              <input className="main-input" type="number" placeholder='0' onChange={(e) => setBet(Number(e.target.value))}/>
               <div className="separator"></div>
               <div className="select-container">
-                <img src={usdtIcon} alt="USDT Icon" className="currency-icon"/>
-                <select>
-                    <option value="USDT">USDT</option>
-                    <option value="BTC">BTC</option>
-                    <option value="ETH">ETH</option>
+              {selectedCurrency === 'TON' && <img src={tonIcon} alt="TON Icon" className="currency-icon"/>}
+              {selectedCurrency === 'USDT' && <img src={usdtIcon} alt="USDT Icon" className="currency-icon"/>}
+                <select onChange={(e) => setSelectedCurrency(e.target.value)}>
+                    <option value="TON">TON</option>
+                    <option disabled value="USDT">USDT</option>
                 </select>
               </div>
           </div>

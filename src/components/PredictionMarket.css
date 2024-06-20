@@ -189,7 +189,7 @@ button:disabled, button:disabled:hover {
 }
 
 .select-container::after {
-  content: '▾';
+  content: url("./../assets/chevron.forward.svg");
   position: absolute;
   right: 10px;
   pointer-events: none;

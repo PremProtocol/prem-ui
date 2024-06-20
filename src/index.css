@@ -16,9 +16,7 @@ body {
 }
 
 /* Disable any default behavior on iOS */
-input[type="text"],
-input[type="number"],
-input[type="email"],
+input,
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -30,9 +28,7 @@ select {
 }
 
 /* Prevent long-press to select text */
-input[type="text"]::selection,
-input[type="number"]::selection,
-input[type="email"]::selection {
+input::selection{
     background: none;
 }
 
