@@ -38,7 +38,6 @@ function App() {
     icon: <img src={leadBoardIcon} alt="leadBoardIcon" className="leadBoardIcon" />
   }]
   const [currentTab, setCurrentTab] = useState(tabs[0].id);
-
   const tabItemClick = (id: string, path: string) => {
     setCurrentTab(id);
     navigate(path);
@@ -51,11 +50,6 @@ function App() {
           <img src={logo} alt="Logo" className="logo" />
           <TonConnectButton />
         </div>
-        {/* <nav>
-          <Link to="/prem-ui/">Home</Link>
-          <Link to="/prem-ui/create-market">Create Market</Link>
-          <Link to="/prem-ui/user-bets">User Bets</Link>
-        </nav> */}
       </header>
       <Tabbar>
         {tabs.map(({
@@ -63,8 +57,8 @@ function App() {
         text,
         path,
         icon
-      }) => <Tabbar.Item key={id} text={text} selected={id === currentTab} onClick={() => tabItemClick(id, path)}>
-            {icon}
+      }) => <Tabbar.Item style={{ padding: "8px 10px 0px" }} key={id} text={text} selected={id === currentTab} onClick={() => tabItemClick(id, path)}>
+            {icon}  
           </Tabbar.Item>)}
       </Tabbar>
       <Routes>
