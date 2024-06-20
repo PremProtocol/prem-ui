@@ -37,7 +37,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
   
-  if(!!filter.searchQuery && !predictionMarketDetails.eventDescription.includes(filter.searchQuery)) {
+  if(!!filter.searchQuery && !predictionMarketDetails.eventDescription.toLowerCase().includes(filter.searchQuery.toLowerCase())) {
     return;
   }
   
