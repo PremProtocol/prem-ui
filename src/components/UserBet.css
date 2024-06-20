@@ -27,3 +27,9 @@
 .market-details p {
   margin: 5px 0; /* Adjust this value as needed */
 }
+
+.user-bet-currency-icon {
+  height: 18px;
+  width: 18px;
+  margin-left: 5px;
+}

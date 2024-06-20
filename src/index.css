@@ -54,6 +54,11 @@ input::selection{
   margin: 5px 0;
 }
 
+.info-row-icon-wrapper{
+  display: flex;
+  align-items: center;
+}
+
 .info-title {
   font-weight: bold;
 }

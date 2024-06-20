@@ -5,6 +5,7 @@ import { useUserBetContract } from '../hooks/useUserBetContract';
 import { fromNano } from '@ton/core';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import { Skeleton } from 'antd';
+import tonIcon from "./../assets/ton-icon.svg";
 
 interface UserBetProps {
   key: number;
@@ -60,7 +61,11 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
           </div>
           <div className="info-row">
               <span className="info-title">Your Bet:</span>
-              <span className="info-value white-text">{fromNano(userBet.betAmount)}</span>
+              <div className="info-row-icon-wrapper">
+                <span className="info-value white-text">{fromNano(userBet.betAmount)} </span>
+                <img src={tonIcon} alt="TON Icon" className="user-bet-currency-icon"/>
+              </div>
+
           </div>
           <div className="info-row">
               <span className="info-title">Sell Price:</span>
