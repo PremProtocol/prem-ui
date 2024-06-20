@@ -15,6 +15,27 @@ body {
   height: 100vh;
 }
 
+/* Disable any default behavior on iOS */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    box-shadow: none;
+}
+
+/* Prevent long-press to select text */
+input[type="text"]::selection,
+input[type="number"]::selection,
+input[type="email"]::selection {
+    background: none;
+}
+
 /* Use in market-card in different components */
 .info-row-group {
   display: flex;
