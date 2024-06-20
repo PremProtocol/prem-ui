@@ -6,6 +6,7 @@ import { fromNano } from '@ton/core';
 import { Skeleton } from 'antd';
 import Modal from './internal/Modal';
 import { Filter } from '../models/filter';
+import usdtIcon from "./../assets/usdt-icon.svg";
 
 interface PredictionMarketProps {
   key: number;
@@ -23,7 +24,11 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   const [outcome, setOutcome] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
-  if ((!predictionMarketDetails || !address) && currentAttempt !== MAX_RETRY_AMOUNT) {
+  if (currentAttempt === MAX_RETRY_AMOUNT) {
+    return;
+  }
+
+  if (!predictionMarketDetails || !address) {
     return <Skeleton active />;
   }
 
@@ -62,22 +67,18 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
     <div className="market-card">
       <h2>{predictionMarketDetails.eventDescription}</h2>
       <div className="market-content">
-        <div className="market-info">
-          <div className="market-details">
-            <div className="info-row-group">
-              <div className="info-row">
-                  <span className="info-title">End Time:</span>
-                  <span className="info-value white-text">{endTimeString}</span>
-              </div>
-              <div className="info-row">
-                  <span className="info-title">Outcome 1:</span>
-                  <span className="info-value blue-text">{predictionMarketDetails.outcomeName1}</span>
-              </div>
-              <div className="info-row">
-                  <span className="info-title">Outcome 2:</span>
-                  <span className="info-value red-text">{predictionMarketDetails.outcomeName2}</span>
-              </div>
-            </div>
+        <div className="info-row-group">
+          <div className="info-row">
+              <span className="info-title">End Time:</span>
+              <span className="info-value white-text">{endTimeString}</span>
+          </div>
+          <div className="info-row">
+              <span className="info-title">Outcome 1:</span>
+              <span className="info-value blue-text">{predictionMarketDetails.outcomeName1}</span>
+          </div>
+          <div className="info-row">
+              <span className="info-title">Outcome 2:</span>
+              <span className="info-value red-text">{predictionMarketDetails.outcomeName2}</span>
           </div>
         </div>
         <div className="market-controls">
@@ -110,11 +111,18 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
             <span className="info-value">{outcomeText}</span>
         </div>
         <div className="bet-input">
-          <input type="number" value={bet} onChange={(e) => setBet(Number(e.target.value))}/>
-          <select>
-            <option value="USDT">USDT</option>
-            <option value="USDT">TON</option>
-          </select>
+        <div className="custom-input">
+              <input className="main-input" type="number" placeholder='10' value={bet} onChange={(e) => setBet(Number(e.target.value))}/>
+              <div className="separator"></div>
+              <div className="select-container">
+                <img src={usdtIcon} alt="USDT Icon" className="currency-icon"/>
+                <select>
+                    <option value="USDT">USDT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="ETH">ETH</option>
+                </select>
+              </div>
+          </div>
         </div>
         <button className="bet-button" onClick={() => handleBet()}>Bet</button>
       </Modal>

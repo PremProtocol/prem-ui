@@ -1,55 +1,55 @@
-.market-card {
+.resolve-market-card {
   display: flex;
   flex-direction: column;
   padding: 1.2rem;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  background-color: #1E1E1E;
+  background-color: var(--primary-background-color);
   margin-bottom: 1rem;
   border: none;
 }
 
-.market-card>h2 {
+.resolve-market-card>h2 {
   margin: 0;
   color: #fff;
 }
 
-.market-content {
+.resolve-market-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-top: 0.5rem;
 }
 
-.market-info {
+.resolve-market-info {
   flex: 1;
 }
 
-.market-controls {
+.resolve-market-controls {
   flex: 1;
 }
 
-.market-controls form {
+.resolve-market-controls form {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.market-controls label {
+.resolve-market-controls label {
   font-size: 1.2em; /* Adjust this value as needed */
 }
 
-.market-controls input {
+.resolve-market-controls input {
   width: 100px; /* Adjust this value as needed */
 }
 
-.market-details {
+.resolve-market-details {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.market-details p {
+.resolve-market-details p {
   margin: 5px 0; /* Adjust this value as needed */
 }
 

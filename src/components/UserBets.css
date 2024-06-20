@@ -7,3 +7,9 @@
   align-self: center;
   margin-bottom: 100px;
 }
+
+@media (min-width: 450px) {
+  .placed-bets {
+    max-width: 420px;
+  }
+}

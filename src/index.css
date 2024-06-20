@@ -1,22 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-surface-color: #0F0F0F;
+  --primary-background-color: #1E1E1E;
+  --primary-text-color: #78797E;
+  --font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
 body {
-  margin: 0;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background-color: #0F0F0F;
-  color: #333;
+  font-family: var(--font-family);
+  background-color: var(--primary-surface-color);
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-a {
-  color: #007bff;
-  text-decoration: none;
+/* Use in market-card in different components */
+.info-row-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+  gap: 10px;
+  margin: 10px 0;
+
+  color: var(--primary-text-color);
 }
 
-a:hover {
-  text-decoration: underline;
+.info-row-group p {
+  margin: 5px 0;
 }
 
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.info-title {
+  font-weight: bold;
+}
+
+.info-value {
+  text-align: right;
+}
+
+/* Use for text in different components */
 .centered-text {
   text-align: center;
 }

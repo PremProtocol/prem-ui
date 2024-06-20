@@ -11,7 +11,12 @@ interface ResolveMarketProps {
 const ResolveMarket: React.FC<ResolveMarketProps> = ({ marketFactoryContractAddress, seqno }) => {
   const { currentAttempt, predictionMarketDetails, resolveMarket } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
-  if (!predictionMarketDetails || currentAttempt !== MAX_RETRY_AMOUNT) {
+  
+  if (currentAttempt === MAX_RETRY_AMOUNT) {
+    return;
+  }
+
+  if (!predictionMarketDetails) {
     return <Skeleton active />;
   }
   
@@ -23,17 +28,17 @@ const ResolveMarket: React.FC<ResolveMarketProps> = ({ marketFactoryContractAddr
   };
 
   return (
-    <div className="market-card">
+    <div className="resolve-market-card">
       <h2>{predictionMarketDetails.eventDescription}</h2>
-      <div className="market-content">
-        <div className="market-info">
-          <div className="market-details">
+      <div className="resolve-market-content">
+        <div className="resolve-market-info">
+          <div className="resolve-market-details">
             <p><strong>End Time:</strong> {new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString()}</p>
             <p><strong>Outcome 1:</strong> {predictionMarketDetails.outcomeName1}</p>
             <p><strong>Outcome 2:</strong> {predictionMarketDetails.outcomeName2}</p>
           </div>
         </div>
-        <div className="market-controls">
+        <div className="resolve-market-controls">
           {predictionMarketDetails.resolved ? (
               <p className="centered-text"><strong>Resolved with outcome {Number(predictionMarketDetails.outcome) === 0 ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2 }</strong></p>
              ) : (

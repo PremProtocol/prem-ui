@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 100%;
   max-width: 560px;
   margin: 0 auto;
 }
@@ -58,3 +57,4 @@ nav a:hover {
   align-items: center;
   height: 100vh;
 }
+

@@ -4,7 +4,7 @@
   padding: 1.2rem;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  background-color: #1E1E1E;
+  background-color: var(--primary-background-color);
   margin-bottom: 1rem;
   border: none;
 }
@@ -21,10 +21,6 @@
   margin-top: 0.5rem;
 }
 
-.market-info {
-  flex: 1;
-}
-
 .market-controls {
   margin-top: 1rem;
   flex: 1;
@@ -37,23 +33,13 @@
 }
 
 .market-controls label {
-  font-size: 1.2em; /* Adjust this value as needed */
+  font-size: 1.2em;
 }
 
 .market-controls input {
-  width: 100px; /* Adjust this value as needed */
+  width: 100px;
 }
 
-.market-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  color: #78797E;
-}
-
-.market-details p {
-  margin: 5px 0; /* Adjust this value as needed */
-}
 
 .bet-control {
   display: flex;
@@ -116,7 +102,6 @@ button:disabled, button:disabled:hover {
 }
 
 .app {
-  font-family: Arial, sans-serif;
   padding: 1.2rem;
 }
 
@@ -149,19 +134,64 @@ button:disabled, button:disabled:hover {
   font-size: 16px;
 }
 
-.info-row-group {
-  margin: 10px 0;
-}
-.info-row {
+.custom-input {
   display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
+
+  align-items: center;
+  border: 1px solid #666;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: var(--primary-background-color);
+  color: #ccc; /* Adjust text color if needed */
+  padding: 5px;
+  width: 100%;
 }
 
-.info-title {
-  font-weight: bold;
+.custom-input input {
+  border: none;
+  padding: 10px;
+  background: transparent;
+  color: inherit;
+  flex-grow: 1;
+  font-size: 1rem;
 }
 
-.info-value {
-  text-align: right;
+.separator {
+  width: 1px;
+  height: 30px; /* Adjust height as needed */
+  background-color: #444;
+  margin: 0 10px;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.currency-icon {
+  width: 24px; /* Adjust size as needed */
+  height: 24px; /* Adjust size as needed */
+  margin-right: 5px;
+}
+
+.custom-input select {
+  border: none;
+  background: transparent;
+  color: inherit;
+  padding: 10px;
+  padding-right: 30px; /* To give space for the arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.select-container::after {
+  content: '▾';
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: inherit;
 }

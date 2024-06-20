@@ -17,12 +17,17 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
   const { currentAttempt, address, predictionMarketDetails } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(address!);
   
-  if ((!predictionMarketDetails || !address) && currentAttempt !== MAX_RETRY_AMOUNT) {
+  if (currentAttempt === MAX_RETRY_AMOUNT) {
+    return;
+  }
+
+  if (!predictionMarketDetails || !address) {
     return <Skeleton active />;
   }
   
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
-  
+  const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
+
   const handleClaim = () => {
     claimWinnings();
   };
@@ -31,13 +36,36 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
     return;
   }
 
+  const userOutcome = userBet.outcome === 0n ? {
+    cssClass: 'blue-text',
+    outcome: predictionMarketDetails.outcomeName1
+  } : {
+    cssClass: 'red-text',
+    outcome: predictionMarketDetails.outcomeName2
+  };
+
+
   return (
     <div className="user-bet-card">
+      <h2>{predictionMarketDetails.eventDescription}</h2>
       <div className="user-bet-content">
-        <h2>{predictionMarketDetails.eventDescription}</h2>
-        <div className="user-bet-info">
-          <p><strong>End Time:</strong> {new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString()}</p>
-          <p><strong>Your Bet:</strong> {fromNano(userBet.betAmount)} TON on {userBet.outcome === 0n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2}</p>
+        <div className="info-row-group">
+          <div className="info-row">
+              <span className="info-title">End Time:</span>
+              <span className="info-value white-text">{endTimeString}</span>
+          </div>
+          <div className="info-row">
+              <span className="info-title">Your outcome:</span>
+              <span className={`info-value ${userOutcome.cssClass}`}>{userOutcome.outcome}</span>
+          </div>
+          <div className="info-row">
+              <span className="info-title">Your Bet:</span>
+              <span className="info-value white-text">{fromNano(userBet.betAmount)}</span>
+          </div>
+          <div className="info-row">
+              <span className="info-title">Sell Price:</span>
+              <span className="info-value white-text">TBD</span>
+          </div>
         </div>
       </div>
       <div className="market-controls">
