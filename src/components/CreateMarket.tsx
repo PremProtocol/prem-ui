@@ -30,7 +30,6 @@ const CreateMarket: React.FC = () => {
           onChange={(e) => setEventDescription(e.target.value)}
         />
         <select className="select-dropdown" value={eventType} onChange={(e) => setEventType(e.target.value)}>
-          <option value="" disabled selected>Event Type</option>
           {eventTypes.map((type) => (
             <option key={type} value={type}>
               {type}
