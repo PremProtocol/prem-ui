@@ -35,6 +35,10 @@ input, select, textarea {
   cursor: pointer;
 }
 
+.datetime-input {
+  min-height: 38px;
+}
+
 .create-market-button {
   padding: 10px 20px;
   background-color: #2990FF;
