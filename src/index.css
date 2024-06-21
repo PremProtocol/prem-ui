@@ -4,7 +4,9 @@
   --primary-surface-color: #0F0F0F;
   --primary-background-color: #1E1E1E;
   --primary-text-color: #78797E;
+  --secondary-text-color: #FFFFFF;
   --secondary-blue-text-color: #2990FF;
+  --secondary-red-text-color: #E53935; 
   --font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -86,9 +88,13 @@ input::selection{
 }
 
 .red-text {
-  color: #E53935;
+  color: var(--secondary-red-text-color);
 }
 
 .white-text {
-  color: #fff;
+  color: var(--secondary-text-color);
+}
+
+.grey-text {
+  color: var(--primary-text-color);
 }

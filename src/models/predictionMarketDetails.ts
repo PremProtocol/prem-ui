@@ -24,7 +24,7 @@ export class PredictionMarketDetailsClonable {
   outcomeName1: string;
   outcomeName2: string;
   numOutcomes: number;
-  totalOutcomeBets: { [key: number]: number };
+  totalOutcomeBets: Array<number>;
   totalPool: number;
   outcome: number;
   resolved: boolean;
@@ -38,9 +38,7 @@ export class PredictionMarketDetailsClonable {
     this.outcomeName1 = details.outcomeName1;
     this.outcomeName2 = details.outcomeName2;
     this.numOutcomes = Number(details.numOutcomes);
-    this.totalOutcomeBets = Object.fromEntries(
-      Object.entries(details.totalOutcomeBets).map(([key, value]) => [Number(key), Number(value)])
-    );
+    this.totalOutcomeBets = Array.from(details.totalOutcomeBets.values(), value => Number(value));
     this.totalPool = Number(details.totalPool);
     this.outcome = Number(details.outcome);
     this.resolved = details.resolved;

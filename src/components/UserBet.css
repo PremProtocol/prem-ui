@@ -12,11 +12,6 @@
   flex: 1;
 }
 
-.market-controls {
-  flex: 0;
-  align-self: center;
-}
-
 .market-details {
   display: flex;
   flex-direction: column;

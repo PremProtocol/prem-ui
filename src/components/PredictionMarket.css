@@ -21,11 +21,6 @@
   margin-top: 0.5rem;
 }
 
-.market-controls {
-  margin-top: 1rem;
-  flex: 1;
-}
-
 .market-controls form {
   display: flex;
   flex-direction: column;
@@ -39,7 +34,6 @@
 .market-controls input {
   width: 100px;
 }
-
 
 .bet-control {
   display: flex;
@@ -77,6 +71,7 @@ button:disabled, button:disabled:hover {
 .bet-buttons {
   display: flex;
   gap: 10px;
+  justify-content: space-around;
 }
 
 .outcome-one-button {
@@ -92,7 +87,7 @@ button:disabled, button:disabled:hover {
 
 .outcome-two-button {
   background-color: rgba(241, 46, 46, 0.12);
-  color: #E53935;
+  color: var(--secondary-red-text-color);
   border: none;
   border-radius: 12px;
   padding: 23px 31px;

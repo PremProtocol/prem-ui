@@ -1,0 +1,48 @@
+.market-details {
+  padding: 20px;
+  color: var(--secondary-text-color);
+  margin-bottom: 80px;
+}
+
+.cancel-button {
+  background: none;
+  border: none;
+  color: var(--secondary-text-color);
+  font-size: 18px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.outcomes {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.outcome {
+  flex: 1;
+  padding: 0 10px;
+  text-align: left;
+}
+
+.outcome-name {
+  font-size: 18px;
+}
+
+.outcome-probability {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.chart {
+  height: 200px;
+  background-color: #333;
+}
+
+.about {
+  padding: 10px;
+  border-radius: 5px;
+}
