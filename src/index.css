@@ -4,6 +4,7 @@
   --primary-surface-color: #0F0F0F;
   --primary-background-color: #1E1E1E;
   --primary-text-color: #78797E;
+  --secondary-blue-text-color: #2990FF;
   --font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -59,6 +60,14 @@ input::selection{
   align-items: center;
 }
 
+.learn-more{
+  color: var(--secondary-blue-text-color);
+  display: flex;
+  align-items: baseline;
+  margin-top: 1rem;
+  text-decoration: none;
+  gap: 10px;
+}
 .info-title {
   font-weight: bold;
 }
@@ -73,7 +82,7 @@ input::selection{
 }
 
 .blue-text {
-  color: #2990FF;
+  color: var(--secondary-blue-text-color);
 }
 
 .red-text {

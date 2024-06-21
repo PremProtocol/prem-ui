@@ -10,6 +10,6 @@
 
 @media (min-width: 450px) {
   .placed-bets {
-    max-width: 420px;
+    min-width: 420px;
   }
 }

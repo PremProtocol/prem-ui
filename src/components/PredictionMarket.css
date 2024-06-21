@@ -81,7 +81,7 @@ button:disabled, button:disabled:hover {
 
 .outcome-one-button {
   background-color: rgba(67, 120, 255, 0.12);
-  color: #2990FF;
+  color: var(--secondary-blue-text-color);
   border: none;
   border-radius: 12px;
   padding: 23px 31px;
@@ -105,6 +105,7 @@ button:disabled, button:disabled:hover {
   padding: 1.2rem;
 }
 
+/* Modal window styles */
 .open-modal-button, .bet-button {
   padding: 10px 20px;
   font-size: 16px;
@@ -194,6 +195,20 @@ button:disabled, button:disabled:hover {
   width: 24px; /* Adjust size as needed */
   height: 24px; /* Adjust size as needed */
   margin-right: 5px;
+}
+
+.bet-button {
+  padding: 10px 20px;
+  background-color: var(--secondary-blue-text-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.bet-button:hover {
+  background-color: var(--secondary-blue-text-color);
 }
 
 @media (min-width: 450px) {

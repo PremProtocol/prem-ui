@@ -8,6 +8,9 @@ import Modal from './internal/Modal';
 import { Filter } from '../models/filter';
 import usdtIcon from "./../assets/usdt-icon.svg";
 import tonIcon from "./../assets/ton-icon.svg";
+import arrowIcon from "./../assets/chevron.forward.right.svg";
+import { Link } from 'react-router-dom';
+import { PredictionMarketDetailsClonable } from '../models/predictionMarketDetails';
 
 interface PredictionMarketProps {
   key: number;
@@ -25,7 +28,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   const [outcome, setOutcome] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('TON');
-
+  
   if (currentAttempt === MAX_RETRY_AMOUNT) {
     return;
   }
@@ -33,6 +36,8 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   if (!predictionMarketDetails || !address) {
     return <Skeleton active />;
   }
+
+  const predictionMarketDetailsClonable = new PredictionMarketDetailsClonable(predictionMarketDetails) 
 
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
@@ -101,6 +106,11 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
             </div>
           )}
         </div>
+        <Link to={`/prem-ui/market/${seqno}`}
+          state={{ marketDetails: predictionMarketDetailsClonable }}
+          className="learn-more">
+          Learn more <img src={arrowIcon} alt="Arrow Icon"/>
+        </Link>
       </div>
       <Modal visible={modalVisible} onClose={closeBetModal}>
         <h2>{predictionMarketDetails.eventDescription}</h2>
@@ -126,7 +136,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
               </div>
           </div>
         </div>
-        <button className="bet-button" onClick={() => handleBet()}>Bet</button>
+        <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
       </Modal>
     </div>
   );

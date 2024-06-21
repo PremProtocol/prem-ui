@@ -11,6 +11,7 @@ import PredictionMarkets from './components/PredictionMarkets';
 import '@twa-dev/sdk';
 import { Tabbar } from '@telegram-apps/telegram-ui';
 import { useState } from 'react';
+import MarketDetails from './components/MarketDetails';
 
 interface Tab {
   id: string;
@@ -65,6 +66,7 @@ function App() {
         <Route path="/prem-ui/" element={<PredictionMarkets />} />
         <Route path="/prem-ui/user-bets" element={<UserBets />} />
         <Route path="/prem-ui/create-market" element={<CreateMarket />} />
+        <Route path="/prem-ui/market/:seqno" element={<MarketDetails />} />
       </Routes>
     </div>
   );
