@@ -4,7 +4,7 @@ import './MarketDetails.css';
 const MarketDetails = () => {
   const location = useLocation();
   const { marketDetails } = location.state || {};
-  
+  console.log(marketDetails);
   return (
     <div className="market-details">
       <h1>{marketDetails.eventDescription}</h1>
@@ -12,13 +12,13 @@ const MarketDetails = () => {
         <div className="outcome">
           <div className="outcome-name"><span className='grey-text'>#1</span> {marketDetails.outcomeName1}</div>
           <div className="outcome-probability blue-text">
-            {((marketDetails.totalOutcomeBets[0] / marketDetails.totalPool) * 100).toFixed(0)}% chance
+            {((marketDetails.totalOutcome1Bets / marketDetails.totalPool) * 100).toFixed(0)}% chance
           </div>
         </div>
         <div className="outcome">
           <div className="outcome-name"><span className='grey-text'>#2</span> {marketDetails.outcomeName2}</div>
           <div className="outcome-probability red-text">
-            {((marketDetails.totalOutcomeBets[1] / marketDetails.totalPool) * 100).toFixed(0)}% chance
+            {((marketDetails.totalOutcome2Bets / marketDetails.totalPool) * 100).toFixed(0)}% chance
           </div>
         </div>
       </div>

@@ -58,7 +58,7 @@
 }
 
 button:disabled, button:disabled:hover {
-  background-color: grey;
+  opacity: 0.25;
   cursor: not-allowed;
 }
 

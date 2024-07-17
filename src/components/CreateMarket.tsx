@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
-import ResolveMarkets from './ResolveMarkets';
+import ResolveMarkets from './ManageMarkets';
 
 const CreateMarket: React.FC = () => {
   const {createMarket} = useMarketFactoryContract();
+  const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
@@ -15,13 +16,20 @@ const CreateMarket: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const endTimeNumber = Date.parse(endTime) / 1000;
-    await createMarket(eventDescription, eventType, endTimeNumber, outcomeName1, outcomeName2);
+    await createMarket(eventName, eventDescription, eventType, endTimeNumber, outcomeName1, outcomeName2);
   };
 
   return (
     <div className="create-market-container">
       <h1>Event Information</h1>
       <form className="form" onSubmit={handleSubmit}>
+      <input
+          className="input-field"
+          type="text"
+          placeholder='Event Name'
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
+        />
         <input
           className="input-field"
           type="text"

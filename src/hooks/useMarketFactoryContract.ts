@@ -4,8 +4,6 @@ import { CreateMarket, MarketFactory } from '../wrappers/MarketFactory';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
-//import { PredictionMarket } from '../wrappers/PredictionMarket';
-//import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
@@ -36,16 +34,16 @@ export function useMarketFactoryContract() {
   return {
     address: marketFactoryContract?.address.toString(),
     predictionMarketCount: predictionMarketCount,
-    createMarket: async (eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
+    createMarket: async (eventName: string, eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
       if(!wallet || !marketFactoryContract) return;
       const message: CreateMarket = {
           $$type: "CreateMarket",
+          eventName: eventName,
           eventDescription: eventDescription,
           eventType: eventType,
           endTime: BigInt(endTime),
           outcomeName1: outcomeName1,
           outcomeName2: outcomeName2,
-          numOutcomes: 2n,
       }
       
       const lastTrx = await client?.getTransactions(sender.address!, {
@@ -74,7 +72,6 @@ export function useMarketFactoryContract() {
           //Push notification about transaction success
           console.log('Transaction succeeded:');
           setPredictionMarketCount(predictionMarketCount! + 1);
-          //await redisService.set(PREDICTION_MARKET_COUNT_CACHE_PREFIX, predictionMarketCount!);
         } 
         iterations--;
       }

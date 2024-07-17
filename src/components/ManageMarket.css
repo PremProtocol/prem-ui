@@ -1,0 +1,132 @@
+.resolve-market-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  background-color: var(--primary-background-color);
+  margin-bottom: 1rem;
+  border: none;
+}
+
+.resolve-market-card>h2 {
+  margin: 0;
+  color: #fff;
+}
+
+.resolve-market-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.resolve-market-info {
+  flex: 1;
+}
+
+.resolve-market-controls {
+  flex: 1;
+}
+
+.resolve-market-controls form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.resolve-market-controls label {
+  font-size: 1.2em; /* Adjust this value as needed */
+}
+
+.resolve-market-controls input {
+  width: 100px; /* Adjust this value as needed */
+}
+
+.resolve-market-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resolve-market-details p {
+  margin: 5px 0; /* Adjust this value as needed */
+}
+
+.liqudity-section, .resolve-section {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.add-liqudity-button, .resolve-one-button {
+  background-color: rgba(67, 120, 255, 0.12);
+  color: var(--secondary-blue-text-color);
+  border: none;
+  border-radius: 12px;
+  padding: 23px 31px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.remove-liqudity-button, .resolve-two-button {
+  background-color: rgba(241, 46, 46, 0.12);
+  color: var(--secondary-red-text-color);
+  border: none;
+  border-radius: 12px;
+  padding: 23px 31px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resolve-button {
+  flex: 1;
+  margin: 0 10px;
+}
+
+button:disabled, button:disabled:hover {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* Modal styles */
+
+.lp-amount-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.lp-amount-input input {
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.lp-amount-input select {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.liqudity-button {
+  padding: 10px 20px;
+  background-color: var(--secondary-blue-text-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.liqudity-button:hover{
+  background-color: var(--secondary-blue-text-color);
+}

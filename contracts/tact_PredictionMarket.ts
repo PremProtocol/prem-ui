@@ -459,60 +459,60 @@ function dictValueParserCreateMarketResponse(): DictionaryValue<CreateMarketResp
 
 export type CreateMarket = {
     $$type: 'CreateMarket';
+    eventName: string;
     eventDescription: string;
     eventType: string;
     endTime: bigint;
     outcomeName1: string;
     outcomeName2: string;
-    numOutcomes: bigint;
 }
 
 export function storeCreateMarket(src: CreateMarket) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(1389069614, 32);
+        b_0.storeUint(1393681475, 32);
+        b_0.storeStringRefTail(src.eventName);
         b_0.storeStringRefTail(src.eventDescription);
         b_0.storeStringRefTail(src.eventType);
         b_0.storeUint(src.endTime, 64);
-        b_0.storeStringRefTail(src.outcomeName1);
         let b_1 = new Builder();
+        b_1.storeStringRefTail(src.outcomeName1);
         b_1.storeStringRefTail(src.outcomeName2);
-        b_1.storeUint(src.numOutcomes, 8);
         b_0.storeRef(b_1.endCell());
     };
 }
 
 export function loadCreateMarket(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1389069614) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 1393681475) { throw Error('Invalid prefix'); }
+    let _eventName = sc_0.loadStringRefTail();
     let _eventDescription = sc_0.loadStringRefTail();
     let _eventType = sc_0.loadStringRefTail();
     let _endTime = sc_0.loadUintBig(64);
-    let _outcomeName1 = sc_0.loadStringRefTail();
     let sc_1 = sc_0.loadRef().beginParse();
+    let _outcomeName1 = sc_1.loadStringRefTail();
     let _outcomeName2 = sc_1.loadStringRefTail();
-    let _numOutcomes = sc_1.loadUintBig(8);
-    return { $$type: 'CreateMarket' as const, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    return { $$type: 'CreateMarket' as const, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2 };
 }
 
 function loadTupleCreateMarket(source: TupleReader) {
+    let _eventName = source.readString();
     let _eventDescription = source.readString();
     let _eventType = source.readString();
     let _endTime = source.readBigNumber();
     let _outcomeName1 = source.readString();
     let _outcomeName2 = source.readString();
-    let _numOutcomes = source.readBigNumber();
-    return { $$type: 'CreateMarket' as const, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    return { $$type: 'CreateMarket' as const, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2 };
 }
 
 function storeTupleCreateMarket(source: CreateMarket) {
     let builder = new TupleBuilder();
+    builder.writeString(source.eventName);
     builder.writeString(source.eventDescription);
     builder.writeString(source.eventType);
     builder.writeNumber(source.endTime);
     builder.writeString(source.outcomeName1);
     builder.writeString(source.outcomeName2);
-    builder.writeNumber(source.numOutcomes);
     return builder.build();
 }
 
@@ -530,64 +530,64 @@ function dictValueParserCreateMarket(): DictionaryValue<CreateMarket> {
 export type MarketInitialize = {
     $$type: 'MarketInitialize';
     owner: Address;
+    eventName: string;
     eventDescription: string;
     eventType: string;
     endTime: bigint;
     outcomeName1: string;
     outcomeName2: string;
-    numOutcomes: bigint;
 }
 
 export function storeMarketInitialize(src: MarketInitialize) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(587944281, 32);
+        b_0.storeUint(2175637175, 32);
         b_0.storeAddress(src.owner);
+        b_0.storeStringRefTail(src.eventName);
         b_0.storeStringRefTail(src.eventDescription);
         b_0.storeStringRefTail(src.eventType);
         b_0.storeUint(src.endTime, 64);
-        b_0.storeStringRefTail(src.outcomeName1);
         let b_1 = new Builder();
+        b_1.storeStringRefTail(src.outcomeName1);
         b_1.storeStringRefTail(src.outcomeName2);
-        b_1.storeUint(src.numOutcomes, 8);
         b_0.storeRef(b_1.endCell());
     };
 }
 
 export function loadMarketInitialize(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 587944281) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 2175637175) { throw Error('Invalid prefix'); }
     let _owner = sc_0.loadAddress();
+    let _eventName = sc_0.loadStringRefTail();
     let _eventDescription = sc_0.loadStringRefTail();
     let _eventType = sc_0.loadStringRefTail();
     let _endTime = sc_0.loadUintBig(64);
-    let _outcomeName1 = sc_0.loadStringRefTail();
     let sc_1 = sc_0.loadRef().beginParse();
+    let _outcomeName1 = sc_1.loadStringRefTail();
     let _outcomeName2 = sc_1.loadStringRefTail();
-    let _numOutcomes = sc_1.loadUintBig(8);
-    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2 };
 }
 
 function loadTupleMarketInitialize(source: TupleReader) {
     let _owner = source.readAddress();
+    let _eventName = source.readString();
     let _eventDescription = source.readString();
     let _eventType = source.readString();
     let _endTime = source.readBigNumber();
     let _outcomeName1 = source.readString();
     let _outcomeName2 = source.readString();
-    let _numOutcomes = source.readBigNumber();
-    return { $$type: 'MarketInitialize' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes };
+    return { $$type: 'MarketInitialize' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2 };
 }
 
 function storeTupleMarketInitialize(source: MarketInitialize) {
     let builder = new TupleBuilder();
     builder.writeAddress(source.owner);
+    builder.writeString(source.eventName);
     builder.writeString(source.eventDescription);
     builder.writeString(source.eventType);
     builder.writeNumber(source.endTime);
     builder.writeString(source.outcomeName1);
     builder.writeString(source.outcomeName2);
-    builder.writeNumber(source.numOutcomes);
     return builder.build();
 }
 
@@ -598,6 +598,95 @@ function dictValueParserMarketInitialize(): DictionaryValue<MarketInitialize> {
         },
         parse: (src) => {
             return loadMarketInitialize(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type AddLiquidity = {
+    $$type: 'AddLiquidity';
+    amount: bigint;
+    oddsForOutcome1: bigint;
+}
+
+export function storeAddLiquidity(src: AddLiquidity) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(1027787397, 32);
+        b_0.storeCoins(src.amount);
+        b_0.storeUint(src.oddsForOutcome1, 8);
+    };
+}
+
+export function loadAddLiquidity(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 1027787397) { throw Error('Invalid prefix'); }
+    let _amount = sc_0.loadCoins();
+    let _oddsForOutcome1 = sc_0.loadUintBig(8);
+    return { $$type: 'AddLiquidity' as const, amount: _amount, oddsForOutcome1: _oddsForOutcome1 };
+}
+
+function loadTupleAddLiquidity(source: TupleReader) {
+    let _amount = source.readBigNumber();
+    let _oddsForOutcome1 = source.readBigNumber();
+    return { $$type: 'AddLiquidity' as const, amount: _amount, oddsForOutcome1: _oddsForOutcome1 };
+}
+
+function storeTupleAddLiquidity(source: AddLiquidity) {
+    let builder = new TupleBuilder();
+    builder.writeNumber(source.amount);
+    builder.writeNumber(source.oddsForOutcome1);
+    return builder.build();
+}
+
+function dictValueParserAddLiquidity(): DictionaryValue<AddLiquidity> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeAddLiquidity(src)).endCell());
+        },
+        parse: (src) => {
+            return loadAddLiquidity(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type RemoveLiquidity = {
+    $$type: 'RemoveLiquidity';
+    amount: bigint;
+}
+
+export function storeRemoveLiquidity(src: RemoveLiquidity) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(258093095, 32);
+        b_0.storeCoins(src.amount);
+    };
+}
+
+export function loadRemoveLiquidity(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 258093095) { throw Error('Invalid prefix'); }
+    let _amount = sc_0.loadCoins();
+    return { $$type: 'RemoveLiquidity' as const, amount: _amount };
+}
+
+function loadTupleRemoveLiquidity(source: TupleReader) {
+    let _amount = source.readBigNumber();
+    return { $$type: 'RemoveLiquidity' as const, amount: _amount };
+}
+
+function storeTupleRemoveLiquidity(source: RemoveLiquidity) {
+    let builder = new TupleBuilder();
+    builder.writeNumber(source.amount);
+    return builder.build();
+}
+
+function dictValueParserRemoveLiquidity(): DictionaryValue<RemoveLiquidity> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeRemoveLiquidity(src)).endCell());
+        },
+        parse: (src) => {
+            return loadRemoveLiquidity(src.loadRef().beginParse());
         }
     }
 }
@@ -696,8 +785,8 @@ export type ClaimWinningsInfo = {
 export function storeClaimWinningsInfo(src: ClaimWinningsInfo) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(3371601891, 32);
-        b_0.storeUint(src.betAmount, 64);
+        b_0.storeUint(4043895049, 32);
+        b_0.storeCoins(src.betAmount);
         b_0.storeAddress(src.walletAddress);
         b_0.storeInt(src.outcome, 8);
     };
@@ -705,8 +794,8 @@ export function storeClaimWinningsInfo(src: ClaimWinningsInfo) {
 
 export function loadClaimWinningsInfo(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3371601891) { throw Error('Invalid prefix'); }
-    let _betAmount = sc_0.loadUintBig(64);
+    if (sc_0.loadUint(32) !== 4043895049) { throw Error('Invalid prefix'); }
+    let _betAmount = sc_0.loadCoins();
     let _walletAddress = sc_0.loadAddress();
     let _outcome = sc_0.loadIntBig(8);
     return { $$type: 'ClaimWinningsInfo' as const, betAmount: _betAmount, walletAddress: _walletAddress, outcome: _outcome };
@@ -741,14 +830,20 @@ function dictValueParserClaimWinningsInfo(): DictionaryValue<ClaimWinningsInfo> 
 export type PredictionMarketDetails = {
     $$type: 'PredictionMarketDetails';
     owner: Address;
+    eventName: string;
     eventDescription: string;
     eventType: string;
     endTime: bigint;
     outcomeName1: string;
     outcomeName2: string;
-    numOutcomes: bigint;
-    totalOutcomeBets: Dictionary<number, bigint>;
+    totalOutcome1Bets: bigint;
+    totalOutcome2Bets: bigint;
     totalPool: bigint;
+    totalLiquidity: bigint;
+    reserve1: bigint;
+    reserve2: bigint;
+    oddsForOutcome1: bigint;
+    protocolFeePercentage: bigint;
     outcome: bigint;
     resolved: boolean;
 }
@@ -756,17 +851,23 @@ export type PredictionMarketDetails = {
 export function storePredictionMarketDetails(src: PredictionMarketDetails) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(4287364553, 32);
+        b_0.storeUint(2609344367, 32);
         b_0.storeAddress(src.owner);
+        b_0.storeStringRefTail(src.eventName);
         b_0.storeStringRefTail(src.eventDescription);
         b_0.storeStringRefTail(src.eventType);
         b_0.storeUint(src.endTime, 64);
-        b_0.storeStringRefTail(src.outcomeName1);
         let b_1 = new Builder();
+        b_1.storeStringRefTail(src.outcomeName1);
         b_1.storeStringRefTail(src.outcomeName2);
-        b_1.storeUint(src.numOutcomes, 8);
-        b_1.storeDict(src.totalOutcomeBets, Dictionary.Keys.Uint(8), Dictionary.Values.BigUint(64));
-        b_1.storeUint(src.totalPool, 64);
+        b_1.storeCoins(src.totalOutcome1Bets);
+        b_1.storeCoins(src.totalOutcome2Bets);
+        b_1.storeCoins(src.totalPool);
+        b_1.storeCoins(src.totalLiquidity);
+        b_1.storeCoins(src.reserve1);
+        b_1.storeCoins(src.reserve2);
+        b_1.storeUint(src.oddsForOutcome1, 8);
+        b_1.storeUint(src.protocolFeePercentage, 8);
         b_1.storeInt(src.outcome, 8);
         b_1.storeBit(src.resolved);
         b_0.storeRef(b_1.endCell());
@@ -775,48 +876,66 @@ export function storePredictionMarketDetails(src: PredictionMarketDetails) {
 
 export function loadPredictionMarketDetails(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 4287364553) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 2609344367) { throw Error('Invalid prefix'); }
     let _owner = sc_0.loadAddress();
+    let _eventName = sc_0.loadStringRefTail();
     let _eventDescription = sc_0.loadStringRefTail();
     let _eventType = sc_0.loadStringRefTail();
     let _endTime = sc_0.loadUintBig(64);
-    let _outcomeName1 = sc_0.loadStringRefTail();
     let sc_1 = sc_0.loadRef().beginParse();
+    let _outcomeName1 = sc_1.loadStringRefTail();
     let _outcomeName2 = sc_1.loadStringRefTail();
-    let _numOutcomes = sc_1.loadUintBig(8);
-    let _totalOutcomeBets = Dictionary.load(Dictionary.Keys.Uint(8), Dictionary.Values.BigUint(64), sc_1);
-    let _totalPool = sc_1.loadUintBig(64);
+    let _totalOutcome1Bets = sc_1.loadCoins();
+    let _totalOutcome2Bets = sc_1.loadCoins();
+    let _totalPool = sc_1.loadCoins();
+    let _totalLiquidity = sc_1.loadCoins();
+    let _reserve1 = sc_1.loadCoins();
+    let _reserve2 = sc_1.loadCoins();
+    let _oddsForOutcome1 = sc_1.loadUintBig(8);
+    let _protocolFeePercentage = sc_1.loadUintBig(8);
     let _outcome = sc_1.loadIntBig(8);
     let _resolved = sc_1.loadBit();
-    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes, totalOutcomeBets: _totalOutcomeBets, totalPool: _totalPool, outcome: _outcome, resolved: _resolved };
+    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, totalOutcome1Bets: _totalOutcome1Bets, totalOutcome2Bets: _totalOutcome2Bets, totalPool: _totalPool, totalLiquidity: _totalLiquidity, reserve1: _reserve1, reserve2: _reserve2, oddsForOutcome1: _oddsForOutcome1, protocolFeePercentage: _protocolFeePercentage, outcome: _outcome, resolved: _resolved };
 }
 
 function loadTuplePredictionMarketDetails(source: TupleReader) {
     let _owner = source.readAddress();
+    let _eventName = source.readString();
     let _eventDescription = source.readString();
     let _eventType = source.readString();
     let _endTime = source.readBigNumber();
     let _outcomeName1 = source.readString();
     let _outcomeName2 = source.readString();
-    let _numOutcomes = source.readBigNumber();
-    let _totalOutcomeBets = Dictionary.loadDirect(Dictionary.Keys.Uint(8), Dictionary.Values.BigUint(64), source.readCellOpt());
+    let _totalOutcome1Bets = source.readBigNumber();
+    let _totalOutcome2Bets = source.readBigNumber();
     let _totalPool = source.readBigNumber();
+    let _totalLiquidity = source.readBigNumber();
+    let _reserve1 = source.readBigNumber();
+    let _reserve2 = source.readBigNumber();
+    let _oddsForOutcome1 = source.readBigNumber();
+    let _protocolFeePercentage = source.readBigNumber();
     let _outcome = source.readBigNumber();
     let _resolved = source.readBoolean();
-    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, numOutcomes: _numOutcomes, totalOutcomeBets: _totalOutcomeBets, totalPool: _totalPool, outcome: _outcome, resolved: _resolved };
+    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, totalOutcome1Bets: _totalOutcome1Bets, totalOutcome2Bets: _totalOutcome2Bets, totalPool: _totalPool, totalLiquidity: _totalLiquidity, reserve1: _reserve1, reserve2: _reserve2, oddsForOutcome1: _oddsForOutcome1, protocolFeePercentage: _protocolFeePercentage, outcome: _outcome, resolved: _resolved };
 }
 
 function storeTuplePredictionMarketDetails(source: PredictionMarketDetails) {
     let builder = new TupleBuilder();
     builder.writeAddress(source.owner);
+    builder.writeString(source.eventName);
     builder.writeString(source.eventDescription);
     builder.writeString(source.eventType);
     builder.writeNumber(source.endTime);
     builder.writeString(source.outcomeName1);
     builder.writeString(source.outcomeName2);
-    builder.writeNumber(source.numOutcomes);
-    builder.writeCell(source.totalOutcomeBets.size > 0 ? beginCell().storeDictDirect(source.totalOutcomeBets, Dictionary.Keys.Uint(8), Dictionary.Values.BigUint(64)).endCell() : null);
+    builder.writeNumber(source.totalOutcome1Bets);
+    builder.writeNumber(source.totalOutcome2Bets);
     builder.writeNumber(source.totalPool);
+    builder.writeNumber(source.totalLiquidity);
+    builder.writeNumber(source.reserve1);
+    builder.writeNumber(source.reserve2);
+    builder.writeNumber(source.oddsForOutcome1);
+    builder.writeNumber(source.protocolFeePercentage);
     builder.writeNumber(source.outcome);
     builder.writeBoolean(source.resolved);
     return builder.build();
@@ -842,17 +961,17 @@ export type PlaceBetInternal = {
 export function storePlaceBetInternal(src: PlaceBetInternal) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(4125778717, 32);
+        b_0.storeUint(3532229292, 32);
         b_0.storeInt(src.outcome, 8);
-        b_0.storeUint(src.betAmount, 64);
+        b_0.storeCoins(src.betAmount);
     };
 }
 
 export function loadPlaceBetInternal(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 4125778717) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 3532229292) { throw Error('Invalid prefix'); }
     let _outcome = sc_0.loadIntBig(8);
-    let _betAmount = sc_0.loadUintBig(64);
+    let _betAmount = sc_0.loadCoins();
     return { $$type: 'PlaceBetInternal' as const, outcome: _outcome, betAmount: _betAmount };
 }
 
@@ -889,17 +1008,17 @@ export type UserBetInfo = {
 export function storeUserBetInfo(src: UserBetInfo) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(4155719743, 32);
+        b_0.storeUint(2079623544, 32);
         b_0.storeInt(src.outcome, 8);
-        b_0.storeUint(src.betAmount, 64);
+        b_0.storeCoins(src.betAmount);
     };
 }
 
 export function loadUserBetInfo(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 4155719743) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 2079623544) { throw Error('Invalid prefix'); }
     let _outcome = sc_0.loadIntBig(8);
-    let _betAmount = sc_0.loadUintBig(64);
+    let _betAmount = sc_0.loadCoins();
     return { $$type: 'UserBetInfo' as const, outcome: _outcome, betAmount: _betAmount };
 }
 
@@ -927,63 +1046,6 @@ function dictValueParserUserBetInfo(): DictionaryValue<UserBetInfo> {
     }
 }
 
-export type ClaimWinningsInternal = {
-    $$type: 'ClaimWinningsInternal';
-    resolved: boolean;
-    winningOutcome: bigint;
-    totalPool: bigint;
-    totalOutcomeBets: bigint;
-}
-
-export function storeClaimWinningsInternal(src: ClaimWinningsInternal) {
-    return (builder: Builder) => {
-        let b_0 = builder;
-        b_0.storeUint(3696625672, 32);
-        b_0.storeBit(src.resolved);
-        b_0.storeUint(src.winningOutcome, 8);
-        b_0.storeUint(src.totalPool, 64);
-        b_0.storeUint(src.totalOutcomeBets, 64);
-    };
-}
-
-export function loadClaimWinningsInternal(slice: Slice) {
-    let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3696625672) { throw Error('Invalid prefix'); }
-    let _resolved = sc_0.loadBit();
-    let _winningOutcome = sc_0.loadUintBig(8);
-    let _totalPool = sc_0.loadUintBig(64);
-    let _totalOutcomeBets = sc_0.loadUintBig(64);
-    return { $$type: 'ClaimWinningsInternal' as const, resolved: _resolved, winningOutcome: _winningOutcome, totalPool: _totalPool, totalOutcomeBets: _totalOutcomeBets };
-}
-
-function loadTupleClaimWinningsInternal(source: TupleReader) {
-    let _resolved = source.readBoolean();
-    let _winningOutcome = source.readBigNumber();
-    let _totalPool = source.readBigNumber();
-    let _totalOutcomeBets = source.readBigNumber();
-    return { $$type: 'ClaimWinningsInternal' as const, resolved: _resolved, winningOutcome: _winningOutcome, totalPool: _totalPool, totalOutcomeBets: _totalOutcomeBets };
-}
-
-function storeTupleClaimWinningsInternal(source: ClaimWinningsInternal) {
-    let builder = new TupleBuilder();
-    builder.writeBoolean(source.resolved);
-    builder.writeNumber(source.winningOutcome);
-    builder.writeNumber(source.totalPool);
-    builder.writeNumber(source.totalOutcomeBets);
-    return builder.build();
-}
-
-function dictValueParserClaimWinningsInternal(): DictionaryValue<ClaimWinningsInternal> {
-    return {
-        serialize: (src, buidler) => {
-            buidler.storeRef(beginCell().store(storeClaimWinningsInternal(src)).endCell());
-        },
-        parse: (src) => {
-            return loadClaimWinningsInternal(src.loadRef().beginParse());
-        }
-    }
-}
-
  type PredictionMarket_init_args = {
     $$type: 'PredictionMarket_init_args';
     parent: Address;
@@ -999,8 +1061,8 @@ function initPredictionMarket_init_args(src: PredictionMarket_init_args) {
 }
 
 async function PredictionMarket_init(parent: Address, seqno: bigint) {
-    const __code = Cell.fromBase64('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');
-    const __system = Cell.fromBase64('te6cckECRQEAC5MAAQHAAQIBSAIWAQW7TbgDART/APSkE/S88sgLBAIBYgUMA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCDgYLBNbtou37AZaAINchMH/gcCHXScIflTAg1wsf3iCCEPXqYx26jzow0x8BghD16mMduvLggdIH0z9ZbBI0ggDReAPA/xPy9PhBbyQTXwOCCJiWgKFyiCdVIH9VMG1t2zx/4CCCEJRqmLa64wLAAB4qBwgBUDDTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH8pA/SP9PkBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG64wKC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo8mgWNT+EJSUMcF8vSBIFIBwADy9H9wgQCCiCdVIH9VMG1t2zx/2zHgkTDicAkKKgG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEMj2j+NQBMsfEss/ASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEqABYAAAAAd2lubmluZwCoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UAgEgDRICEb7Rbtnm2eNilA4RAcTtRNDUAfhj0gABjkr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB9IAVUBsFeD4KNcLCoMJuvLgiQ8BivpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBIC0QHbPBAABnB/cAAGUyEBAgEgNRMCAUgUFQARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1XR2JKNmRSWEhac1VXdlBYM3Z3SmdvSkRvRUVQQjZIV3NCcFp4REZpNUFnOIIAEFuglYFwEU/wD0pBP0vPLICxgCAWIZLgN+0AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRzbPPLggts8QRosBHYBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQIwtRWbqPCDDbPGwX2zx/4CCCELhj3R+64wIgghBG5vPIuhscHyEAntMfAYIQIwtRWbry4IH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdAB0z/UAdAB1AHQ1AHQAdMHMBAnECYQJRAkECMB9jk5OTs7Oz2BXjr4QlLQxwXy9IIA2rAo+CO88vSBK0KLCCYB+QEB+QG98vSBK0KLCCUB+QEB+QG98vSBP1IjwALy9IFFt4sIKwH5AQH5Ab3y9IIAyrWLCCoB+QEB+QG98vR4cCAQNIBAIW6VW1n0WzCYyAHPAUEz9EPieB0CgHFwgEAhbpVbWfRbMJjIAc8BQTP0Q+L4QW8kE18DggkxLQC8jxn4QW8kE18DggkxLQChcogvVSB/VTBtbds83gEeKgAUAAAAAHJlZnVuZAHAMNMfAYIQuGPdH7ry4IHSBwExgV3g+CMqufL0ggCViyHC/5NTFLmRcOLy9PhBbyQTXwOCCcnDgKF4VBQEUjCAQCFulVtZ9FswmMgBzwFBM/RD4lEjoPhC+CgQRVUS2zx/IALa+ENAQ9s8XHBZyHABywFzAcsBcAHLABLMzMn5AMhyAcsBcAHLABLKB8v/ydAg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIggl9eEAFcgXIWYIQ9epjHVADyx/KB8s/yRUUQzB/BgUEQTPbPCUqBL6PSzDTHwGCEEbm88i68uCB0gcBMTaBYWX4QlLgxwXy9IIAleD4Iym+8vSBUW4Hsxfy9IIAlYslwv+TU1K5kXDi8vR/iBf4QgF/bds8f+AgghDI9o/juuMCghCUapi2uiIpIygAIAAAAABnYXMgcmV0dXJuZWQBcjDTHwGCEMj2j+O68uCB0z/6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdIHVSBsE9s8fyQC9IEo1iry9IFX9FORuvL0+EP4KEEw2zxwWchwAcsBcwHLAXABywASzMzJ+QDIcgHLAXABywASygfL/8nQINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiIIAmen4QhLHBfL0URKoeFREE4BAQTP0Dm+hlAHXATCSW23iJSYA1gLQ9AQwbQGBNNsBgBD0D2+h8uCHAYE02yICgBD0F8gByPQAyQHMcAHKAEADWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbJAiogbvLQgKkE+EKAQogQI39VMG1t2zwnKgAyAAAAAGNsYWltV2lubmluZ3NJbnRlcm5hbAFYjqfTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gMHApATptbSJus5lbIG7y0IBvIgGRMuIQJHADBIBCUCPbPCoByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsAKwCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzAEWyPhDAcx/AcoAVcAtAPZQ3CDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAKINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WGMs/yFAHzxbJUAbMyFAFzxbJUATMEss/ygDKB8jIUAPPFslYzMhQA88WyVjMEssHE/QAyz/JAczJ7VQCASAvNAIBIDAyAhG7UV2zzbPGzRhBMQACJgIVuF3ts8VQzbPGzRhBMwBSggCViyHC/5NTFLmRcOLy9HgjAoBAQTP0Dm+hlAHXATCSW23iIG7y0IACASA1NgCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgEgN0ACASA4PAIBSDk6ABCqvu1E0NIAAQIQqw3bPNs8bNFBOwACJQIBaj0+AHOndxoatLgzOZ0Xl6i2qDa0IiosNKo3K6coN7c5Nym7vSEztDCxt6O8sbm8IaI8qSwjoaQ0KLacMpnBAg+l87Z5tnjZo0E/AAIgAhW0Gftnm2eNl22FcEFEAoTtRNDUAfhj0gAB4wL4KNcLCoMJuvLgifpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgBgQEB1wBZAtEB2zxCQwDo+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdM/1AHQAdQB0AHTP9IA0gfUAdDUAdAB1AHQAdMH9ATTPzAQXRBcEFsQWhBZEFgQVxBWbB0Amm1wIMhyAcsBcAHLABLKB8v/ydAg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIiwiLCHCLCIsIInB/IhCcEJsQmhCJEHgQZ0ZQFEMwABhUfJhUenZUeHZT/gH42NNa');
+    const __code = Cell.fromBase64('te6ccgECMQEACaEAART/APSkE/S88sgLAQIBYgIDA+LQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zwREhEUERIRERETEREREBESERAPEREPDhEQDhDfVRzbPPLggsj4QwHMfwHKABETERIREREQVeDbPMntVCwEBQIBIBobBNYBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQga2Wt7qPwjDbPGwXPz9XEVcRVxFXEVcTgV46+EJWEwHHBfL0ggDasC34I7zy9PhBbyQTXwOCCTEtAKFyiFYVVSB/VTBtbds8f+AgghA9QsqFugYPFwcB9gEREwEREiDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgERECDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFh7LP8hQDc8WyVAMzMhQC88WyVAKzMjIUArPFslQCcwXyz8VygATygfIWM8WyQHMyFjPFskBzBkAntMfAYIQga2Wt7ry4IH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdAB1AHQAdM/1AHQ1AHQAdQw0BAnECYQJRAkECMEqI/JMNMfAYIQPULKhbry4IH6ANMHWWwSggCPNSLCAJr4QW8kE18DUjC5kXDi8vSBSxP4QlYWAccF8vTbPHByiFYVVSB/VTBtbds8f+AgghAPYjAnuggPFwkAPGwzXKiAZKkEUyChUVOgUxVQhaBQkqBQdaAQRwYFAwP+jpIw0x8BghAPYjAnuvLggfoAATHgIIIQuGPdH7qO3jDTHwGCELhj3R+68uCB0gcBMYFd4PgjL7ny9IIAlYshwv+TIcECkXDi8vT4QW8kE18DggkxLQChIcAAk1GZoJohwAGUUYigCN4J4iHAADBReaD4QvgoEJtAmQPbPH/gIAoLDAPiggDuzyHCAPL0gUsT+EJWFQHHBfL0ERIRExESERERExERERARExEQDxETDw4REw4NERMNDBETDAsREwsKERMKCRETCRETCAcGVUBWE9s8gEKIVhQDERZZf1UwbW3bPBERERIREREQEREREA8REA9VDn8NDxcC5PhDQEPbPFxwWchwAcsBcwHLAXABywASzMzJ+QDIcgHLAXABywASygfL/8nQINdJgQELuvLg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');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -1038,20 +1100,23 @@ const PredictionMarket_errors: { [key: number]: { message: string } } = {
     9949: { message: `Only the owner can claim winnings` },
     10454: { message: `Market should be resolved to claim winnings` },
     11074: { message: `Outcome names must be provided` },
-    16210: { message: `Should be only 2 outcomes` },
     17847: { message: `Event description has must be provided` },
+    19219: { message: `Only owner contract can provire liquidity for the market` },
     20846: { message: `Market already resolved` },
     22516: { message: `Outcome does not match the bet outcome` },
     24032: { message: `Betting has ended` },
     24122: { message: `Only parent contract can init the market` },
     24933: { message: `Only owner can resolve market` },
     25427: { message: `Only the market can call this function` },
+    36661: { message: `Amount must be positive and less than the value sent` },
     38283: { message: `Invalid outcome` },
     38368: { message: `Event has not ended` },
     39401: { message: `Only owner can claim winnings` },
     51893: { message: `Event type has must be provided` },
     53624: { message: `Bet already placed` },
     55984: { message: `End time must be in the future` },
+    59266: { message: `Event name has must be provided` },
+    61135: { message: `Amount must be positive` },
 }
 
 const PredictionMarket_types: ABIType[] = [
@@ -1064,15 +1129,16 @@ const PredictionMarket_types: ABIType[] = [
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"CreateMarketResponse","header":4036598661,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"CreateMarket","header":1389069614,"fields":[{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
-    {"name":"MarketInitialize","header":587944281,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
+    {"name":"CreateMarket","header":1393681475,"fields":[{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"MarketInitialize","header":2175637175,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"AddLiquidity","header":1027787397,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"oddsForOutcome1","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
+    {"name":"RemoveLiquidity","header":258093095,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"PlaceBet","header":3093552415,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ResolveMarket","header":1189540808,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
-    {"name":"ClaimWinningsInfo","header":3371601891,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"walletAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
-    {"name":"PredictionMarketDetails","header":4287364553,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"numOutcomes","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalOutcomeBets","type":{"kind":"dict","key":"uint","keyFormat":8,"value":"uint","valueFormat":64}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}}]},
-    {"name":"PlaceBetInternal","header":4125778717,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
-    {"name":"UserBetInfo","header":4155719743,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
-    {"name":"ClaimWinningsInternal","header":3696625672,"fields":[{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}},{"name":"winningOutcome","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"totalOutcomeBets","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
+    {"name":"ClaimWinningsInfo","header":4043895049,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"walletAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
+    {"name":"PredictionMarketDetails","header":2609344367,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"totalOutcome1Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalOutcome2Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalLiquidity","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve1","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve2","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"oddsForOutcome1","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocolFeePercentage","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}}]},
+    {"name":"PlaceBetInternal","header":3532229292,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"UserBetInfo","header":2079623544,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
 ]
 
 const PredictionMarket_getters: ABIGetter[] = [
@@ -1085,6 +1151,8 @@ const PredictionMarket_getters: ABIGetter[] = [
 
 const PredictionMarket_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"typed","type":"MarketInitialize"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"AddLiquidity"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"RemoveLiquidity"}},
     {"receiver":"internal","message":{"kind":"typed","type":"PlaceBet"}},
     {"receiver":"internal","message":{"kind":"typed","type":"ResolveMarket"}},
     {"receiver":"internal","message":{"kind":"typed","type":"ClaimWinningsInfo"}},
@@ -1121,11 +1189,17 @@ export class PredictionMarket implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: MarketInitialize | PlaceBet | ResolveMarket | ClaimWinningsInfo | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: MarketInitialize | AddLiquidity | RemoveLiquidity | PlaceBet | ResolveMarket | ClaimWinningsInfo | Deploy) {
         
         let body: Cell | null = null;
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'MarketInitialize') {
             body = beginCell().store(storeMarketInitialize(message)).endCell();
+        }
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'AddLiquidity') {
+            body = beginCell().store(storeAddLiquidity(message)).endCell();
+        }
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'RemoveLiquidity') {
+            body = beginCell().store(storeRemoveLiquidity(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'PlaceBet') {
             body = beginCell().store(storePlaceBet(message)).endCell();

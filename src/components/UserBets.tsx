@@ -8,7 +8,7 @@ import './UserBets.css';
 const UserBets: React.FC = () => {
   const { address, predictionMarketCount } = useMarketFactoryContract();
 
-  if (!address || !predictionMarketCount) {
+  if (!address || predictionMarketCount === undefined) {
     return ;
   }
 

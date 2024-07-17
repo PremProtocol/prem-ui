@@ -18,9 +18,11 @@ const PredictionMarkets: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState(1);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
   const [filter, setFilter] = useState<Filter>(new Filter());
-  if (!address || !predictionMarketCount) {
+
+  if (!address) {
     return ;
   }
+
   const handleCategoryChange = (category: EventType) => {
     setActiveTab(category.id);
     filter.eventType = category.label;
@@ -38,40 +40,39 @@ const PredictionMarkets: React.FC = () => {
   };
   return (
     <div className="markets-list">
-      {!predictionMarketCount || predictionMarketCount === 0 ? (
-        <p className="centered-text"><strong>No prediction market available right now</strong></p>
-        ) : (
-          <div>
-            <div className="search-container">
-            <input type="text" className="search-input" placeholder="Search" value={searchQuery} onChange={(e) => onChangeSearch(e)}/>
-              <i className="search-icon"><img src={searchIcon} alt="searchIcon" className="searchIcon" onClick={handleSearchClick}/></i>
-            </div>
+      <div>
+        <div className="search-container">
+        <input type="text" className="search-input" placeholder="Search" value={searchQuery} onChange={(e) => onChangeSearch(e)}/>
+          <i className="search-icon"><img src={searchIcon} alt="searchIcon" className="searchIcon" onClick={handleSearchClick}/></i>
+        </div>
 
-            <div className="tab-container">
-              <div className="tab-buttons">
-                {categories.map((category) => (
-                  <label key={category.id} className="tab-label">
-                    <input
-                      type="radio"
-                      name="tab"
-                      value={category.id}
-                      checked={activeTab === category.id}
-                      onChange={() => handleCategoryChange(category)}
-                      className="tab-input"
-                    />
-                    <span className={`tab-button ${activeTab === category.id ? 'active' : ''}`}>
-                      {category.label}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            
-            {Array.from({ length: predictionMarketCount }).map((_, index) => (
-              <PredictionMarket key={index} marketFactoryContractAddress={address} seqno={index} filter={filter}/>
+        <div className="tab-container">
+          <div className="tab-buttons">
+            {categories.map((category) => (
+              <label key={category.id} className="tab-label">
+                <input
+                  type="radio"
+                  name="tab"
+                  value={category.id}
+                  checked={activeTab === category.id}
+                  onChange={() => handleCategoryChange(category)}
+                  className="tab-input"
+                />
+                <span className={`tab-button ${activeTab === category.id ? 'active' : ''}`}>
+                  {category.label}
+                </span>
+              </label>
             ))}
           </div>
-      )}
+        </div>
+        {!predictionMarketCount || predictionMarketCount === 0 ? (
+          <p className="centered-text"><strong>No prediction market available right now</strong></p>
+          ) : (
+          Array.from({ length: predictionMarketCount }).map((_, index) => (
+            <PredictionMarket key={index} marketFactoryContractAddress={address} seqno={index} filter={filter}/>
+          ))
+        )}
+      </div>
     </div>
   );
 };

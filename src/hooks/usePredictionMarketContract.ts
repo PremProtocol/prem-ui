@@ -1,6 +1,6 @@
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { Address, OpenedContract, toNano } from '@ton/core';
-import { PredictionMarket, ResolveMarket } from '../wrappers/PredictionMarket';
+import { AddLiquidity, PredictionMarket, RemoveLiquidity, ResolveMarket } from '../wrappers/PredictionMarket';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { PlaceBet } from '../wrappers/UserBet';
@@ -18,7 +18,9 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     if(!client || !wallet) return;
     
     if (marketFactoryContractAddress != null || marketFactoryContractAddress != undefined) {
+      console.log(marketFactoryContractAddress, seqno);
       const contract = await PredictionMarket.fromInit(Address.parse(marketFactoryContractAddress), BigInt(seqno)); 
+      console.log(contract.address.toString());
       return client.open(contract) as OpenedContract<PredictionMarket>
     }
 
@@ -31,8 +33,9 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
         const attempts = MAX_RETRY_AMOUNT;
         for(let i = 0; i < attempts; i++) {
           try {
+            console.log(predictionMarketContract.address.toString());
             const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
-            const predictionMarketDetails: PredictionMarketDetails = createPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
+            const predictionMarketDetails: PredictionMarketDetails = mapPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
             setPredictionMarketDetails(predictionMarketDetails);
             break; // If successful, break the loop
           } catch (e) {
@@ -47,24 +50,26 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     fetchPredictionMarketDetailsArray();
   }, [client, predictionMarketContract, MAX_RETRY_AMOUNT]);
 
-  function createPredictionMarketDetails(predictionMarketDetailsRes: any, childAddress: Address): PredictionMarketDetails {
+  function mapPredictionMarketDetails(predictionMarketDetailsRes: any, childAddress: Address): PredictionMarketDetails {
     return {
       selfAddress: childAddress,
       owner: predictionMarketDetailsRes.owner,
+      eventName: predictionMarketDetailsRes.eventName,
       eventDescription: predictionMarketDetailsRes.eventDescription,
       eventType: predictionMarketDetailsRes.eventType,
       endTime: predictionMarketDetailsRes.endTime,
       outcomeName1: predictionMarketDetailsRes.outcomeName1,
       outcomeName2: predictionMarketDetailsRes.outcomeName2,
       numOutcomes: predictionMarketDetailsRes.numOutcomes,
-      totalOutcomeBets: predictionMarketDetailsRes.totalOutcomeBets || {},
+      totalOutcome1Bets: predictionMarketDetailsRes.totalOutcome1Bets,
+      totalOutcome2Bets: predictionMarketDetailsRes.totalOutcome2Bets,
       totalPool: predictionMarketDetailsRes.totalPool || 0n,
       outcome: predictionMarketDetailsRes.outcome || -1n,
       resolved: predictionMarketDetailsRes.resolved || false,
     };
   }
 
-  async function sendTransaction(message: PlaceBet | ResolveMarket, value: bigint) {
+  async function sendTransaction(message: PlaceBet | ResolveMarket | AddLiquidity | RemoveLiquidity, value: bigint) {
     const lastTrx = await client?.getTransactions(sender.address!, {
       limit: 1,
     });
@@ -105,7 +110,25 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
           outcome: BigInt(outcome),
       }
 
-      sendTransaction(message, toNano(betAmount) + toNano("0.03"))
+      sendTransaction(message, toNano(betAmount) + toNano("0.02"))
+    },
+    addLiquidity: async (amount: number, oddsForOutcome1: number) => {
+      console.log(amount, oddsForOutcome1);
+      const message: AddLiquidity = {
+          $$type: "AddLiquidity",
+          amount: BigInt(amount),
+          oddsForOutcome1: BigInt(oddsForOutcome1),
+      }
+
+      sendTransaction(message, toNano(amount) + toNano("0.03"))
+    },
+    removeLiquidity: async (amount: number) => {
+      const message: RemoveLiquidity = {
+          $$type: "RemoveLiquidity",
+          amount: BigInt(amount),
+      }
+
+      sendTransaction(message, toNano(amount) + toNano("0.03"))
     },
     resolveMarket: (outcome: number) => {
       const message: ResolveMarket = {

@@ -1,15 +1,17 @@
-import { Address, Dictionary } from "@ton/core";
+import { Address } from "@ton/core";
 
 export type PredictionMarketDetails = {
   selfAddress: Address;
   owner: Address;
+  eventName: string;
   eventDescription: string;
   eventType: string;
   endTime: bigint;
   outcomeName1: string;
   outcomeName2: string;
   numOutcomes: bigint;
-  totalOutcomeBets: Dictionary<number, bigint>;
+  totalOutcome1Bets: bigint;
+  totalOutcome2Bets: bigint;
   totalPool: bigint;
   outcome: bigint;
   resolved: boolean;
@@ -24,7 +26,8 @@ export class PredictionMarketDetailsClonable {
   outcomeName1: string;
   outcomeName2: string;
   numOutcomes: number;
-  totalOutcomeBets: Array<number>;
+  totalOutcome1Bets: number;
+  totalOutcome2Bets: number;
   totalPool: number;
   outcome: number;
   resolved: boolean;
@@ -38,7 +41,8 @@ export class PredictionMarketDetailsClonable {
     this.outcomeName1 = details.outcomeName1;
     this.outcomeName2 = details.outcomeName2;
     this.numOutcomes = Number(details.numOutcomes);
-    this.totalOutcomeBets = Array.from(details.totalOutcomeBets.values(), value => Number(value));
+    this.totalOutcome1Bets =  Number(details.totalOutcome1Bets)
+    this.totalOutcome2Bets =  Number(details.totalOutcome2Bets)
     this.totalPool = Number(details.totalPool);
     this.outcome = Number(details.outcome);
     this.resolved = details.resolved;
