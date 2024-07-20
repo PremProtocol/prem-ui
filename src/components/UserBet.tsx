@@ -44,7 +44,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
     cssClass: 'red-text',
     outcome: predictionMarketDetails.outcomeName2
   };
-
+  console.log( userBet.outcome, predictionMarketDetails.outcome, userBet.outcome === predictionMarketDetails.outcome)
 
   return (
     <div className="user-bet-card">

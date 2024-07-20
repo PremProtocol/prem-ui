@@ -38,7 +38,7 @@ export function useUserBetContract(predictionMarketContractAddress: string) {
     claimWinnings: () => {
 
       userBetContract?.send(sender, {
-          value: toNano("0.1")
+          value: toNano("0.02")
       }, "claimWinnings")
     }
   };

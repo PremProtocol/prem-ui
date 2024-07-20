@@ -132,9 +132,10 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
           amount: BigInt(toNano(amount)),
       }
 
-      sendTransaction(message, toNano(amount) + toNano("0.03"))
+      sendTransaction(message, toNano("0.03"))
     },
     resolveMarket: (outcome: number) => {
+      console.log(outcome);
       const message: ResolveMarket = {
         $$type: "ResolveMarket",
         outcome: BigInt(outcome),

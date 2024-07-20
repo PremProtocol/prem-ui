@@ -5,6 +5,7 @@ import Modal from './internal/Modal';
 import { useState } from 'react';
 import usdtIcon from "./../assets/usdt-icon.svg";
 import tonIcon from "./../assets/ton-icon.svg";
+import { fromNano } from '@ton/core';
 
 interface ManageMarketProps {
   key: number;
@@ -65,11 +66,23 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
             <p><strong>End Time:</strong> {new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString()}</p>
             <p><strong>Outcome 1:</strong> {predictionMarketDetails.outcomeName1}</p>
             <p><strong>Outcome 2:</strong> {predictionMarketDetails.outcomeName2}</p>
+            <p><strong>Liquidity provided:</strong> {fromNano(predictionMarketDetails.totalLiquidity)} TON</p>
           </div>
         </div>
         <div className="resolve-market-controls">
           {predictionMarketDetails.resolved ? (
-              <p className="centered-text"><strong>Resolved with outcome {Number(predictionMarketDetails.outcome) === 0 ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2 }</strong></p>
+              <div className='button-wrapper'>
+                <div className="liqudity-section">
+                  <button className="add-liqudity-button" onClick={() => openBetModal('add')} disabled={eventEnded}>Add Liquidity</button>
+                  <button className="remove-liqudity-button" onClick={() => openBetModal('remove')}>Remove Liquidity</button>
+                </div>
+                <div className="resolve-section">
+                  <p className="centered-text"><strong>Resolved with outcome {Number(predictionMarketDetails.outcome) === 0 ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2 }</strong></p>
+                </div>
+                <div className="claim-fee-section">
+                  <button className="claim-fee-button" onClick={() => handleClaimFee()}>Claim fees</button>
+                </div>
+              </div>
              ) : (
               <div className='button-wrapper'>
                 <div className="liqudity-section">

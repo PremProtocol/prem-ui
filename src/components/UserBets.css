@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 20px;
   margin-top: 30px;
-  max-width: 300px;
+  min-width: 340px;
   align-self: center;
   margin-bottom: 100px;
 }
