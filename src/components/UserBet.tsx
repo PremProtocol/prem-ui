@@ -79,7 +79,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
             <div className="claim-section">
               <label className="claim-label">Claim Amount:</label>
               <div className="claim-amount">{fromNano(Number(userBet.betAmount))}</div>
-              <button onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
+              <button className='claim-button' onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
             </div>
             ) : (
             <p className="centered-text">Wait until host resolve the market</p>
