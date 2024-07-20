@@ -39,7 +39,7 @@ const MarketDetails = () => {
   return (
     <div className="market-details">
 
-      <BackButton onClick={() => navigate('/prem-ui')} />;
+      <BackButton onClick={() => navigate('/prem-ui')} />
       <p>{marketDetails.eventType}</p>
       <h1>{marketDetails.eventDescription}</h1>
       <div className="outcomes">
