@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './MarketDetails.css';
 import Modal from './internal/Modal';
 import { useState } from 'react';
@@ -6,6 +6,7 @@ import { usePredictionMarketContract } from '../hooks/usePredictionMarketContrac
 import usdtIcon from "./../assets/usdt-icon.svg";
 import tonIcon from "./../assets/ton-icon.svg";
 import { fromNano } from '@ton/core';
+import { BackButton } from '@vkruglikov/react-telegram-web-app';
 
 const MarketDetails = () => {
   const location = useLocation();
@@ -33,8 +34,12 @@ const MarketDetails = () => {
     setModalVisible(false);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="market-details">
+
+      <BackButton onClick={() => navigate('/prem-ui')} />;
       <p>{marketDetails.eventType}</p>
       <h1>{marketDetails.eventDescription}</h1>
       <div className="outcomes">
