@@ -89,15 +89,23 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
         </div>
         <div className="market-controls">
           {eventEnded ? (
-             predictionMarketDetails.resolved && userBet ? (
-              <div className="claim-section">
-                <label className="claim-label">Claim Amount:</label>
-                <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}</div>
-                <button onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
-              </div>
-             ) : (
-              <p>Wait until host resolve the market</p>
-             )
+            userBet ? (
+              predictionMarketDetails.resolved ? (
+                userBet.outcome === predictionMarketDetails.outcome ? (
+                  <div className="claim-section">
+                    <label className="claim-label">Claim Amount:</label>
+                    <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}</div>
+                    <button className='claim-button' onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
+                  </div>
+                  ) : (
+                    <p className="centered-text">This event was resolved with a different outcome than predicted.</p>
+                  )
+                ) : (
+                  <p className="centered-text">Wait until host resolve the market</p>
+                )
+              ) : (
+                <p className="centered-text">Event ended</p>   
+              )
           ) : (
             <div className="bet-buttons">
               <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(predictionMarketDetails.outcomeName1)}>Bet on #1</button>

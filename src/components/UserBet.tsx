@@ -76,11 +76,15 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
       <div className="market-controls">
         {eventEnded ? (
             predictionMarketDetails.resolved ? (
-            <div className="claim-section">
-              <label className="claim-label">Claim Amount:</label>
-              <div className="claim-amount">{fromNano(Number(userBet.betAmount))}</div>
-              <button className='claim-button' onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
-            </div>
+              userBet.outcome === predictionMarketDetails.outcome ? (
+                <div className="claim-section">
+                  <label className="claim-label">Claim Amount:</label>
+                  <div className="claim-amount">{fromNano(Number(userBet.betAmount))}</div>
+                  <button className='claim-button' onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
+                </div>
+              ) : (
+                <p className="centered-text">You lost the bet</p>
+              )
             ) : (
             <p className="centered-text">Wait until host resolve the market</p>
             )
