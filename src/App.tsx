@@ -12,6 +12,7 @@ import '@twa-dev/sdk';
 import { Tabbar } from '@telegram-apps/telegram-ui';
 import { useState } from 'react';
 import MarketDetails from './components/MarketDetails';
+import { useExpand } from '@vkruglikov/react-telegram-web-app'
 
 interface Tab {
   id: string;
@@ -21,6 +22,9 @@ interface Tab {
 }
 
 function App() {
+  const [isExpanded, expand] = useExpand();
+  !isExpanded && expand()
+
   const navigate = useNavigate();
   const tabs: Tab[] = [{
     id: 'prediction-markets',
