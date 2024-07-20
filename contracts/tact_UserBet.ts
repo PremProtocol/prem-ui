@@ -693,31 +693,36 @@ function dictValueParserRemoveLiquidity(): DictionaryValue<RemoveLiquidity> {
 
 export type PlaceBet = {
     $$type: 'PlaceBet';
+    amount: bigint;
     outcome: bigint;
 }
 
 export function storePlaceBet(src: PlaceBet) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(3093552415, 32);
+        b_0.storeUint(2255585262, 32);
+        b_0.storeCoins(src.amount);
         b_0.storeInt(src.outcome, 8);
     };
 }
 
 export function loadPlaceBet(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3093552415) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 2255585262) { throw Error('Invalid prefix'); }
+    let _amount = sc_0.loadCoins();
     let _outcome = sc_0.loadIntBig(8);
-    return { $$type: 'PlaceBet' as const, outcome: _outcome };
+    return { $$type: 'PlaceBet' as const, amount: _amount, outcome: _outcome };
 }
 
 function loadTuplePlaceBet(source: TupleReader) {
+    let _amount = source.readBigNumber();
     let _outcome = source.readBigNumber();
-    return { $$type: 'PlaceBet' as const, outcome: _outcome };
+    return { $$type: 'PlaceBet' as const, amount: _amount, outcome: _outcome };
 }
 
 function storeTuplePlaceBet(source: PlaceBet) {
     let builder = new TupleBuilder();
+    builder.writeNumber(source.amount);
     builder.writeNumber(source.outcome);
     return builder.build();
 }
@@ -846,12 +851,13 @@ export type PredictionMarketDetails = {
     protocolFeePercentage: bigint;
     outcome: bigint;
     resolved: boolean;
+    protocolFees: bigint;
 }
 
 export function storePredictionMarketDetails(src: PredictionMarketDetails) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(2609344367, 32);
+        b_0.storeUint(4424983, 32);
         b_0.storeAddress(src.owner);
         b_0.storeStringRefTail(src.eventName);
         b_0.storeStringRefTail(src.eventDescription);
@@ -870,13 +876,14 @@ export function storePredictionMarketDetails(src: PredictionMarketDetails) {
         b_1.storeUint(src.protocolFeePercentage, 8);
         b_1.storeInt(src.outcome, 8);
         b_1.storeBit(src.resolved);
+        b_1.storeCoins(src.protocolFees);
         b_0.storeRef(b_1.endCell());
     };
 }
 
 export function loadPredictionMarketDetails(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 2609344367) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 4424983) { throw Error('Invalid prefix'); }
     let _owner = sc_0.loadAddress();
     let _eventName = sc_0.loadStringRefTail();
     let _eventDescription = sc_0.loadStringRefTail();
@@ -895,7 +902,8 @@ export function loadPredictionMarketDetails(slice: Slice) {
     let _protocolFeePercentage = sc_1.loadUintBig(8);
     let _outcome = sc_1.loadIntBig(8);
     let _resolved = sc_1.loadBit();
-    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, totalOutcome1Bets: _totalOutcome1Bets, totalOutcome2Bets: _totalOutcome2Bets, totalPool: _totalPool, totalLiquidity: _totalLiquidity, reserve1: _reserve1, reserve2: _reserve2, oddsForOutcome1: _oddsForOutcome1, protocolFeePercentage: _protocolFeePercentage, outcome: _outcome, resolved: _resolved };
+    let _protocolFees = sc_1.loadCoins();
+    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, totalOutcome1Bets: _totalOutcome1Bets, totalOutcome2Bets: _totalOutcome2Bets, totalPool: _totalPool, totalLiquidity: _totalLiquidity, reserve1: _reserve1, reserve2: _reserve2, oddsForOutcome1: _oddsForOutcome1, protocolFeePercentage: _protocolFeePercentage, outcome: _outcome, resolved: _resolved, protocolFees: _protocolFees };
 }
 
 function loadTuplePredictionMarketDetails(source: TupleReader) {
@@ -916,7 +924,8 @@ function loadTuplePredictionMarketDetails(source: TupleReader) {
     let _protocolFeePercentage = source.readBigNumber();
     let _outcome = source.readBigNumber();
     let _resolved = source.readBoolean();
-    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, totalOutcome1Bets: _totalOutcome1Bets, totalOutcome2Bets: _totalOutcome2Bets, totalPool: _totalPool, totalLiquidity: _totalLiquidity, reserve1: _reserve1, reserve2: _reserve2, oddsForOutcome1: _oddsForOutcome1, protocolFeePercentage: _protocolFeePercentage, outcome: _outcome, resolved: _resolved };
+    let _protocolFees = source.readBigNumber();
+    return { $$type: 'PredictionMarketDetails' as const, owner: _owner, eventName: _eventName, eventDescription: _eventDescription, eventType: _eventType, endTime: _endTime, outcomeName1: _outcomeName1, outcomeName2: _outcomeName2, totalOutcome1Bets: _totalOutcome1Bets, totalOutcome2Bets: _totalOutcome2Bets, totalPool: _totalPool, totalLiquidity: _totalLiquidity, reserve1: _reserve1, reserve2: _reserve2, oddsForOutcome1: _oddsForOutcome1, protocolFeePercentage: _protocolFeePercentage, outcome: _outcome, resolved: _resolved, protocolFees: _protocolFees };
 }
 
 function storeTuplePredictionMarketDetails(source: PredictionMarketDetails) {
@@ -938,6 +947,7 @@ function storeTuplePredictionMarketDetails(source: PredictionMarketDetails) {
     builder.writeNumber(source.protocolFeePercentage);
     builder.writeNumber(source.outcome);
     builder.writeBoolean(source.resolved);
+    builder.writeNumber(source.protocolFees);
     return builder.build();
 }
 
@@ -1061,8 +1071,8 @@ function initUserBet_init_args(src: UserBet_init_args) {
 }
 
 async function UserBet_init(owner: Address, parent: Address) {
-    const __code = Cell.fromBase64('te6ccgECGAEABHsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCEAQFAgEgDg8E1u2i7fsBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQ0omKrLqPOjDTHwGCENKJiqy68uCB0gf6AFlsEjSCANF4A8D/E/L0+EFvJBNfA4IImJaAoXKIJ1Ugf1UwbW3bPH/gIIIQlGqYtrrjAsAABgwHCACoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CQP0j/T5ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuuMCgvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqPJoFjU/hCUlDHBfL0gSBSAcAA8vR/cIEAgognVSB/VTBtbds8f9sx4JEw4nAKCwwBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEPEI8QlQBMsfWPoCASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+0W7Z5tnjYpQQEQIBIBQVAcTtRNDUAfhj0gABjkr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB9IAVUBsFeD4KNcLCoMJuvLgiRIABlMhAQGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgWFwARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1ZNXdoVjM2M3NZWmpGWGY1SGpCR3BhaFN4TnJ4ZGZ0cUFvQzJiTHU3UkQ2R4IA==');
-    const __system = Cell.fromBase64('te6cckECGgEABIUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRTbPPLgghEFDgTW7aLt+wGWgCDXITB/4HAh10nCH5UwINcLH94gghDSiYqsuo86MNMfAYIQ0omKrLry4IHSB/oAWWwSNIIA0XgDwP8T8vT4QW8kE18DggiYloChcognVSB/VTBtbds8f+AgghCUapi2uuMCwAAGDAcJABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwMA/SP9PkBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG64wKC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo8mgWNT+EJSUMcF8vSBIFIBwADy9H9wgQCCiCdVIH9VMG1t2zx/2zHgkTDicAoLDAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEPEI8QlQBMsfWPoCASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAKjI+EMBzH8BygBVQFBUINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WWCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFss/EsoHygDJ7VQCASAQFQIRvtFu2ebZ42KUERQBxO1E0NQB+GPSAAGOSvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IH0gBVQGwV4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAAZTIQECASAWFwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIGBkAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtWTV3aFYzNjNzWVpqRlhmNUhqQkdwYWhTeE5yeGRmdHFBb0MyYkx1N1JENkeCA8mCMS');
+    const __code = Cell.fromBase64('te6ccgECGAEABHsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCEAQFAgEgDg8E1u2i7fsBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQ0omKrLqPOjDTHwGCENKJiqy68uCB0gf6AFlsEjSCANF4A8D/E/L0+EFvJBNfA4IImJaAoXKIJ1Ugf1UwbW3bPH/gIIIQlGqYtrrjAsAABgwHCACoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CQP0j/T5ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuuMCgvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqPJoFjU/hCUlDHBfL0gSBSAcAA8vR/cIEAgognVSB/VTBtbds8f9sx4JEw4nAKCwwBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEPEI8QlQBMsfWPoCASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+0W7Z5tnjYpQQEQIBIBQVAcTtRNDUAfhj0gABjkr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB9IAVUBsFeD4KNcLCoMJuvLgiRIABlMhAQGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgWFwARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1mVkpIV0RQSnd6M2pVbWpYejZtUDJYWG5SaG9acVZGaWJReGdnWENNekJrToIA==');
+    const __system = Cell.fromBase64('te6cckECGgEABIUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRTbPPLgghEFDgTW7aLt+wGWgCDXITB/4HAh10nCH5UwINcLH94gghDSiYqsuo86MNMfAYIQ0omKrLry4IHSB/oAWWwSNIIA0XgDwP8T8vT4QW8kE18DggiYloChcognVSB/VTBtbds8f+AgghCUapi2uuMCwAAGDAcJABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwMA/SP9PkBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG64wKC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo8mgWNT+EJSUMcF8vSBIFIBwADy9H9wgQCCiCdVIH9VMG1t2zx/2zHgkTDicAoLDAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEPEI8QlQBMsfWPoCASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAKjI+EMBzH8BygBVQFBUINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WWCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFss/EsoHygDJ7VQCASAQFQIRvtFu2ebZ42KUERQBxO1E0NQB+GPSAAGOSvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IH0gBVQGwV4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAAZTIQECASAWFwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIGBkAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtZlZKSFdEUEp3ejNqVW1qWHo2bVAyWFhuUmhvWnFWRmliUXhnZ1hDTXpCa06CDm+Yjm');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -1112,6 +1122,7 @@ const UserBet_errors: { [key: number]: { message: string } } = {
     38283: { message: `Invalid outcome` },
     38368: { message: `Event has not ended` },
     39401: { message: `Only owner can claim winnings` },
+    43115: { message: `Only owner contract can collect fees` },
     51893: { message: `Event type has must be provided` },
     53624: { message: `Bet already placed` },
     55984: { message: `End time must be in the future` },
@@ -1133,10 +1144,10 @@ const UserBet_types: ABIType[] = [
     {"name":"MarketInitialize","header":2175637175,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}}]},
     {"name":"AddLiquidity","header":1027787397,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"oddsForOutcome1","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
     {"name":"RemoveLiquidity","header":258093095,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
-    {"name":"PlaceBet","header":3093552415,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
+    {"name":"PlaceBet","header":2255585262,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ResolveMarket","header":1189540808,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"ClaimWinningsInfo","header":4043895049,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"walletAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
-    {"name":"PredictionMarketDetails","header":2609344367,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"totalOutcome1Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalOutcome2Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalLiquidity","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve1","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve2","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"oddsForOutcome1","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocolFeePercentage","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}}]},
+    {"name":"PredictionMarketDetails","header":4424983,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"totalOutcome1Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalOutcome2Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalLiquidity","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve1","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve2","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"oddsForOutcome1","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocolFeePercentage","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}},{"name":"protocolFees","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"PlaceBetInternal","header":3532229292,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"UserBetInfo","header":2079623544,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
 ]

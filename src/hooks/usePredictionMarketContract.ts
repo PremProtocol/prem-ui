@@ -32,6 +32,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       if (predictionMarketContract) {
         const attempts = MAX_RETRY_AMOUNT;
         for(let i = 0; i < attempts; i++) {
+          console.log("hello");
           try {
             console.log(predictionMarketContract.address.toString());
             const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
@@ -64,8 +65,13 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       totalOutcome1Bets: predictionMarketDetailsRes.totalOutcome1Bets,
       totalOutcome2Bets: predictionMarketDetailsRes.totalOutcome2Bets,
       totalPool: predictionMarketDetailsRes.totalPool || 0n,
+      totalLiquidity: predictionMarketDetailsRes.totalLiquidity || 0n,
+      reserve1: predictionMarketDetailsRes.reserve1 || 0n,
+      reserve2: predictionMarketDetailsRes.reserve2 || 0n,
       outcome: predictionMarketDetailsRes.outcome || -1n,
       resolved: predictionMarketDetailsRes.resolved || false,
+      protocolFees: predictionMarketDetailsRes.protocolFees || 0n
+
     };
   }
 
@@ -107,6 +113,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     placeUserBet: async (betAmount: number, outcome: number) => {
       const message: PlaceBet = {
           $$type: "PlaceBet",
+          amount: BigInt(toNano(betAmount)),
           outcome: BigInt(outcome),
       }
 
@@ -116,7 +123,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       console.log(amount, oddsForOutcome1);
       const message: AddLiquidity = {
           $$type: "AddLiquidity",
-          amount: BigInt(amount),
+          amount: BigInt(toNano(amount)),
           oddsForOutcome1: BigInt(oddsForOutcome1),
       }
 
@@ -125,7 +132,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     removeLiquidity: async (amount: number) => {
       const message: RemoveLiquidity = {
           $$type: "RemoveLiquidity",
-          amount: BigInt(amount),
+          amount: BigInt(toNano(amount)),
       }
 
       sendTransaction(message, toNano(amount) + toNano("0.03"))
