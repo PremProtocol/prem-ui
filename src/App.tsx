@@ -22,8 +22,8 @@ interface Tab {
 }
 
 function App() {
-  const [isExpanded, expand] = useExpand();
-  !isExpanded && expand()
+  const [, expand] = useExpand();
+  expand()
 
   const navigate = useNavigate();
   const tabs: Tab[] = [{
