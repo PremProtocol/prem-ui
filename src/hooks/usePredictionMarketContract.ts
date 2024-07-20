@@ -30,11 +30,8 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       if (predictionMarketContract) {
         const attempts = MAX_RETRY_AMOUNT;
         for(let i = 0; i < attempts; i++) {
-          console.log("hello");
           try {
-            console.log(predictionMarketContract.address.toString());
             const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
-            console.log(predictionMarketDetailsRes)
             const predictionMarketDetails: PredictionMarketDetails = mapPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
             setPredictionMarketDetails(predictionMarketDetails);
             break; // If successful, break the loop
@@ -121,7 +118,6 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       sendTransaction(message, toNano(betAmount) + toNano("0.02"))
     },
     addLiquidity: async (amount: number, oddsForOutcome1: number) => {
-      console.log(amount, oddsForOutcome1);
       const message: AddLiquidity = {
           $$type: "AddLiquidity",
           amount: BigInt(toNano(amount)),

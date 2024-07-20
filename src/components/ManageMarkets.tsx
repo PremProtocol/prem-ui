@@ -6,7 +6,6 @@ import ManageMarket from './ManageMarket';
 const ResolveMarkets: React.FC = () => {
   const { address, predictionMarketCount } = useMarketFactoryContract();
   
-  console.log(address, predictionMarketCount);
   if (!address || !predictionMarketCount) {
     return ;
   }

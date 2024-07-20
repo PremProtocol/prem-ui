@@ -27,7 +27,6 @@ const PredictionMarkets: React.FC = () => {
     setActiveTab(category.id);
     filter.eventType = category.label;
     setFilter(filter);
-    console.log(filter);
   }
 
   const onChangeSearch = (e) => {
@@ -36,7 +35,9 @@ const PredictionMarkets: React.FC = () => {
     setFilter(filter);
   }
   const handleSearchClick = (e) => {
-    console.log(filter);
+    setSearchQuery(e.target.value);
+    filter.searchQuery = searchQuery;
+    setFilter(filter);
   };
   return (
     <div className="markets-list">

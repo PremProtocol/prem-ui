@@ -55,7 +55,6 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   };
 
   const handleBet = () => {
-    console.log(bet, outcome);
     placeUserBet(bet, Number(outcome));
     setModalVisible(false);
   };

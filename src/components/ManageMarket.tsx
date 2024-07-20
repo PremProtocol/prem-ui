@@ -45,7 +45,6 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
   };
 
   const handleAddLiquidity = (amount: number) => {
-    console.log(amount);
     addLiquidity(amount, 50);
   };
 

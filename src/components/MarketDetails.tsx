@@ -16,11 +16,9 @@ const MarketDetails = () => {
   const [outcome, setOutcome] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('TON');
-  console.log(marketDetails);
   const endTimeString = new Date(Number(marketDetails.endTime) * 1000).toLocaleString();
   
   const handleBet = () => {
-    console.log(bet, outcome);
     placeUserBet(bet, Number(outcome));
     setModalVisible(false);
   };
