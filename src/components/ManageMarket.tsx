@@ -13,7 +13,7 @@ interface ManageMarketProps {
 }
 
 const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddress, seqno }) => {
-  const { currentAttempt, predictionMarketDetails, resolveMarket, addLiquidity, removeLiquidity } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const { currentAttempt, predictionMarketDetails, resolveMarket, addLiquidity, removeLiquidity, claimFee } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('TON');
@@ -52,6 +52,10 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
     removeLiquidity(amount);
   };
 
+  const handleClaimFee = () => {
+    claimFee();
+  };
+
   return (
     <div className="resolve-market-card">
       <h2>{predictionMarketDetails.eventDescription}</h2>
@@ -75,6 +79,9 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
                 <div className="resolve-section">
                   <button className="resolve-one-button" onClick={(e) => handleResolve(e, 0)} disabled={!eventEnded}>Resolve with {predictionMarketDetails.outcomeName1}</button>
                   <button className="resolve-two-button" onClick={(e) => handleResolve(e, 1)} disabled={!eventEnded}>Resolve with {predictionMarketDetails.outcomeName2}</button>
+                </div>
+                <div className="claim-fee-section">
+                  <button className="claim-fee-button" onClick={() => handleClaimFee()}>Claim fees</button>
                 </div>
               </div>
              )}

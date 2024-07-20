@@ -138,9 +138,14 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       const message: ResolveMarket = {
         $$type: "ResolveMarket",
         outcome: BigInt(outcome),
-    }
+      }
 
-    sendTransaction(message, toNano("0.02"))
+      sendTransaction(message, toNano("0.02"))
+    },
+    claimFee: () => {
+      predictionMarketContract?.send(sender, {
+        value: toNano("0.02")
+      }, "collectFees");
     }
   };
 }
