@@ -18,9 +18,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     if(!client || !wallet) return;
     
     if (marketFactoryContractAddress != null || marketFactoryContractAddress != undefined) {
-      console.log(marketFactoryContractAddress, seqno);
       const contract = await PredictionMarket.fromInit(Address.parse(marketFactoryContractAddress), BigInt(seqno)); 
-      console.log(contract.address.toString());
       return client.open(contract) as OpenedContract<PredictionMarket>
     }
 
@@ -36,6 +34,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
           try {
             console.log(predictionMarketContract.address.toString());
             const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
+            console.log(predictionMarketDetailsRes)
             const predictionMarketDetails: PredictionMarketDetails = mapPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
             setPredictionMarketDetails(predictionMarketDetails);
             break; // If successful, break the loop
@@ -55,6 +54,8 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     return {
       selfAddress: childAddress,
       owner: predictionMarketDetailsRes.owner,
+      parent: predictionMarketDetailsRes.parent,
+      seqno: predictionMarketDetailsRes.seqno,
       eventName: predictionMarketDetailsRes.eventName,
       eventDescription: predictionMarketDetailsRes.eventDescription,
       eventType: predictionMarketDetailsRes.eventType,
@@ -70,8 +71,8 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       reserve2: predictionMarketDetailsRes.reserve2 || 0n,
       outcome: predictionMarketDetailsRes.outcome || -1n,
       resolved: predictionMarketDetailsRes.resolved || false,
-      protocolFees: predictionMarketDetailsRes.protocolFees || 0n
-
+      protocolFees: predictionMarketDetailsRes.protocolFees || 0n,
+      protocolFeePercentage: predictionMarketDetailsRes.protocolFeePercentage || 0n
     };
   }
 

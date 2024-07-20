@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import usdtIcon from "./../assets/usdt-icon.svg";
 import tonIcon from "./../assets/ton-icon.svg";
+import { fromNano } from '@ton/core';
 
 const MarketDetails = () => {
   const location = useLocation();
@@ -15,7 +16,7 @@ const MarketDetails = () => {
   const [outcome, setOutcome] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('TON');
-
+  console.log(marketDetails);
   const endTimeString = new Date(Number(marketDetails.endTime) * 1000).toLocaleString();
   
   const handleBet = () => {
@@ -36,6 +37,7 @@ const MarketDetails = () => {
 
   return (
     <div className="market-details">
+      <p>{marketDetails.eventType}</p>
       <h1>{marketDetails.eventDescription}</h1>
       <div className="outcomes">
         <div className="outcome">
@@ -57,6 +59,11 @@ const MarketDetails = () => {
         <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(marketDetails.outcomeName2)}>Bet on #2</button>
       </div>
       <div className="about">
+        <p>Total bets: {fromNano(marketDetails.totalPool)} TON</p>
+        <p>Total outcome 1 bets: {fromNano(marketDetails.totalOutcome1Bets)} TON</p>
+        <p>Total outcome 2 bets: {fromNano(marketDetails.totalOutcome2Bets)} TON</p>
+        <p>Protocol Fee: {marketDetails.protocolFeePercentage / 10} %</p>
+        <p>Resolved: {marketDetails.resolved.toLocaleString()}</p>
         <h2>About</h2>
         <p>{marketDetails.eventDescription}</p>
       </div>
@@ -85,6 +92,7 @@ const MarketDetails = () => {
           </div>
         </div>
         <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        <p className='fee-info grey-text'>Fee: {Number(marketDetails.protocolFeePercentage) / 10} %</p>
       </Modal>
     </div>
   );

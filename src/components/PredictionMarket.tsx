@@ -38,7 +38,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   }
 
   const predictionMarketDetailsClonable = new PredictionMarketDetailsClonable(predictionMarketDetails) 
-
+  
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
   
@@ -137,6 +137,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
           </div>
         </div>
         <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        <p className='fee-info grey-text'>Fee: {Number(predictionMarketDetails.protocolFeePercentage) / 10} %</p>
       </Modal>
     </div>
   );

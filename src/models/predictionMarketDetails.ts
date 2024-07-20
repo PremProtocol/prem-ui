@@ -21,6 +21,7 @@ export type PredictionMarketDetails = {
   outcome: bigint;
   resolved: boolean;
   protocolFees: bigint;
+  protocolFeePercentage: bigint;
 };
 
 export class PredictionMarketDetailsClonable {
@@ -43,6 +44,7 @@ export class PredictionMarketDetailsClonable {
   outcome: number;
   resolved: boolean;
   protocolFees: number;
+  protocolFeePercentage: number;
 
   constructor(details: PredictionMarketDetails) {
     this.selfAddress = details.selfAddress.toString();
@@ -64,5 +66,6 @@ export class PredictionMarketDetailsClonable {
     this.outcome = Number(details.outcome);
     this.resolved = details.resolved;
     this.protocolFees = Number(details.protocolFees);
+    this.protocolFeePercentage = Number(details.protocolFeePercentage);
   }
 }

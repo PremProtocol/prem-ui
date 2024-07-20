@@ -83,6 +83,7 @@ button:disabled, button:disabled:hover {
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
+  width: 50%;
 }
 
 .outcome-two-button {
@@ -94,6 +95,7 @@ button:disabled, button:disabled:hover {
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
+  width: 50%;
 }
 
 .app {
@@ -204,6 +206,11 @@ button:disabled, button:disabled:hover {
 
 .bet-button:hover {
   background-color: var(--secondary-blue-text-color);
+}
+
+.fee-info {
+  margin: 0;
+  align-self: self-end;
 }
 
 @media (min-width: 450px) {
