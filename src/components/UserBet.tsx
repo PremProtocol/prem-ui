@@ -1,11 +1,12 @@
 // src/components/PlaceBet.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import './UserBet.css';
 import { useUserBetContract } from '../hooks/useUserBetContract';
 import { fromNano } from '@ton/core';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import { Skeleton } from 'antd';
 import tonIcon from "./../assets/ton-icon.svg";
+import Modal from './internal/Modal';
 
 interface UserBetProps {
   key: number;
@@ -15,8 +16,13 @@ interface UserBetProps {
 
 const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }) => {
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
-  const { currentAttempt, address, predictionMarketDetails } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const { currentAttempt, address, predictionMarketDetails, placeUserBet } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const { userBet, isNotUserBetContract, claimWinnings } = useUserBetContract(address!);
+  const [bet, setBet] = useState(0);
+  const [outcomeText, setOutcomeText] = useState("");
+  const [outcome, setOutcome] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('TON');
   
   if (currentAttempt === MAX_RETRY_AMOUNT) {
     return;
@@ -32,6 +38,21 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
   const handleClaim = () => {
     claimWinnings();
   };
+
+  const handleBet = () => {
+    placeUserBet(bet, Number(outcome));
+    setModalVisible(false);
+  };
+
+  const openBetModal = (outcome: string) => {
+    setOutcomeText(outcome);
+    setOutcome(outcome === predictionMarketDetails.outcomeName1 ? 0 : 1);
+    setModalVisible(true);
+  };
+
+  const closeBetModal = () => {
+    setModalVisible(false);
+  };
   
   if(!userBet || isNotUserBetContract) {
     return;
@@ -44,7 +65,6 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
     cssClass: 'red-text',
     outcome: predictionMarketDetails.outcomeName2
   };
-  console.log( userBet.outcome, predictionMarketDetails.outcome, userBet.outcome === predictionMarketDetails.outcome)
 
   return (
     <div className="user-bet-card">
@@ -93,9 +113,38 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
             <p className="centered-text">Wait until host resolve the market</p>
             )
         ) : (
-          <p className="centered-text">Wait until end of event</p>
+          <div className="bet-buttons">
+            <button className="increase-bet-button" type="button" value={userBet?.outcome.toString()} onClick={() => openBetModal(userOutcome.outcome)}>Increase position for {userOutcome.outcome}</button>
+          </div>
         )}
       </div>
+      <Modal visible={modalVisible} onClose={closeBetModal}>
+        <h2>{predictionMarketDetails.eventDescription}</h2>
+        <div className="info-row">
+            <span className="info-title">End Time:</span>
+            <span className="info-value">{endTimeString}</span>
+        </div>
+        <div className="info-row">
+            <span className="info-title">Your Outcome:</span>
+            <span className={`info-value ${outcome === 0 ? 'blue-text' : 'red-text'}`}>{outcomeText}</span>
+        </div>
+        <div className="bet-input">
+        <div className="custom-input">
+              <input className="main-input" type="number" placeholder='0' onChange={(e) => setBet(Number(e.target.value))}/>
+              <div className="separator"></div>
+              <div className="select-container">
+              {selectedCurrency === 'TON' && <img src={tonIcon} width='18' height='18' alt="TON Icon" className="currency-icon"/>}
+              {selectedCurrency === 'USDT' && <img src={usdtIcon} width='18' height='18' alt="USDT Icon" className="currency-icon"/>}
+                <select onChange={(e) => setSelectedCurrency(e.target.value)}>
+                    <option value="TON">TON</option>
+                    <option disabled value="USDT">USDT</option>
+                </select>
+              </div>
+          </div>
+        </div>
+        <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        <p className='fee-info grey-text'>Fee: {Number(predictionMarketDetails.protocolFeePercentage) / 10} %</p>
+      </Modal>
     </div>
   );
 };

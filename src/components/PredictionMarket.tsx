@@ -107,10 +107,16 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
                 <p className="centered-text">Event ended</p>   
               )
           ) : (
-            <div className="bet-buttons">
-              <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(predictionMarketDetails.outcomeName1)}>Bet on #1</button>
-              <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(predictionMarketDetails.outcomeName2)}>Bet on #2</button>
-            </div>
+            userBet?.outcome === -1n ? (
+              <div className="bet-buttons">
+                <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(predictionMarketDetails.outcomeName1)}>Bet on #1</button>
+                <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(predictionMarketDetails.outcomeName2)}>Bet on #2</button>
+              </div>
+            ) : (
+              <div className="bet-buttons">
+                <button className="increase-bet-button" type="button" value={userBet?.outcome.toString()} onClick={() => openBetModal(userBet?.outcome === 0n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2)}>Increase position for {userBet?.outcome === 0n ? "#1" : "#2"}</button>
+              </div>
+            )
           )}
         </div>
         <Link to={`/prem-ui/market/${seqno}`}
