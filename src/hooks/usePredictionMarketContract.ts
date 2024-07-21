@@ -26,12 +26,15 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
   }, [client, wallet, marketFactoryContractAddress])
 
   useEffect(() => {
-    async function fetchPredictionMarketDetailsArray() {
+    async function fetchPredictionMarketDetails() {
       if (predictionMarketContract) {
         const attempts = MAX_RETRY_AMOUNT;
         for(let i = 0; i < attempts; i++) {
           try {
             const predictionMarketDetailsRes = await predictionMarketContract.getPredictionMarketDetails();
+            if (predictionMarketDetailsRes.isRemoved) {
+              break
+            }
             const predictionMarketDetails: PredictionMarketDetails = mapPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
             setPredictionMarketDetails(predictionMarketDetails);
             break; // If successful, break the loop
@@ -44,7 +47,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
         }
       }
     }
-    fetchPredictionMarketDetailsArray();
+    fetchPredictionMarketDetails();
   }, [client, predictionMarketContract, MAX_RETRY_AMOUNT]);
 
   function mapPredictionMarketDetails(predictionMarketDetailsRes: any, childAddress: Address): PredictionMarketDetails {
