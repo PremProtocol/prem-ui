@@ -87,7 +87,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
                   <button className="claim-fee-button" onClick={() => handleClaimFee()}>Claim fees</button>
                 </div>
                 <div className="remove-section">
-                  <button className="remove-button" onClick={() => handleRemove()}>Remove market</button>
+                  <button className="remove-button" onClick={() => handleRemove()} disabled={!eventEnded && !predictionMarketDetails.resolved}>Remove market</button>
                 </div>
               </div>
              ) : (
@@ -104,7 +104,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
                   <button className="claim-fee-button" onClick={() => handleClaimFee()}>Claim fees</button>
                 </div>
                 <div className="remove-section">
-                  <button className="remove-button" onClick={() => handleRemove()}>Remove market</button>
+                  <button className="remove-button" onClick={() => handleRemove()} disabled={!eventEnded && !predictionMarketDetails.resolved}>Remove market</button>
                 </div>
               </div>
              )}
