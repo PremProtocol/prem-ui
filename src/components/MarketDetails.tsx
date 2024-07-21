@@ -85,10 +85,16 @@ const MarketDetails = () => {
             <p className="centered-text">Event ended</p>   
           )
       ) : (
-        <div className="bet-buttons">
-          <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(marketDetails.outcomeName1)}>Bet on #1</button>
-          <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(marketDetails.outcomeName2)}>Bet on #2</button>
-        </div>
+        userBet?.outcome === -1n ? (
+          <div className="bet-buttons">
+            <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(marketDetails.outcomeName1)}>Bet on #1</button>
+            <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(marketDetails.outcomeName2)}>Bet on #2</button>
+          </div>
+        ) : (
+          <div className="bet-buttons">
+            <button className="increase-bet-button" type="button" value={userBet?.outcome.toString()} onClick={() => openBetModal(userBet?.outcome === 0n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2)}>Increase position for {userBet?.outcome === 0n ? "#1" : "#2"}</button>
+          </div>
+        )
       )}
       <div className="about">
         <p>Total bets: {fromNano(marketDetails.totalPool)} <img src={tonIcon} alt="TON Icon" width='18' height='18' className="currency-icon"/></p>
