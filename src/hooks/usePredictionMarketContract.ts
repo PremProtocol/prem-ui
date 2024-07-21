@@ -149,6 +149,11 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       predictionMarketContract?.send(sender, {
         value: toNano("0.02")
       }, "collectFees");
+    },
+    removeMarket: () => {
+      predictionMarketContract?.send(sender, {
+        value: toNano("0.01")
+      }, "remove");
     }
   };
 }

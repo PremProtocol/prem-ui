@@ -14,7 +14,7 @@ interface ManageMarketProps {
 }
 
 const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddress, seqno }) => {
-  const { currentAttempt, predictionMarketDetails, resolveMarket, addLiquidity, removeLiquidity, claimFee } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
+  const { currentAttempt, predictionMarketDetails, resolveMarket, addLiquidity, removeLiquidity, claimFee, removeMarket } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('TON');
@@ -57,6 +57,10 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
     claimFee();
   };
 
+  const handleRemove = () => {
+    removeMarket();
+  };
+
   return (
     <div className="resolve-market-card">
       <h2>{predictionMarketDetails.eventDescription}</h2>
@@ -82,6 +86,9 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
                 <div className="claim-fee-section">
                   <button className="claim-fee-button" onClick={() => handleClaimFee()}>Claim fees</button>
                 </div>
+                <div className="remove-section">
+                  <button className="remove-button" onClick={() => handleRemove()}>Remove market</button>
+                </div>
               </div>
              ) : (
               <div className='button-wrapper'>
@@ -95,6 +102,9 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
                 </div>
                 <div className="claim-fee-section">
                   <button className="claim-fee-button" onClick={() => handleClaimFee()}>Claim fees</button>
+                </div>
+                <div className="remove-section">
+                  <button className="remove-button" onClick={() => handleRemove()}>Remove market</button>
                 </div>
               </div>
              )}
