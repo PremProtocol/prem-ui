@@ -74,7 +74,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
               <div className='button-wrapper'>
                 <div className="liqudity-section">
                   <button className="add-liqudity-button" onClick={() => openBetModal('add')} disabled={eventEnded}>Add Liquidity</button>
-                  <button className="remove-liqudity-button" onClick={() => openBetModal('remove')}>Remove Liquidity</button>
+                  <button className="remove-liqudity-button" onClick={() => openBetModal('remove')} disabled={predictionMarketDetails.totalLiquidity === 0n}>Remove Liquidity</button>
                 </div>
                 <div className="resolve-section">
                   <p className="centered-text"><strong>Resolved with outcome {Number(predictionMarketDetails.outcome) === 0 ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2 }</strong></p>
