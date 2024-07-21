@@ -92,11 +92,15 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
             userBet ? (
               predictionMarketDetails.resolved ? (
                 userBet.outcome === predictionMarketDetails.outcome ? (
-                  <div className="claim-section">
-                    <label className="claim-label">Claim Amount:</label>
-                    <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}  <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
-                    <button className='claim-button' onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
-                  </div>
+                  !userBet.isClaimed ? (
+                    <div className="claim-section">
+                      <label className="claim-label">Claim Amount:</label>
+                      <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}  <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
+                      <button className='claim-button' onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
+                    </div>
+                    ) : (
+                      <p className="centered-text">Already claimed</p>
+                    )
                   ) : (
                     <p className="centered-text">This event was resolved with a different outcome than predicted.</p>
                   )
@@ -107,7 +111,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
                 <p className="centered-text">Event ended</p>   
               )
           ) : (
-            userBet?.outcome === -1n ? (
+            !userBet ? (
               <div className="bet-buttons">
                 <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(predictionMarketDetails.outcomeName1)}>Bet on #1</button>
                 <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(predictionMarketDetails.outcomeName2)}>Bet on #2</button>

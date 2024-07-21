@@ -31,6 +31,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
   if (!predictionMarketDetails || !address) {
     return <Skeleton active />;
   }
+
   
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();

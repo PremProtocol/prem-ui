@@ -66,7 +66,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       totalLiquidity: predictionMarketDetailsRes.totalLiquidity || 0n,
       reserve1: predictionMarketDetailsRes.reserve1 || 0n,
       reserve2: predictionMarketDetailsRes.reserve2 || 0n,
-      outcome: predictionMarketDetailsRes.outcome || -1n,
+      outcome: predictionMarketDetailsRes.outcome,
       resolved: predictionMarketDetailsRes.resolved || false,
       protocolFees: predictionMarketDetailsRes.protocolFees || 0n,
       protocolFeePercentage: predictionMarketDetailsRes.protocolFeePercentage || 0n
@@ -135,7 +135,6 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
       sendTransaction(message, toNano("0.03"))
     },
     resolveMarket: (outcome: number) => {
-      console.log(outcome);
       const message: ResolveMarket = {
         $$type: "ResolveMarket",
         outcome: BigInt(outcome),
