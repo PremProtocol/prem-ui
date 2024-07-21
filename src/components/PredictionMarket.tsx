@@ -94,7 +94,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
                 userBet.outcome === predictionMarketDetails.outcome ? (
                   <div className="claim-section">
                     <label className="claim-label">Claim Amount:</label>
-                    <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}</div>
+                    <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}  <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
                     <button className='claim-button' onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
                   </div>
                   ) : (
@@ -134,8 +134,8 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
               <input className="main-input" type="number" placeholder='0' onChange={(e) => setBet(Number(e.target.value))}/>
               <div className="separator"></div>
               <div className="select-container">
-              {selectedCurrency === 'TON' && <img src={tonIcon} alt="TON Icon" className="currency-icon"/>}
-              {selectedCurrency === 'USDT' && <img src={usdtIcon} alt="USDT Icon" className="currency-icon"/>}
+              {selectedCurrency === 'TON' && <img src={tonIcon} width='18' height='18' alt="TON Icon" className="currency-icon"/>}
+              {selectedCurrency === 'USDT' && <img src={usdtIcon} width='18' height='18' alt="USDT Icon" className="currency-icon"/>}
                 <select onChange={(e) => setSelectedCurrency(e.target.value)}>
                     <option value="TON">TON</option>
                     <option disabled value="USDT">USDT</option>

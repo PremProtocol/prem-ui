@@ -66,7 +66,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
             <p><strong>End Time:</strong> {new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString()}</p>
             <p><strong>Outcome 1:</strong> {predictionMarketDetails.outcomeName1}</p>
             <p><strong>Outcome 2:</strong> {predictionMarketDetails.outcomeName2}</p>
-            <p><strong>Liquidity provided:</strong> {fromNano(predictionMarketDetails.totalLiquidity)} TON</p>
+            <p><strong>Liquidity provided:</strong> {fromNano(predictionMarketDetails.totalLiquidity)} <img src={tonIcon} alt="TON Icon" width='18' height='18' className="currency-icon"/></p>
           </div>
         </div>
         <div className="resolve-market-controls">

@@ -1023,35 +1023,40 @@ export type UserBetInfo = {
     $$type: 'UserBetInfo';
     outcome: bigint;
     betAmount: bigint;
+    isClaimed: boolean;
 }
 
 export function storeUserBetInfo(src: UserBetInfo) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(2079623544, 32);
+        b_0.storeUint(3267701942, 32);
         b_0.storeInt(src.outcome, 8);
         b_0.storeCoins(src.betAmount);
+        b_0.storeBit(src.isClaimed);
     };
 }
 
 export function loadUserBetInfo(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 2079623544) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 3267701942) { throw Error('Invalid prefix'); }
     let _outcome = sc_0.loadIntBig(8);
     let _betAmount = sc_0.loadCoins();
-    return { $$type: 'UserBetInfo' as const, outcome: _outcome, betAmount: _betAmount };
+    let _isClaimed = sc_0.loadBit();
+    return { $$type: 'UserBetInfo' as const, outcome: _outcome, betAmount: _betAmount, isClaimed: _isClaimed };
 }
 
 function loadTupleUserBetInfo(source: TupleReader) {
     let _outcome = source.readBigNumber();
     let _betAmount = source.readBigNumber();
-    return { $$type: 'UserBetInfo' as const, outcome: _outcome, betAmount: _betAmount };
+    let _isClaimed = source.readBoolean();
+    return { $$type: 'UserBetInfo' as const, outcome: _outcome, betAmount: _betAmount, isClaimed: _isClaimed };
 }
 
 function storeTupleUserBetInfo(source: UserBetInfo) {
     let builder = new TupleBuilder();
     builder.writeNumber(source.outcome);
     builder.writeNumber(source.betAmount);
+    builder.writeBoolean(source.isClaimed);
     return builder.build();
 }
 
@@ -1081,8 +1086,8 @@ function initUserBet_init_args(src: UserBet_init_args) {
 }
 
 async function UserBet_init(owner: Address, parent: Address) {
-    const __code = Cell.fromBase64('te6ccgECGAEABHsAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCEAQFAgEgDg8E1u2i7fsBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQ0omKrLqPOjDTHwGCENKJiqy68uCB0gf6AFlsEjSCANF4A8D/E/L0+EFvJBNfA4IImJaAoXKIJ1Ugf1UwbW3bPH/gIIIQlGqYtrrjAsAABgwHCACoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CQP0j/T5ASCC8PPhTprkHTCdwmjRUl/ESK7GRxMZJ2ktdj0TOwJaRtsBuuMCgvAijClXUJnMoSgwTN9dALT9f3LJcu2RnmaZWfZcRsA0xbqPJoFjU/hCUlDHBfL0gSBSAcAA8vR/cIEAgognVSB/VTBtbds8f9sx4JEw4nAKCwwBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEPEI8QlQBMsfWPoCASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+0W7Z5tnjYpQQEQIBIBQVAcTtRNDUAfhj0gABjkr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB9IAVUBsFeD4KNcLCoMJuvLgiRIABlMhAQGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgWFwARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1kcWtuUFFLb1k1UDV2aWsyTTFoZThGb0J0MWlWVkRrYXZielJFRjdQTUEyOYIA==');
-    const __system = Cell.fromBase64('te6cckECGgEABIUAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRTbPPLgghEFDgTW7aLt+wGWgCDXITB/4HAh10nCH5UwINcLH94gghDSiYqsuo86MNMfAYIQ0omKrLry4IHSB/oAWWwSNIIA0XgDwP8T8vT4QW8kE18DggiYloChcognVSB/VTBtbds8f+AgghCUapi2uuMCwAAGDAcJABQAAAAAcmVmdW5kAVAw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/CAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwMA/SP9PkBIILw8+FOmuQdMJ3CaNFSX8RIrsZHExknaS12PRM7AlpG2wG64wKC8CKMKVdQmcyhKDBM310AtP1/csly7ZGeZplZ9lxGwDTFuo8mgWNT+EJSUMcF8vSBIFIBwADy9H9wgQCCiCdVIH9VMG1t2zx/2zHgkTDicAoLDAG4MIEm3fhCUmDHBfL0gSBSIcAA8vRwgEL4QlRkYFjIVSCCEPEI8QlQBMsfWPoCASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsoHySZVIH9VMG1t2zx/2zEMABYAAAAAd2lubmluZwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAKjI+EMBzH8BygBVQFBUINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WWCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFss/EsoHygDJ7VQCASAQFQIRvtFu2ebZ42KUERQBxO1E0NQB+GPSAAGOSvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTP9IH0gBVQGwV4Pgo1wsKgwm68uCJEgGK+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAds8EwAGcH9wAAZTIQECASAWFwCVu70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIAgFIGBkAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtZHFrblBRS29ZNVA1dmlrMk0xaGU4Rm9CdDFpVlZEa2F2YnpSRUY3UE1BMjmCDx12TL');
+    const __code = Cell.fromBase64('te6ccgECGAEABJIAART/APSkE/S88sgLAQIBYgIDA3rQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVFNs88uCCEAQFAgEgDg8D7O2i7fsBloAg1yEwf+BwIddJwh+VMCDXCx/eIIIQ0omKrLqPUDDTHwGCENKJiqy68uCB0gf6AFlsEoIAgd34QlJwxwXy9IIAnLkkwP+SNH+TUUK64hTy9Fqg+EFvJBNfA4IImJaAoXKIJ1Ugf1UwbW3bPAJ/4CAGDAcAqMj4QwHMfwHKAFVAUFQg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZYINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wyz8SygfKAMntVAAUAAAAAHJlZnVuZAJyghCUapi2uo6oMNMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8f+DAAJEw4w1wCAkBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAPo+QEggvDz4U6a5B0wncJo0VJfxEiuxkcTGSdpLXY9EzsCWkbbAbrjAoLwIowpV1CZzKEoMEzfXQC0/X9yyXLtkZ5mmVn2XEbANMW6jyaBY1P4QlJQxwXy9IEgUgHAAPL0f3CBAIKIJ1Ugf1UwbW3bPH/bMeAKCwwBuDCBJt34QlJgxwXy9IEgUiHAAPL0cIBC+EJUZGBYyFUgghDxCPEJUATLH1j6AgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbKB8kmVSB/VTBtbds8f9sxDAAWAAAAAHdpbm5pbmcByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADQCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzAIRvtFu2ebZ42KcEBECASAUFQHE7UTQ1AH4Y9IAAY5K+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdM/0gfSAFVAbBXg+CjXCwqDCbry4IkSAAhUchASAYr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB2zwTAAZwf3AAlbu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSAIBSBYXABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVgzM1lZa1VyYVU3WVVVRGoxN1BGWFF5SlhhTTczS1p6RWdkUnU3VWNUU1o5gg');
+    const __system = Cell.fromBase64('te6cckECGgEABJwAAQHAAQEFoGm3AgEU/wD0pBP0vPLICwMCAWIEDwN60AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8VRTbPPLgghEFDgPs7aLt+wGWgCDXITB/4HAh10nCH5UwINcLH94gghDSiYqsuo9QMNMfAYIQ0omKrLry4IHSB/oAWWwSggCB3fhCUnDHBfL0ggCcuSTA/5I0f5NRQrriFPL0WqD4QW8kE18DggiYloChcognVSB/VTBtbds8An/gIAYMBwAUAAAAAHJlZnVuZAJyghCUapi2uo6oMNMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8f+DAAJEw4w1wCAkBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAPo+QEggvDz4U6a5B0wncJo0VJfxEiuxkcTGSdpLXY9EzsCWkbbAbrjAoLwIowpV1CZzKEoMEzfXQC0/X9yyXLtkZ5mmVn2XEbANMW6jyaBY1P4QlJQxwXy9IEgUgHAAPL0f3CBAIKIJ1Ugf1UwbW3bPH/bMeAKCwwBuDCBJt34QlJgxwXy9IEgUiHAAPL0cIBC+EJUZGBYyFUgghDxCPEJUATLH1j6AgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbKB8kmVSB/VTBtbds8f9sxDAAWAAAAAHdpbm5pbmcByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADQCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzACoyPhDAcx/AcoAVUBQVCDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlgg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbLPxLKB8oAye1UAgEgEBUCEb7Rbtnm2eNinBEUAcTtRNDUAfhj0gABjkr6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0z/SB9IAVUBsFeD4KNcLCoMJuvLgiRIBivpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBIC0QHbPBMABnB/cAAIVHIQEgIBIBYXAJW7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgCAUgYGQARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1YMzNZWWtVcmFVN1lVVURqMTdQRlhReUpYYU03M0taekVnZFJ1N1VjVFNaOYIFz4+zY=');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -1128,13 +1133,14 @@ const UserBet_errors: { [key: number]: { message: string } } = {
     24122: { message: `Only parent contract can init the market` },
     24933: { message: `Only owner can resolve market` },
     25427: { message: `Only the market can call this function` },
+    33245: { message: `Only the market can place a bet` },
     36661: { message: `Amount must be positive and less than the value sent` },
     38283: { message: `Invalid outcome` },
     38368: { message: `Event has not ended` },
     39401: { message: `Only owner can claim winnings` },
+    40121: { message: `Should be first bet or same outcome bet` },
     43115: { message: `Only owner contract can collect fees` },
     51893: { message: `Event type has must be provided` },
-    53624: { message: `Bet already placed` },
     55984: { message: `End time must be in the future` },
     59266: { message: `Event name has must be provided` },
     61135: { message: `Amount must be positive` },
@@ -1159,7 +1165,7 @@ const UserBet_types: ABIType[] = [
     {"name":"ClaimWinningsInfo","header":4043895049,"fields":[{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"walletAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}}]},
     {"name":"PredictionMarketDetails","header":2422672107,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"parent","type":{"kind":"simple","type":"address","optional":false}},{"name":"seqno","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"eventName","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"eventType","type":{"kind":"simple","type":"string","optional":false}},{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"outcomeName1","type":{"kind":"simple","type":"string","optional":false}},{"name":"outcomeName2","type":{"kind":"simple","type":"string","optional":false}},{"name":"totalOutcome1Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalOutcome2Bets","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalPool","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalLiquidity","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve1","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"reserve2","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"oddsForOutcome1","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocolFeePercentage","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"resolved","type":{"kind":"simple","type":"bool","optional":false}},{"name":"protocolFees","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"PlaceBetInternal","header":3532229292,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
-    {"name":"UserBetInfo","header":2079623544,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"UserBetInfo","header":3267701942,"fields":[{"name":"outcome","type":{"kind":"simple","type":"int","optional":false,"format":8}},{"name":"betAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"isClaimed","type":{"kind":"simple","type":"bool","optional":false}}]},
 ]
 
 const UserBet_getters: ABIGetter[] = [

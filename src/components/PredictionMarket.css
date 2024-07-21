@@ -189,8 +189,6 @@ button:disabled, button:disabled:hover {
 }
 
 .currency-icon {
-  width: 24px; /* Adjust size as needed */
-  height: 24px; /* Adjust size as needed */
   margin-right: 5px;
 }
 

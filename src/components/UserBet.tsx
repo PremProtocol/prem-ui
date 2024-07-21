@@ -63,7 +63,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
               <span className="info-title">Your Bet:</span>
               <div className="info-row-icon-wrapper">
                 <span className="info-value white-text">{fromNano(userBet.betAmount)} </span>
-                <img src={tonIcon} alt="TON Icon" className="user-bet-currency-icon"/>
+                <img src={tonIcon} alt="TON Icon" width='18' height='18' className="user-bet-currency-icon"/>
               </div>
 
           </div>
@@ -77,11 +77,15 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
         {eventEnded ? (
             predictionMarketDetails.resolved ? (
               userBet.outcome === predictionMarketDetails.outcome ? (
-                <div className="claim-section">
-                  <label className="claim-label">Claim Amount:</label>
-                  <div className="claim-amount">{fromNano(Number(userBet.betAmount))}</div>
-                  <button className='claim-button' onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
-                </div>
+                !userBet.isClaimed ? (
+                  <div className="claim-section">
+                    <label className="claim-label">Claim Amount:</label>
+                    <div className="claim-amount">{fromNano(Number(userBet.betAmount))} <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
+                    <button className='claim-button' onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
+                  </div>
+                ) : (
+                  <p className="centered-text">Already claimed</p>
+                )
               ) : (
                 <p className="centered-text">You lost the bet</p>
               )
