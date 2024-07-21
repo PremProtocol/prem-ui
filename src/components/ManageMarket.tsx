@@ -87,7 +87,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
               <div className='button-wrapper'>
                 <div className="liqudity-section">
                   <button className="add-liqudity-button" onClick={() => openBetModal('add')} disabled={eventEnded}>Add Liquidity</button>
-                  <button className="remove-liqudity-button" onClick={() => openBetModal('remove')}>Remove Liquidity</button>
+                  <button className="remove-liqudity-button" onClick={() => openBetModal('remove')} disabled={predictionMarketDetails.totalLiquidity === 0n}>Remove Liquidity</button>
                 </div>
                 <div className="resolve-section">
                   <button className="resolve-one-button" onClick={(e) => handleResolve(e, 0)} disabled={!eventEnded}>Resolve with {predictionMarketDetails.outcomeName1}</button>
@@ -107,8 +107,8 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
               <input className="main-input" type="number" placeholder='0' onChange={(e) => setLpAmount(Number(e.target.value))}/>
               <div className="separator"></div>
               <div className="select-container">
-              {selectedCurrency === 'TON' && <img src={tonIcon} alt="TON Icon" className="currency-icon"/>}
-              {selectedCurrency === 'USDT' && <img src={usdtIcon} alt="USDT Icon" className="currency-icon"/>}
+              {selectedCurrency === 'TON' && <img src={tonIcon} height='18' width='18' alt="TON Icon" className="currency-icon"/>}
+              {selectedCurrency === 'USDT' && <img src={usdtIcon} height='18' width='18' alt="USDT Icon" className="currency-icon"/>}
                 <select onChange={(e) => setSelectedCurrency(e.target.value)}>
                     <option value="TON">TON</option>
                     <option disabled value="USDT">USDT</option>

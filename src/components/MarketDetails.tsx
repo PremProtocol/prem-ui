@@ -114,8 +114,8 @@ const MarketDetails = () => {
               <input className="main-input" type="number" placeholder='0' onChange={(e) => setBet(Number(e.target.value))}/>
               <div className="separator"></div>
               <div className="select-container">
-              {selectedCurrency === 'TON' && <img src={tonIcon} alt="TON Icon" className="currency-icon"/>}
-              {selectedCurrency === 'USDT' && <img src={usdtIcon} alt="USDT Icon" className="currency-icon"/>}
+              {selectedCurrency === 'TON' && <img src={tonIcon} width='18' height='18' alt="TON Icon" className="currency-icon"/>}
+              {selectedCurrency === 'USDT' && <img src={usdtIcon} width='18' height='18' alt="USDT Icon" className="currency-icon"/>}
                 <select onChange={(e) => setSelectedCurrency(e.target.value)}>
                     <option value="TON">TON</option>
                     <option disabled value="USDT">USDT</option>
