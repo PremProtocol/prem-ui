@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
-import ResolveMarkets from './ManageMarkets';
+import ManageMarkets from './ManageMarkets';
+import { useTonWallet } from '@tonconnect/ui-react';
 
 const CreateMarket: React.FC = () => {
   const {createMarket} = useMarketFactoryContract();
+  const wallet = useTonWallet();
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -65,9 +67,15 @@ const CreateMarket: React.FC = () => {
           placeholder='Outcome 2'
           onChange={(e) => setOutcomeName2(e.target.value)}
         />
-        <button className="create-market-button" type="submit">Create Market</button>
+        {wallet ? (
+            <button className="create-market-button" type="submit">Create Market</button>
+          ) : (
+            <button className="create-market-button" type="submit" disabled>Wallet not connected</button>
+          )
+        }
+        
       </form>
-      <ResolveMarkets />
+      {wallet && <ManageMarkets />}
     </div>
   );
 };

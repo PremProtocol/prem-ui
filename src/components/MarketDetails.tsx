@@ -8,9 +8,11 @@ import tonIcon from "./../assets/ton-icon.svg";
 import { fromNano } from '@ton/core';
 import { BackButton } from '@vkruglikov/react-telegram-web-app';
 import { useUserBetContract } from '../hooks/useUserBetContract';
+import { useTonConnect } from '../hooks/useTonConnect';
 
 const MarketDetails = () => {
   const location = useLocation();
+  const { wallet } = useTonConnect();
   const { marketDetails } = location.state || {};
   const { address, placeUserBet } = usePredictionMarketContract(marketDetails.parent, marketDetails.seqno);
   const { userBet, claimWinnings } = useUserBetContract(address!);
@@ -132,7 +134,11 @@ const MarketDetails = () => {
               </div>
           </div>
         </div>
-        <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        {wallet ? (
+          <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        ) : (
+          <button className="bet-button" disabled>Wallet not connected</button>
+        )}
         <p className='fee-info grey-text'>Fee: {Number(marketDetails.protocolFeePercentage) / 10} %</p>
       </Modal>
     </div>

@@ -3,7 +3,7 @@ import "./ManageMarkets.css";
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import ManageMarket from './ManageMarket';
 
-const ResolveMarkets: React.FC = () => {
+const ManageMarkets: React.FC = () => {
   const { address, predictionMarketCount } = useMarketFactoryContract();
   
   if (!address || !predictionMarketCount) {
@@ -19,4 +19,4 @@ const ResolveMarkets: React.FC = () => {
   );
 };
 
-export default ResolveMarkets;
+export default ManageMarkets;

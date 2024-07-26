@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
-  const {sender, wallet} = useTonConnect()
+  const {sender} = useTonConnect()
   const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
 
   const marketFactoryContract = useAsyncInitialize(async () => {
@@ -35,7 +35,7 @@ export function useMarketFactoryContract() {
     address: marketFactoryContract?.address.toString(),
     predictionMarketCount: predictionMarketCount,
     createMarket: async (eventName: string, eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
-      if(!wallet || !marketFactoryContract) return;
+      if(!marketFactoryContract) return;
       const message: CreateMarket = {
           $$type: "CreateMarket",
           eventName: eventName,

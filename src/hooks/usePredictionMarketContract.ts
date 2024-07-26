@@ -10,12 +10,12 @@ import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 export function usePredictionMarketContract(marketFactoryContractAddress: string, seqno: number) {
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
   const {client} = useTonClient()
-  const {wallet, sender} = useTonConnect()
+  const {sender} = useTonConnect()
   const [predictionMarketDetails, setPredictionMarketDetails] = useState<PredictionMarketDetails>()
   const [currentAttempt, setCurrentAttempt] = useState(0);
 
   const predictionMarketContract = useAsyncInitialize(async () => {
-    if(!client || !wallet) return;
+    if(!client) return;
     
     if (marketFactoryContractAddress != null || marketFactoryContractAddress != undefined) {
       const contract = await PredictionMarket.fromInit(Address.parse(marketFactoryContractAddress), BigInt(seqno)); 
@@ -23,7 +23,7 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
     }
 
     return null;
-  }, [client, wallet, marketFactoryContractAddress])
+  }, [client, marketFactoryContractAddress])
 
   useEffect(() => {
     async function fetchPredictionMarketDetails() {

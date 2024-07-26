@@ -11,6 +11,7 @@ import tonIcon from "./../assets/ton-icon.svg";
 import arrowIcon from "./../assets/chevron.forward.right.svg";
 import { Link } from 'react-router-dom';
 import { PredictionMarketDetailsClonable } from '../models/predictionMarketDetails';
+import { useTonConnect } from '../hooks/useTonConnect';
 
 interface PredictionMarketProps {
   key: number;
@@ -21,6 +22,7 @@ interface PredictionMarketProps {
 
 const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContractAddress, seqno, filter }) => {
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
+  const { wallet } = useTonConnect();
   const { currentAttempt, address, predictionMarketDetails, placeUserBet } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const { userBet, claimWinnings } = useUserBetContract(address!);
   const [bet, setBet] = useState(0);
@@ -153,7 +155,11 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
               </div>
           </div>
         </div>
-        <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        {wallet ? (
+          <button className="bet-button" onClick={() => handleBet()}>Place Bet</button>
+        ) : (
+          <button className="bet-button" disabled>Wallet not connected</button>
+        )}
         <p className='fee-info grey-text'>Fee: {Number(predictionMarketDetails.protocolFeePercentage) / 10} %</p>
       </Modal>
     </div>
