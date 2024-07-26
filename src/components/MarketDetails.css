@@ -46,3 +46,13 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.image-container {
+  width: 100%;
+  height: auto;
+}
+
+.feature-in-progress {
+  max-width: 100%;
+  height: auto;
+}

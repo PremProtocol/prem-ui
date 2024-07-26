@@ -67,7 +67,7 @@ const MarketDetails = () => {
           </div>
         </div>
       </div>
-      <div className=""><img src={featureInProgress} width="520px" alt="Feature is in progress"></img></div>
+      <div className="image-container"><img src={featureInProgress} width="520px" className="feature-in-progress" alt="Feature is in progress"></img></div>
       {eventEnded ? (
         userBet ? (
           marketDetails.resolved ? (
