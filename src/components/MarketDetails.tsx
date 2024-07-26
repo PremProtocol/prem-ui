@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import usdtIcon from "./../assets/usdt-icon.svg";
 import tonIcon from "./../assets/ton-icon.svg";
+import featureInProgress from "./../assets/feature-in-progress.png"
 import { fromNano } from '@ton/core';
 import { BackButton } from '@vkruglikov/react-telegram-web-app';
 import { useUserBetContract } from '../hooks/useUserBetContract';
@@ -66,7 +67,7 @@ const MarketDetails = () => {
           </div>
         </div>
       </div>
-      <div className="chart"></div>
+      <div className=""><img src={featureInProgress} width="520px" alt="Feature is in progress"></img></div>
       {eventEnded ? (
         userBet ? (
           marketDetails.resolved ? (
