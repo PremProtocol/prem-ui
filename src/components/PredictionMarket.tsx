@@ -3,7 +3,6 @@ import './PredictionMarket.css';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import { useUserBetContract } from '../hooks/useUserBetContract';
 import { fromNano } from '@ton/core';
-import { Skeleton } from 'antd';
 import Modal from './internal/Modal';
 import { Filter } from '../models/filter';
 import usdtIcon from "./../assets/usdt-icon.svg";
@@ -36,7 +35,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   }
 
   if (!predictionMarketDetails || !address) {
-    return <Skeleton active />;
+    return;
   }
 
   const predictionMarketDetailsClonable = new PredictionMarketDetailsClonable(predictionMarketDetails) 

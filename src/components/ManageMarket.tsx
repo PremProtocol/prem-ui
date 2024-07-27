@@ -1,6 +1,5 @@
 import './ManageMarket.css';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
-import { Skeleton } from 'antd';
 import Modal from './internal/Modal';
 import { useState } from 'react';
 import usdtIcon from "./../assets/usdt-icon.svg";
@@ -26,7 +25,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
   }
 
   if (!predictionMarketDetails) {
-    return <Skeleton active />;
+    return;
   }
   
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();

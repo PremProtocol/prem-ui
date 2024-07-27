@@ -4,7 +4,6 @@ import './UserBet.css';
 import { useUserBetContract } from '../hooks/useUserBetContract';
 import { fromNano } from '@ton/core';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
-import { Skeleton } from 'antd';
 import tonIcon from "./../assets/ton-icon.svg";
 import Modal from './internal/Modal';
 
@@ -29,7 +28,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
   }
 
   if (!predictionMarketDetails || !address) {
-    return <Skeleton active />;
+    return;
   }
 
   
