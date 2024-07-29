@@ -43,7 +43,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
   
-  if(!!filter.searchQuery && !predictionMarketDetails.eventDescription.toLowerCase().includes(filter.searchQuery.toLowerCase())) {
+  if(!!filter.searchQuery && !predictionMarketDetails.eventName.toLowerCase().includes(filter.searchQuery.toLowerCase())) {
     return;
   }
   
@@ -72,7 +72,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
 
   return (
     <div className="market-card">
-      <h2>{predictionMarketDetails.eventDescription}</h2>
+      <h2>{predictionMarketDetails.eventName}</h2>
       <div className="market-content">
         <div className="info-row-group">
           <div className="info-row">

@@ -68,7 +68,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
 
   return (
     <div className="user-bet-card">
-      <h2>{predictionMarketDetails.eventDescription}</h2>
+      <h2>{predictionMarketDetails.eventName}</h2>
       <div className="user-bet-content">
         <div className="info-row-group">
           <div className="info-row">

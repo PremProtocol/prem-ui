@@ -62,7 +62,7 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
 
   return (
     <div className="resolve-market-card">
-      <h2>{predictionMarketDetails.eventDescription}</h2>
+      <h2>{predictionMarketDetails.eventName}</h2>
       <div className="resolve-market-content">
         <div className="resolve-market-info">
           <div className="resolve-market-details">
