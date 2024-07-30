@@ -13,9 +13,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <TonConnectUIProvider 
     manifestUrl={manifestUrl}
     uiPreferences={{theme: THEME.LIGHT}}
-    // actionsConfiguration={{
-    //   twaReturnUrl: 'https://t.me/<YOUR_APP_NAME>'
-    // }}
+    actionsConfiguration={{
+      twaReturnUrl: 'https://t.me/prem_ton_bot/prem'
+    }}
   >
     <AppRoot>
       <BrowserRouter>
