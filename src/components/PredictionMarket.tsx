@@ -11,6 +11,8 @@ import arrowIcon from "./../assets/chevron.forward.right.svg";
 import { Link } from 'react-router-dom';
 import { PredictionMarketDetailsClonable } from '../models/predictionMarketDetails';
 import { useTonConnect } from '../hooks/useTonConnect';
+import CustomSlider from './internal/VoteSlider';
+import VoteSlider from './internal/VoteSlider';
 
 interface PredictionMarketProps {
   key: number;
@@ -76,6 +78,7 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
 
   return (
     <div className="market-card">
+      <VoteSlider value={((Number(predictionMarketDetails.totalOutcome1Bets) / Number(predictionMarketDetails.totalPool)) * 100).toFixed(0)}/>
       <h2>{predictionMarketDetails.eventName}</h2>
       <div className="market-content">
         <div className="info-row-group">
