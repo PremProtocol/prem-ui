@@ -37,7 +37,6 @@ export function usePredictionMarketContract(marketFactoryContractAddress: string
             }
             const predictionMarketDetails: PredictionMarketDetails = mapPredictionMarketDetails(predictionMarketDetailsRes, predictionMarketContract.address);
             setPredictionMarketDetails(predictionMarketDetails);
-            console.log('Prediction Market Details:', predictionMarketDetails);
             break; // If successful, break the loop
           } catch (e) {
             setCurrentAttempt(i + 1);

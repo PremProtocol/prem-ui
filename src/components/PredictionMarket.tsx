@@ -43,6 +43,10 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
   
+  if(eventEnded){
+    return;
+  }
+
   if(!!filter.searchQuery && !predictionMarketDetails.eventName.toLowerCase().includes(filter.searchQuery.toLowerCase())) {
     return;
   }
@@ -89,39 +93,35 @@ const PredictionMarket: React.FC<PredictionMarketProps> = ({ marketFactoryContra
           </div>
         </div>
         <div className="market-controls">
-          {eventEnded ? (
-            userBet ? (
-              predictionMarketDetails.resolved ? (
-                userBet.outcome === predictionMarketDetails.outcome ? (
-                  !userBet.isClaimed ? (
-                    <div className="claim-section">
-                      <label className="claim-label">Claim Amount:</label>
-                      <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}  <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
-                      <button className='claim-button' onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
-                    </div>
-                    ) : (
-                      <p className="centered-text">Already claimed</p>
-                    )
+          {userBet ? (
+            predictionMarketDetails.resolved ? (
+              userBet.outcome === predictionMarketDetails.outcome ? (
+                !userBet.isClaimed ? (
+                  <div className="claim-section">
+                    <label className="claim-label">Claim Amount:</label>
+                    <div className="claim-amount">{fromNano(Number(userBet?.betAmount))}  <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
+                    <button className='claim-button' onClick={handleClaim} disabled={Number(userBet?.betAmount) === 0}>Claim</button>
+                  </div>
                   ) : (
-                    <p className="centered-text">This event was resolved with a different outcome than predicted.</p>
+                    <p className="centered-text">Already claimed</p>
                   )
                 ) : (
-                  <p className="centered-text">Wait until host resolve the market</p>
+                  <p className="centered-text">This event was resolved with a different outcome than predicted.</p>
                 )
               ) : (
-                <p className="centered-text">Event ended</p>   
+                <p className="centered-text">Wait until host resolve the market</p>
               )
-          ) : (
-            !userBet ? (
-              <div className="bet-buttons">
-                <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(predictionMarketDetails.outcomeName1)}>Bet on #1</button>
-                <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(predictionMarketDetails.outcomeName2)}>Bet on #2</button>
-              </div>
             ) : (
-              <div className="bet-buttons">
-                <button className="increase-bet-button" type="button" value={userBet?.outcome.toString()} onClick={() => openBetModal(userBet?.outcome === 0n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2)}>Increase position for {userBet?.outcome === 0n ? "#1" : "#2"}</button>
-              </div>
-            )
+              !userBet ? (
+                <div className="bet-buttons">
+                  <button className="outcome-one-button" type="button" value="0" onClick={() => openBetModal(predictionMarketDetails.outcomeName1)}>Bet on #1</button>
+                  <button className="outcome-two-button" type="button" value="1" onClick={() => openBetModal(predictionMarketDetails.outcomeName2)}>Bet on #2</button>
+                </div>
+              ) : (
+                <div className="bet-buttons">
+                  <button className="increase-bet-button" type="button" value={userBet?.outcome.toString()} onClick={() => openBetModal(userBet?.outcome === 0n ? predictionMarketDetails.outcomeName1 : predictionMarketDetails.outcomeName2)}>Increase position for {userBet?.outcome === 0n ? "#1" : "#2"}</button>
+                </div>
+              )
           )}
         </div>
         <Link to={`/prem-ui/market/${seqno}`}
