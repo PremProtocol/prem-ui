@@ -7,7 +7,7 @@ import '@telegram-apps/telegram-ui/dist/styles.css';
 import { BrowserRouter } from 'react-router-dom';
 
 // this manifest is used temporarily for development purposes
-const manifestUrl = 'https://artemgontar.github.io/prem-ui/tonconnect-manifest.json';
+const manifestUrl = 'https://premprotocol.github.io/prem-ui/tonconnect-manifest.json';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <TonConnectUIProvider 

@@ -9,7 +9,7 @@ Users can create markets, place bets, and claim winnings through TON's smart con
 Traditional prediction markets often lack transparency and are hard to use. Prem solves this by leveraging TON's blockchain for transparent transactions and offering a user-friendly Telegram mini-app.
 
 ## TON Contracts repo link
-https://github.com/ArtemGontar/prem
+https://github.com/PremProtocol/prem-core
 
 ## Installation & Start
 
