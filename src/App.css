@@ -58,3 +58,9 @@ nav a:hover {
   height: 100vh;
 }
 
+.version-ton-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}

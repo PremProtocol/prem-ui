@@ -13,6 +13,8 @@ import { Tabbar } from '@telegram-apps/telegram-ui';
 import { useState } from 'react';
 import MarketDetails from './components/MarketDetails';
 import { useExpand } from '@vkruglikov/react-telegram-web-app'
+import { VersionProvider } from './contexts/VersionContext';
+import VersionSelector from './components/internal/VersionSelector';
 
 interface Tab {
   id: string;
@@ -23,7 +25,7 @@ interface Tab {
 
 function App() {
   const [, expand] = useExpand();
-  expand()
+  expand();
 
   const navigate = useNavigate();
   const tabs: Tab[] = [{
@@ -49,30 +51,36 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <header className="header">
-        <div className="header-top">
-          <img src={logo} alt="Logo" className="logo" />
-          <TonConnectButton />
-        </div>
-      </header>
-      <Tabbar>
-        {tabs.map(({
-        id,
-        text,
-        path,
-        icon
-      }) => <Tabbar.Item style={{ padding: "8px 10px 0px" }} key={id} text={text} selected={id === currentTab} onClick={() => tabItemClick(id, path)}>
-            {icon}  
-          </Tabbar.Item>)}
-      </Tabbar>
-      <Routes>
-        <Route path="/prem-ui/" element={<PredictionMarkets />} />
-        <Route path="/prem-ui/user-bets" element={<UserBets />} />
-        <Route path="/prem-ui/create-market" element={<CreateMarket />} />
-        <Route path="/prem-ui/market/:seqno" element={<MarketDetails />} />
-      </Routes>
-    </div>
+    <VersionProvider>
+      <div className="container">
+        <header className="header">
+          <div className="header-top">
+            <img src={logo} alt="Logo" className="logo" />
+            <div className='version-ton-wrapper'>
+              <VersionSelector />
+              <TonConnectButton />
+            </div>
+          </div>
+        </header>
+        <Tabbar>
+          {tabs.map(({
+          id,
+          text,
+          path,
+          icon
+        }) => <Tabbar.Item style={{ padding: "8px 10px 0px" }} key={id} text={text} selected={id === currentTab} onClick={() => tabItemClick(id, path)}>
+              {icon}  
+            </Tabbar.Item>)}
+        </Tabbar>
+        <Routes>
+          <Route path="/prem-ui/" element={<PredictionMarkets />} />
+          <Route path="/prem-ui/user-bets" element={<UserBets />} />
+          <Route path="/prem-ui/create-market" element={<CreateMarket />} />
+          <Route path="/prem-ui/market/:seqno" element={<MarketDetails />} />
+        </Routes>
+      </div>
+    </VersionProvider>
+    
   );
 }
 

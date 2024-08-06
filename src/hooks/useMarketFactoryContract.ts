@@ -4,16 +4,30 @@ import { CreateMarket, MarketFactory } from '../wrappers/MarketFactory';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
+import { useVersion } from '../contexts/VersionContext';
+
+function getContractAddress(version: string): Address {
+  const contractAddresses: { [key: string]: Address } = {
+    v0_1: Address.parse(import.meta.env.VITE_TESTNET_MARKET_FACTORY_CONTRACT_V0_1),
+    //v1_0: Address.parse(import.meta.env.VITE_TESTNET_MARKET_FACTORY_CONTRACT_V1_0),
+    // Add more versions as needed
+  };
+  return contractAddresses[version];
+}
 
 export function useMarketFactoryContract() {
   const {client} = useTonClient()
   const {sender} = useTonConnect()
+  const { selectedVersion } = useVersion();
   const [predictionMarketCount, setPredictionMarketCount] = useState<number>()
 
   const marketFactoryContract = useAsyncInitialize(async () => {
     if(!client) return;
 
-    const contract = MarketFactory.fromAddress(Address.parse(import.meta.env.VITE_TESTNET_MARKET_FACTORY_CONTRACT))
+    // Get the contract address for the selected version
+    const contractAddress = getContractAddress(selectedVersion);
+
+    const contract = MarketFactory.fromAddress(contractAddress)
     return client.open(contract) as OpenedContract<MarketFactory>
   }, [client])
 
