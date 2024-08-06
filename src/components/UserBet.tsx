@@ -6,6 +6,7 @@ import { fromNano } from '@ton/core';
 import { usePredictionMarketContract } from '../hooks/usePredictionMarketContract';
 import tonIcon from "./../assets/ton-icon.svg";
 import Modal from './internal/Modal';
+import { PredictionMarketDetailsClonable } from '../models/predictionMarketDetails';
 
 interface UserBetProps {
   key: number;
@@ -34,7 +35,8 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
   
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   const endTimeString = new Date(Number(predictionMarketDetails.endTime) * 1000).toLocaleString();
-
+  const predictionMarketDetailsClonable = new PredictionMarketDetailsClonable(predictionMarketDetails) 
+  
   const handleClaim = () => {
     claimWinnings();
   };
@@ -58,12 +60,27 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
     return;
   }
 
+  const calculateClaimableAmount = (betAmount: number, totalPool: number, totalOutcomeBets: number) => {
+    const amount = Math.floor((betAmount * totalPool) / totalOutcomeBets);
+    return Number(fromNano(amount)).toFixed(2); // Round to two decimal places
+  };
+
   const userOutcome = userBet.outcome === 0n ? {
     cssClass: 'blue-text',
-    outcome: predictionMarketDetails.outcomeName1
+    outcome: predictionMarketDetails.outcomeName1,
+    claimableAmount: calculateClaimableAmount(
+        Number(userBet.betAmount),
+        predictionMarketDetailsClonable.totalPool,
+        predictionMarketDetailsClonable.totalOutcome1Bets
+      )
   } : {
     cssClass: 'red-text',
-    outcome: predictionMarketDetails.outcomeName2
+    outcome: predictionMarketDetails.outcomeName2,
+    claimableAmount: calculateClaimableAmount(
+        Number(userBet.betAmount),
+        predictionMarketDetailsClonable.totalPool,
+        predictionMarketDetailsClonable.totalOutcome2Bets
+      )
   };
 
   return (
@@ -100,7 +117,7 @@ const UserBet: React.FC<UserBetProps> = ({ marketFactoryContractAddress, seqno }
                 !userBet.isClaimed ? (
                   <div className="claim-section">
                     <label className="claim-label">Claim Amount:</label>
-                    <div className="claim-amount">{fromNano(Number(userBet.betAmount))} <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
+                    <div className="claim-amount">{userOutcome.claimableAmount} <img src={tonIcon} alt="TON Icon" width='40' height='40' className="currency-icon"/></div>
                     <button className='claim-button' onClick={handleClaim} disabled={Number(userBet.betAmount) === 0}>Claim</button>
                   </div>
                 ) : (

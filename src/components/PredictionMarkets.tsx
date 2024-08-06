@@ -46,7 +46,6 @@ const PredictionMarkets: React.FC = () => {
         <input type="text" className="search-input" placeholder="Search" value={searchQuery} onChange={(e) => onChangeSearch(e)}/>
           <i className="search-icon"><img src={searchIcon} alt="searchIcon" className="searchIcon" onClick={handleSearchClick}/></i>
         </div>
-
         <div className="tab-container">
           <div className="tab-buttons">
             {categories.map((category) => (
