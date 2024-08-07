@@ -5,6 +5,7 @@ import { useState } from 'react';
 import usdtIcon from "./../assets/usdt-icon.svg";
 import tonIcon from "./../assets/ton-icon.svg";
 import { fromNano } from '@ton/core';
+import { useTonAddress } from '@tonconnect/ui-react';
 
 interface ManageMarketProps {
   key: number;
@@ -13,6 +14,7 @@ interface ManageMarketProps {
 }
 
 const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddress, seqno }) => {
+  const wallet = useTonAddress(false);
   const { currentAttempt, predictionMarketDetails, resolveMarket, addLiquidity, removeLiquidity, claimFee, removeMarket } = usePredictionMarketContract(marketFactoryContractAddress, seqno);
   const MAX_RETRY_AMOUNT = import.meta.env.VITE_PREDICTION_MARKET_RETRY_COUNT
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,10 +26,10 @@ const ResolveMarket: React.FC<ManageMarketProps> = ({ marketFactoryContractAddre
     return;
   }
 
-  if (!predictionMarketDetails) {
+  if (!predictionMarketDetails || predictionMarketDetails.owner.toRawString() != wallet) {
     return;
   }
-  
+
   const eventEnded = new Date(Number(predictionMarketDetails.endTime) * 1000) <= new Date();
   
   const handleResolve = (e, outcome: number) => {

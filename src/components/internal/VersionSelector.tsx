@@ -11,6 +11,7 @@ const VersionSelector: React.FC = () => {
   return (
     <select className="version-select" value={selectedVersion} onChange={handleVersionChange}>
       <option value="v0_1">v0_1</option>
+      <option value="v0_2">v0_2</option>
       <option value="v1" disabled>v1</option>
       {/* Add more versions as needed */}
     </select>

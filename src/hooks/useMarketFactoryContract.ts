@@ -1,6 +1,6 @@
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { Address, OpenedContract, toNano } from '@ton/core';
-import { CreateMarket, MarketFactory } from '../wrappers/MarketFactory';
+import { CreateMarket, MarketFactory } from '../wrappers/v0_1/MarketFactoryV0_1';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import { useVersion } from '../contexts/VersionContext';
 function getContractAddress(version: string): Address {
   const contractAddresses: { [key: string]: Address } = {
     v0_1: Address.parse(import.meta.env.VITE_TESTNET_MARKET_FACTORY_CONTRACT_V0_1),
+    v0_2: Address.parse(import.meta.env.VITE_TESTNET_MARKET_FACTORY_CONTRACT_V0_2),
     //v1_0: Address.parse(import.meta.env.VITE_TESTNET_MARKET_FACTORY_CONTRACT_V1_0),
     // Add more versions as needed
   };
@@ -29,7 +30,7 @@ export function useMarketFactoryContract() {
 
     const contract = MarketFactory.fromAddress(contractAddress)
     return client.open(contract) as OpenedContract<MarketFactory>
-  }, [client])
+  }, [client, selectedVersion])
 
   useEffect(()=>{
     async function getPredictionMarketCount() {
@@ -50,6 +51,7 @@ export function useMarketFactoryContract() {
     predictionMarketCount: predictionMarketCount,
     createMarket: async (eventName: string, eventDescription: string, eventType: string, endTime: number, outcomeName1: string, outcomeName2: string) => {
       if(!marketFactoryContract) return;
+
       const message: CreateMarket = {
           $$type: "CreateMarket",
           eventName: eventName,

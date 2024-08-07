@@ -3,6 +3,7 @@ import './CreateMarket.css';
 import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import ManageMarkets from './ManageMarkets';
 import { useTonWallet } from '@tonconnect/ui-react';
+import { categories } from '../constants/categories';
 
 const CreateMarket: React.FC = () => {
   const {createMarket} = useMarketFactoryContract();
@@ -12,7 +13,8 @@ const CreateMarket: React.FC = () => {
   const [endTime, setEndTime] = useState('');
   const [outcomeName1, setOutcomeName1] = useState('');
   const [outcomeName2, setOutcomeName2] = useState('');
-  const eventTypes = ['Crypto', 'Elections', 'Awards', 'Sports', 'Other'];
+  const eventTypes = categories.map(category => category.label).filter(label => label !== 'All');
+  
   const [eventType, setEventType] = useState(eventTypes[0]);
 
   const handleSubmit = async (e: React.FormEvent) => {

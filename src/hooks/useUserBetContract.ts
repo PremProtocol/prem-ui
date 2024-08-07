@@ -1,10 +1,10 @@
 import { useTonClient } from "./useTonClient"
 import { useTonConnect } from "./useTonConnect"
 import { useAsyncInitialize } from "./useAsyncInitialize"
-import { UserBet } from "../wrappers/UserBet"
+import { UserBet } from "../wrappers/v0_1/UserBetV0_1"
 import { Address, OpenedContract, toNano } from "@ton/core"
 import { useEffect, useState } from "react"
-import { UserBetInfo } from "../wrappers/PredictionMarket"
+import { UserBetInfo } from "../wrappers/v0_1/PredictionMarketV0_1"
 
 export function useUserBetContract(predictionMarketContractAddress: string) {
   const {client} = useTonClient()

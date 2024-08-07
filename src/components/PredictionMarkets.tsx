@@ -5,16 +5,10 @@ import { useMarketFactoryContract } from '../hooks/useMarketFactoryContract';
 import searchIcon from '../assets/search-icon.svg';
 import { EventType } from '../models/eventType';
 import { Filter } from '../models/filter';
+import { categories } from '../constants/categories';
 
 const PredictionMarkets: React.FC = () => {
   const { address, predictionMarketCount } = useMarketFactoryContract();
-  const categories: EventType[] = [
-    { id: 1, label: 'All' },
-    { id: 2, label: 'Elections' },
-    { id: 3, label: 'Crypto' },
-    { id: 4, label: 'Awards' },
-    { id: 5, label: 'Sports' },
-  ];
   const [activeTab, setActiveTab] = React.useState(1);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
   const [filter, setFilter] = useState<Filter>(new Filter());

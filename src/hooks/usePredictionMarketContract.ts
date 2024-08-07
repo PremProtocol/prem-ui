@@ -1,9 +1,9 @@
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { Address, OpenedContract, toNano } from '@ton/core';
-import { AddLiquidity, PredictionMarket, RemoveLiquidity, ResolveMarket } from '../wrappers/PredictionMarket';
+import { AddLiquidity, PredictionMarket, RemoveLiquidity, ResolveMarket } from '../wrappers/v0_1/PredictionMarketV0_1';
 import { useTonConnect } from './useTonConnect';
 import { useTonClient } from './useTonClient';
-import { PlaceBet } from '../wrappers/UserBet';
+import { PlaceBet } from '../wrappers/v0_1/UserBetV0_1';
 import { useEffect, useState } from 'react';
 import { PredictionMarketDetails } from '../models/predictionMarketDetails';
 

@@ -1,1 +1,0 @@
-export * from '../../contracts/tact_PredictionMarket';

@@ -11,7 +11,6 @@ import arrowIcon from "./../assets/chevron.forward.right.svg";
 import { Link } from 'react-router-dom';
 import { PredictionMarketDetailsClonable } from '../models/predictionMarketDetails';
 import { useTonConnect } from '../hooks/useTonConnect';
-import CustomSlider from './internal/VoteSlider';
 import VoteSlider from './internal/VoteSlider';
 
 interface PredictionMarketProps {

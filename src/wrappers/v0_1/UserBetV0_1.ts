@@ -1,0 +1,1 @@
+export * from '../../../contracts/v0_1/tact_UserBet';
